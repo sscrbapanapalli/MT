@@ -1,0 +1,134 @@
+
+<style>
+
+.ui-datepicker-calendar {
+    display: none;
+    }
+
+	 p.ext {
+    margin-left: 2cm;
+}
+     div.box {
+		height: 700px;
+		width: 800px;
+		border: 1px  ;
+		align: center;
+		background: #fbf2b7;
+		padding: 50px 0;
+		 top: 20%;
+  		bottom: 30%;
+  		left: 15%;
+  		right: 10%;
+  		margin-left: 250px;
+  		margin-right: 250px;
+  		overflow-x: hidden;
+  		overflow-y: scroll;
+  		
+		 
+ 
+	}
+	p.error{
+			float:left;
+			color:red;
+			font-size: 15px;
+	
+	}
+	p.success{
+			float:left;
+			color:green;
+			font-size: 15px;
+	
+	}
+
+</style>
+
+<script type="text/javascript">
+$(function() {
+    $('.date-picker').datepicker( {
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: false,
+        dateFormat: 'MM yy',
+        minDate: '-2M',
+        maxDate: '-1M',
+        onClose: function(dateText, inst) { 
+        	$(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+        	
+        }
+    });
+});
+
+
+</script>
+
+<div ng-controller="loginController" ng-init="init()">
+	<div class="overall" >
+		<nav class="navbar">
+
+			<ul>
+				<li><a ui-sref="home" ui-sref-opts="{reload:true}">
+					<span class="icon fa fa-home"></span>Home</a>
+					<span class="divider"></span>
+				</li>
+				<li ng-repeat="application in applications">
+					<a ui-sref="app({appId: application.id})" ui-sref-opts="{reload:true}"	>{{application.appName}}</a>
+					<span class="divider"></span>
+				</li>
+				
+				<!-- <li><a   ui-sref="settings" ><span class="icon fa "></span>Admin Settings</a></li> -->
+
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="userSettings" >User Settings</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="applicationSettings" >Application Settings</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+			</ul>
+
+		</nav>
+	</div>
+</div>
+	<div  ng-controller="uploadController" ng-init="appServerFolder()">
+   
+    <div> <h1  style="font-size:22px; color:#960;">Application - Upload Files</h1></div></br>
+   <div class="box" >
+  
+		<div>&nbsp</div>
+  	
+	<div class="main" >
+		<form class="form-horizontal" >
+			 <div >
+				 <label for="startDate">Month :</label>
+	   			 <input  name="startDate" id="startDate" ng-model="filetest" class="date-picker textbox" />
+	   		 </div>
+			 <div>&nbsp;</div>
+			 <div class="form-group" ng-repeat="obj in serverFoldersResult">
+					<label class="control-label col-sm-4" for="uploadfile"><label style="float:left;padding-left:100px;">{{obj.folderCaption}}</label></label>
+					<div class="col-sm-5">
+						<input type="file" accept="{{obj.validationType}}" id="file{{$index+1}}" ng-model="filetest" name="file{{$index+1}}" 
+						onchange="angular.element(this).scope().setFile(this.files, angular.element(this).scope().$index+1)"  class="btn btn-warning" />
+	
+					</div>
+			 </div>
+			 <div class="form-group " id="upload"> 
+				    <div class="pull-middle">
+				    	<button ng-click="angular.copy(filetest)" class="btn btn-primary" type="reset">Reset</button>
+				    	<button type="submit" class="btn btn-success" ng-click = "doUploadFile()">Upload</button>
+				    </div>
+				     <div ng-include="'view/loading.html'" ng-show="dataLoading"></div>
+			</div>
+				    
+		</form> 
+		
+	</div>	
+		
+	<!-- 	<div class="col-sm-offset-2">
+			<p class="error" ng-bind="uploadError"></p>
+			<p class="success" ng-bind="uploadSuccess"></p>
+		</div> -->
+	</div>
+	</div>

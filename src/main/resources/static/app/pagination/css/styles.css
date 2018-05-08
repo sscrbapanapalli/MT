@@ -1,0 +1,264 @@
+
+.sort-icon {
+    font-size: 9px;
+    margin-left: 5px;
+}
+
+th {
+	cursor:pointer;
+	background-color:#0055a4;
+}
+.button-link{
+  background: none;
+}
+.button-link:hover {
+    background: #c0c0c0;  
+    text-decoration: none;
+}
+
+.textbox {
+    height: 35px;
+    border: 1px solid #00ffff;
+    border-radius: 5px;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    width: 200px;
+}
+ .textbox:focus {
+    border-color: #BBB;
+    outline: none;
+}
+
+.textboxNumber {
+    height: 35px;
+    border: 1px solid #00ffff;
+    border-radius: 5px;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    width: 50px;
+}
+ .textboxNumber:focus {
+    border-color: #BBB;
+    outline: none;
+}
+.form-submit-button {
+background: #0066A2;
+color: white;
+border-style: outset;
+border-color: #0066A2;
+
+height: 30px;
+
+width: 100px;
+
+font: bold 15px arial, sans-serif;
+
+text-shadow:none;
+
+}
+/* 
+
+
+.close-icon {
+    background: #9E9E9E;  
+	width: 23px;
+	height: 28px;
+	margin-left:1%;
+	float:left;
+	text-align: center;	
+	font-weight: normal;
+	font-size: 16px;
+	box-shadow: 0 0 2px #8080ff;
+	cursor: pointer;
+} */
+
+.slinputtext input {
+  padding:0px;
+  width:75%;
+  padding-left:31px;
+  padding-right:30px;
+  color:black;
+  font-family: arial,sans-serif;
+  font-size: 16px;
+}
+
+/* Remove IE10's “clear field” X button */
+.slinputtext input::-ms-clear {
+    display: none;
+}
+.slinputtext input:focus {
+  border:1px solid #4d90fe;
+}
+
+/* left side icon style (search icon) */
+.slinputtext .left-icon {
+  position:absolute;
+  left:5px;
+  top:100px;
+}
+.slinputtext .fa {
+  color:#444;
+  font-size: 16px;
+}
+.slinputtext .fa-close {
+  color:#ccc;
+}
+
+/* right side icon style (search icon) */
+.slinputtext .right-icon {
+  position:absolute;
+  left:230px;
+  top:100px;
+  cursor:pointer;
+}
+.slinputtext {
+  position:relative;
+  width:30%;
+}
+
+
+/* padding left and right is for search and reset icons */
+.slinput input {
+  padding:0px;
+  width:75%;
+  padding-left:31px;
+  padding-right:30px;
+  color:black;
+  font-family: arial,sans-serif;
+  font-size: 16px;
+}
+
+/* Remove IE10's “clear field” X button */
+.slinput input::-ms-clear {
+    display: none;
+}
+.slinput input:focus {
+  border:1px solid #4d90fe;
+}
+
+/* left side icon style (search icon) */
+.slinput .left-icon {
+  position:absolute;
+  left:5px;
+  top:52px;
+}
+.slinput .fa {
+  color:#444;
+  font-size: 16px;
+}
+.slinput .fa-close {
+  color:#ccc;
+}
+
+/* right side icon style (search icon) */
+.slinput .right-icon {
+  position:absolute;
+  left:230px;
+  top:52px;
+  cursor:pointer;
+}
+.slinput {
+  position:relative;
+  width:30%;
+}
+
+
+#bottom {
+    display: block;
+  }
+#scrollArea {
+    height: 100%;
+    overflow: auto;
+  }
+#tablenodata{
+  text-align:center;	
+    font-size: 15px;
+ background: #b2b3a6; 
+  
+}
+ #footer {
+  background-color: #efefef;
+ 
+}
+
+.customRow {
+  
+	padding: 10px;
+
+    }
+    
+#ui-datepicker-div { display: none; }
+	.table{
+		width:100%; 
+		border-collapse:collapse; 
+		padding:7px; border:#4e95f4 1px solid;
+		
+	}
+		body {
+    font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 15px;
+    line-height: 1.42857143;
+    color: #2c3e50;
+    background-color: #ffffff;
+}
+		
+   table, th, td {
+			padding:2px; border:#4e95f4 1px solid;
+		}
+		.selected {
+			background-color: #fbf2b7;
+		}
+		
+		.odd {
+		  background-color: #FFF;
+		}
+		
+		.even {
+		  background-color: #CCC;
+		}
+
+		
+		/* The Modal (background) */
+.modal {
+ 
+    position: fixed; /* Stay in place */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+ 
+   
+}
+
+/* Modal Content/Box */
+/* .modal-content {
+    background-color: #4CAF50;
+   
+} */
+
+.modal-header {
+    min-height: 16.43px;
+    padding: 15px;
+   border-bottom:none;
+}
+/* The Close Button */
+.close {
+    color: #ff0000;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

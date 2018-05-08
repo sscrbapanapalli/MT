@@ -1,0 +1,306 @@
+
+
+<div ng-controller="loginController" ng-init="init()"><div class="overall" >
+		<nav class="navbar">
+
+			<ul>
+				<li><a ui-sref="home" ui-sref-opts="{reload:true}">
+					<span class="icon fa fa-home"></span>Home</a>
+					<span class="divider"></span>
+				</li>
+				<!-- <li ng-repeat="application in applications">
+					<a ui-sref="app({appId: application.id,appName:application.appName})" ui-sref-opts="{reload:true}"	>{{application.appName}}</a>
+					<span class="divider"></span>
+				</li>
+				-->
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="userSettings" >User Settings</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="applicationSettings" >Application Settings</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<!--<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="jamesWeb" >James Web</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li> -->
+				
+				
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="activityTrackAdmin" >ActivityTrack-Admin</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="activityTrackUser" >ActivityTrack-User</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="monitoring" >Monitoring</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+			</ul>
+
+		</nav>
+	</div></div>	
+<div ng-controller="homeController" ng-init="init()">
+	<div ng-hide="welcomeMsg" >
+		<div>&nbsp;</div>
+		<!-- <h3>Welcome to CDR Application...</h3> -->
+		<div >
+			<h1 class="" style="font-size:22px; color:#960;">Welcome to Activity Tracker...</h1>
+		</div></br>
+		
+	</div>
+
+	<div ng-show="welcomeMsg">
+		<div>
+			<div class="bs-component">
+				<div class="col-xs-12">
+					<h1 class="pull-left" style="font-size:22px; color:#960;">Batch History - {{selectedAppName}}</h1>
+				</div></br>
+				<form name='myform'>
+					<div>
+						<div class="slinputtext ">
+  						 	<i class="fa fa-search left-icon"></i> 
+						    <input class="pull-left textbox" required ng-model="search" placeholder="Enter search term"  ng-change="hideChildTable()"/> 
+						    <i class="fa fa-close right-icon" ng-click="resetParent()"></i>
+						</div>
+						<div class="col-xs-5 pull-right">
+							<label for="search">Record(s) per page</label> 
+								<input type="number"	min="1" max="100" class="textboxNumber" ng-model="pageSize">
+								<button class="btn btn-warning btn-sm dropdown-toggle"	data-toggle="dropdown">
+									<i class="fa fa-bars"></i> Export Table Data
+								</button>
+								<ul class="dropdown-menu " role="menu">
+									<li class="divider"></li>
+									<li><a uisref="{{'.'}}"
+										onClick="generatePdf('parentId');">
+											<img src='./export/images/pdf.png' width='24px'> PDF
+									</a></li>
+									<li><a uisref="{{'.'}}"
+										onClick="$('#parentId').tableExport({tableName:'BatchHistory',type:'doc',escape:'false'});">
+											<img src='./export/images/word.png' width='24px'> Word
+									</a></li>
+									<li class="divider"></li>
+									<li><a uisref="{{'.'}}"
+										onClick="$('#parentId').tableExport({tableName:'BatchHistory',type:'csv',escape:'false'});">
+											<img src='./export/images/csv.png' width='24px'> CSV
+									</a></li>
+									<li><a uisref="{{'.'}}"
+										onClick="$('#parentId').tableExport({tableName:'BatchHistory',type:'excel',escape:'false'});">
+											<img src='./export/images/xls.png' width='24px'> XLS
+									</a></li>
+								</ul>
+								
+							<button type="submit" class="btn btn-success" ng-click="doUpload()">Upload</button>
+					
+						</div>
+						
+					</div>
+				</form>
+			</div>
+		</div>
+		
+			<table class="table" id="parentId">
+				<thead>
+					<tr>
+						<th ng-click="sort('batchId')">BatchId <span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+						</th>
+						<th ng-click="sort('batchUploadCrDate')">Date Time <span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+						</th>
+						<th ng-click="sort('batchUploadStatus')">Status <span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+						</th>
+						<th ng-click="sort('etlProcessed')"> ETL Status
+						<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+						</th>
+						<th ng-click="sort('batchUploadUserName')">LoginUser <span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+						</th>
+						<th ng-click="sort('batchUploadMonth')">Month <span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+						</th>
+						
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-class-odd="ClassOdd($index)"  ng-class-even="ClassEven($index)"
+						dir-paginate="obj in filtered =(batchDetailsResult|filter:search)|orderBy:sortParent:reverse|itemsPerPage: pageSize"
+						current-page="currentPage" pagination-id="original" >
+						<td> <a title="click here Show Batch History Details" scroll-on-click class="button-link" ui-sref="."
+      ng-click='batchFiles($index,obj.id)'>{{obj.batchId}}</a></td>
+      <td title="{{obj.batchUploadCrDate|date:'yyyy-MM-dd HH:mm:ss'}}" >{{obj.batchUploadCrDate|date:'yyyy-MM-dd HH:mm:ss'}}</td>      	
+		
+					<td>{{ obj.batchUploadStatus }}<a title="Reverse" ng-if="obj.id==currentUploadDetailsResult.id"  ng-click="doReverse(obj.id,obj.batchId+'  for the month '+obj.batchUploadMonth)">
+						<img style="width: 25px; height: 25px" alt="logo"	src="./app/images/reverse.png" /> 
+    </a></td>
+						<td>{{obj.etlProcessed}}</td>
+						<td>{{obj.batchUploadUserName}}</td>
+						<td>{{obj.batchUploadMonth}}</td>						
+					</tr>
+				</tbody>
+				
+			</table>
+
+			<dir-pagination-controls class="pull-left" max-size="10"
+				direction-links="true" boundary-links="true"
+				pagination-id="original">
+	</div>
+
+		<div id="tablenodata"
+			ng-show=" batchDetailsResult =='null'||  batchDetailsResult =='undefined' ||  batchDetailsResult.length==0">
+			<div>No Record Found.</div>
+
+		</div>
+		<div ng-show="batchDetailsResult !='undefined' && batchDetailsResult.length>=0" class="pull-right">Filtered : ({{ filtered.length }})
+			record(s) out of ({{batchDetailsResult.length }}) entries</div>
+
+		<!-- <div class="customRow"></div> -->
+		<!-- <div class="form-group" id="upload" ng-show="batchDetailsResult !='undefined' && batchDetailsResult.length>=0">
+			<div class="col-sm-offset-2 col-sm-10">
+				<button type="submit" class="btn btn-primary ng-binding"
+					ng-click="doReverse()">Reverse</button>
+				<button type="submit" class="btn btn-success" ng-click="doUpload()">Upload</button>
+			</div>
+			<div>ETL Possible Status [ 
+        				 N= <span style="color:#7B68EE;font-weight:bold">New</span>,
+   						 P= <span style="color:#00CED1;font-weight:bold">In Progress</span>,
+ 						 Y= <span style="color:#2E8B57;font-weight:bold">ETL Processed</span>,
+  						 X=  <span style="color:#FF0000;font-weight:bold">No Longer Required</span>]
+  				</div>
+		</div> -->
+
+		<div class="customRow"></div>
+		<div ng-show="checkStatus">
+			<div class="col-xs-12">
+				<h1 class="pull-left" style="font-size:18px; color:#333;">Batch History Details - {{selectedAppName}}</h1></div>
+						
+				<div class="bs-component">
+				  <form name='myformChild'>
+					<div>
+						<div class="slinput">
+						    <i class="fa fa-search left-icon"></i> 
+						    <input class="pull-left textbox" required ng-model="searchBatch" placeholder="Enter search term"  /> 
+						    <i class="fa fa-close right-icon" ng-click="resetChild()"></i>
+						</div>				
+						<!-- <div class="col-xs-4 pull-left">
+								<span class="icon pull-left"><i class="fa fa-search"></i></span><input type="text"
+								required ng-model="searchBatch" class="pull-left textbox" placeholder="Enter search term">
+								<a class="pull-left close-icon" href=""  ng-click="resetChild()">X</a>
+							 </div> -->
+						<div class="col-xs-4 pull-right">
+							<label for="search">Record(s) per page</label> <input type="number"	min="1" max="100" class="textboxNumber" ng-model="pageSizetest">
+								<button class="btn btn-warning btn-sm dropdown-toggle"	data-toggle="dropdown">
+									<i class="fa fa-bars"></i> Export Table Data
+								</button>
+								<ul class="dropdown-menu " role="menu">
+									<li class="divider"></li>
+									<li><a uisref="{{'.'}}"	onClick="generatePdf('childTable');">
+											<img src='./export/images/pdf.png' width='24px'> PDF
+										</a>
+									</li>
+									<li><a uisref="{{'.'}}"	onClick="$('#childTable').tableExport({tableName:'BatchHistoryDetail',type:'doc',escape:'false'});">
+											<img src='./export/images/word.png' width='24px'> Word
+										</a>
+									</li>
+									<li class="divider"></li>
+									<li><a uisref="{{'.'}}"	onClick="$('#childTable').tableExport({tableName:'BatchHistoryDetail',type:'csv',escape:'false'});">
+											<img src='./export/images/csv.png' width='24px'> CSV
+										</a>
+									</li>
+									<li><a uisref="{{'.'}}"	onClick="$('#childTable').tableExport({tableName:'BatchHistoryDetail',type:'excel',escape:'false'});">
+											<img src='./export/images/xls.png' width='24px'> XLS
+										</a>
+									</li>
+								</ul>
+						</div>
+					</div>
+				  </form>
+				</div>
+					<table class="table" id="childTable">
+								<thead>
+									<tr>
+										<th ng-click="sortBatch('folderCaption')">Display Name <span
+											class="glyphicon sort-icon"
+											ng-class="{'glyphicon-chevron-up':reverseBatch,'glyphicon-chevron-down':!reverseBatch}"></span>
+										</th>
+										<th ng-click="sortBatch('batchFileName')">File Name <span
+											class="glyphicon sort-icon"
+											ng-class="{'glyphicon-chevron-up':reverseBatch,'glyphicon-chevron-down':!reverseBatch}"></span>
+										</th>
+										<th ng-click="sortBatch('batchFileTrgtPath')">Destination File Path <span
+											class="glyphicon sort-icon"
+											ng-class="{'glyphicon-chevron-up':reverseBatch,'glyphicon-chevron-down':!reverseBatch}"></span>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-click='selectRecordRow($index)'
+										ng-class-odd="ClassOddChild($index)"
+										ng-class-even="ClassEvenChild($index)"
+										dir-paginate="obj1 in filteredChild=(batchFileslist| filter:searchBatch)|orderBy:sortChild:reverseBatch| itemsPerPage: pageSizetest "
+										pagination-id="copy">
+										<td>{{obj1.folderCaption}}
+										<td>{{obj1.batchFileName}}</td>
+										<td href="">{{obj1.batchFileTrgtPath}}</td>
+									</tr>
+								</tbody>
+					</table>
+				
+							<dir-pagination-controls boundary-links="true" class="pull-left"
+								pagination-id="copy"></dir-pagination-controls>
+				
+							<div id="tablenodata"
+								ng-show=" batchFileslist =='null'||  batchFileslist =='undefined' ||  batchFileslist.length==0">
+								<div>No Record Found.</div>
+				
+							</div>
+							<div ng-show="batchFileslist !='undefined' && batchFileslist.length>=0"  class="pull-right">Filtered : ({{ filteredChild.length }})
+								record(s) out of ({{batchFileslist.length }}) entries</div>
+
+		</div>
+<div id="confirmation-dialog">
+      <div class="modal fade confirmation-dialog" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">{{confirmationDialogConfig.title}}</h4>
+            </div>
+            <div class="modal-body">
+              <div class="span5">{{confirmationDialogConfig.message +"  Batch ID: "+confirmationDialogConfig.batchId}}</div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" ng-repeat="button in confirmationDialogConfig.buttons" ng-click="confirmReverse(confirmationDialogConfig.id)" class="btn btn-primary">{{button.label}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+	<script>  function generatePdf(tableId) {
+        var doc = new jsPDF('l', 'pt', 'a4');
+        // doc.text("From HTML", 40, 50);
+         //doc.text( 40, 50);
+         var res = doc.autoTableHtmlToJson(document.getElementById(tableId));
+         doc.autoTable(res.columns, res.data, {
+           startY: 60
+         });
+          doc.save();
+    }
+</script>

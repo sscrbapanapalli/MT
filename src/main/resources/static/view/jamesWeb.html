@@ -1,0 +1,146 @@
+<style>
+
+.ui-datepicker-calendar {
+    display: none;
+    }
+
+	 p.ext {
+    margin-left: 2cm;
+}
+     div.box {
+		height: 400px;
+		width: 800px;
+		border: 1px  ;
+		align: center;
+		background: #fbf2b7;
+		padding: 50px 0;
+		 top: 20%;
+  		bottom: 30%;
+  		left: 15%;
+  		right: 10%;
+  		margin-left: 250px;
+  		margin-right: 250px;
+  		overflow-x: hidden;
+  		overflow-y: scroll;
+  		
+		 
+ 
+	}
+	[tooltip]:before {
+    /* needed - do not touch */
+    content: attr(tooltip);
+    position: absolute;
+    opacity: 0;
+    
+    /* customizable */
+    transition: all 0.15s ease;
+    padding: 10px;
+    color: #333;
+    border-radius: 10px;
+    box-shadow: 2px 2px 1px silver;    
+}
+
+[tooltip]:hover:before {
+    /* needed - do not touch */
+    opacity: 1;
+    
+    /* customizable */
+    background: yellow;
+    margin-top: -50px;
+    margin-left: 20px;    
+}
+
+#test{
+    padding: 7px;
+   
+}
+
+
+</style>
+<!-- <script>
+function myFunction() {
+    var checkBox = document.getElementById("userStatus");
+    
+    if (userStatus == true){
+        text2.style.display = "block";
+        text1.style.display = "none";
+    } else if(userStatus == false){
+    	text1.style.display = "block";
+      	 text2.style.display = "none";
+    }
+}
+</script> -->
+
+<div ng-controller="loginController" ng-init="init()">
+	<div class="overall" >
+		<nav class="navbar">
+
+			<ul>
+				<li><a ui-sref="home" ui-sref-opts="{reload:true}">
+					<span class="icon fa fa-home"></span>Home</a>
+					<span class="divider"></span>
+				</li>
+				<li ng-repeat="application in applications">
+					<a ui-sref="app({appId: application.id,appName:application.appName})" ui-sref-opts="{reload:true}"	>{{application.appName}}</a>
+					<span class="divider"></span>
+				</li>
+				
+				<!-- <li><a   ui-sref="settings" ><span class="icon fa "></span>Admin Settings</a></li> -->
+
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="userSettings" >User Settings</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="applicationSettings" >Application Settings</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="JamesWeb" >James Web</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+			</ul>
+		</nav>
+	</div>
+</div>
+
+<div ng-controller="jamesWebController" ng-init="init()">
+
+	<div> <h1  style="font-size:22px; color:#960;" align="left">James Web</h1></div>
+
+	<div>
+		<table>
+			<tr ng-repeat="folder in batchFolders">
+				<td>
+					<a title="Reverse"   ng-click="getAttachments(folder)">
+							<img style="width: 25px; height: 25px" alt="logo"	src="./app/images/folder_icon.jpg" /> 
+	   				</a>
+	   			</td>
+	   			<td>
+	   				{{folder}}
+				</td>
+			</tr>	
+		</table>	
+	</div>
+	
+	<div>&nbsp;&nbsp</div>
+	<div>
+		<table>
+			<tr ng-repeat="attachment in attachmentsList">
+				<td>
+					<a title="Reverse"   ng-click="">
+							<img style="width: 25px; height: 25px" alt="logo"	src="./app/images/folder_icon.jpg" /> 
+	   				</a>
+	   			</td>
+	   			<td>
+	   				{{attachment}}
+				</td>
+			</tr>	
+		</table>	
+	</div>
+    
+</div>
+

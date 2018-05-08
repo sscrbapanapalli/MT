@@ -1,0 +1,270 @@
+<style>
+
+.ui-datepicker-calendar {
+    display: none;
+    }
+
+	 p.ext {
+    margin-left: 2cm;
+}
+     div.box {
+		height: 380px;
+		width: 900px;
+		border: 1px  ;
+		align: center;
+		background: #fbf2b7;
+		padding: 50px 0;
+		 top: 20%;
+  		bottom: 30%;
+  		left: 15%;
+  		right: 10%;
+  		margin-left: 150px;
+  		margin-right: 250px;
+  		overflow-x: hidden;
+  		overflow-y: scroll;
+  		
+		 
+ 
+	}
+	[tooltip]:before {
+    /* needed - do not touch */
+    content: attr(tooltip);
+    position: absolute;
+    opacity: 0;
+    
+    /* customizable */
+    transition: all 0.15s ease;
+    padding: 10px;
+    color: #333;
+    border-radius: 10px;
+    box-shadow: 2px 2px 1px silver;    
+}
+
+[tooltip]:hover:before {
+    /* needed - do not touch */
+    opacity: 1;
+    
+    /* customizable */
+    background: yellow;
+    margin-top: -50px;
+    margin-left: 20px;    
+}
+
+#test{
+    padding: 7px;
+   
+}
+
+
+</style>
+<!-- <script>
+function myFunction() {
+    var checkBox = document.getElementById("userStatus");
+    
+    if (userStatus == true){
+        text2.style.display = "block";
+        text1.style.display = "none";
+    } else if(userStatus == false){
+    	text1.style.display = "block";
+      	 text2.style.display = "none";
+    }
+}
+</script> -->
+
+<div ng-controller="loginController" ng-init="init()">
+	<div class="overall" >
+		<nav class="navbar">
+
+			<ul>
+				<li><a ui-sref="home" ui-sref-opts="{reload:true}">
+					<span class="icon fa fa-home"></span>Home</a>
+					<span class="divider"></span>
+				</li>
+				<!-- <li ng-repeat="application in applications">
+					<a ui-sref="app({appId: application.id,appName:application.appName})" ui-sref-opts="{reload:true}"	>{{application.appName}}</a>
+					<span class="divider"></span>
+				</li>
+				
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="userSettings" >User Settings</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="applicationSettings" >Application Settings</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="jamesWeb" >James Web</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li> -->
+								
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="activityTrackAdmin" >ActivityTrack-Admin</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="activityTrackUser" >ActivityTrack-User</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="monitoring" >Monitoring</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+			</ul>
+		</nav>
+	</div>
+</div>
+
+<div ng-controller="activityTrackUserController" ng-init="init()">
+
+	<div> <h1  style="font-size:22px; color:#960;" align="left">ActivityTrack-User</h1></div>
+
+	 <div>
+		<div>
+			<div class="bs-component">
+				<form name='myform'>
+					<div>
+						<div class="slinputtext ">
+	  						 	<!-- <i class="fa fa-search left-icon"></i>  -->
+							    <input class="pull-left textbox" required ng-model="search" placeholder="Enter search term"  /> 
+							   <!--  <i class="fa fa-close right-icon" ng-click="resetParent()"></i> -->
+						</div>
+							
+						<div class="pull-right">
+								<label for="search">Record(s) per page</label> 
+									<input type="number"	min="1" max="100" class="textboxNumber" ng-model="pageSize">
+						</div>
+							
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<table class="table" id="parentId">
+			<thead>
+				<tr>
+					<th ng-click="sort('activityName')">Activity Name <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					<th ng-click="sort('activityStatus')">Activity Status <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					<th ng-click="sort('activityStartTime')">Start Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					<th ng-click="sort('activityEndTime')">End Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					<th ng-click="sort('activityTotTime')">Total Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					<th>Actions</th>
+					
+					
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-class-odd="ClassOdd($index)"  ng-class-even="ClassEven($index)"
+					dir-paginate="obj in filtered= ( userActivityList | filter:search)| orderBy:sortKey:reverse |itemsPerPage:pageSize"
+					 >
+						<td align="left">{{obj.activityName}}</td>
+						<td align="left">{{obj.activityStatus}}</td>
+     					<td align="left">{{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+						<td align="left">{{obj.activityEndTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>  
+						<td align="left">{{obj.activityTotTime}}</td> 
+     					
+     					<td class="pull-middle">
+  						 <button type="submit" class="btn btn-primary" ng-click = "startTask(obj.id)">Start</button>
+		   			 <button type="submit" class="btn btn-danger" ng-click = "stopTask(obj.id)">Stop</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		
+			<div class=" pull-left" >
+			 	<dir-pagination-controls
+			       max-size="5"
+			       direction-links="true"
+			       boundary-links="true" >
+	   			 </dir-pagination-controls>
+	   			 &nbsp
+			</div>
+			<div  class="pull-right"ng-show="userActivityList !='undefined' && userActivityList.length>=0" class="pull-right">Filtered : ({{ filtered.length }})
+							record(s) out of ({{userActivityList.length }}) entries
+			</div>
+		
+			
+		
+</div> 
+
+<div id="tablenodata"
+			ng-show=" userActivityList =='null'||  userActivityList =='undefined' || userActivityList.length==0">
+			<div>No Record Found.</div>
+
+		</div>
+		
+<div>&nbsp </div>
+<div>&nbsp</div>
+   <div class="box" >
+   	<div class="main" >
+   		<form class="form-horizontal" >
+		 	
+			<div class="form-group" >
+				<div class="control-label col-sm-3" ><label style="float:left;padding-left:20px;">Activity Task</label></div>
+				<div class="col-sm-8" style="float:left;" align="left">
+					<div style="width:40%;float:left" align="left">
+						<label align="right">Available</label>
+						<input class="pull-left textbox" style="width: 245px" required ng-model="search1" placeholder="Enter search term"  /> 
+						<select size="10"   multiple ng-model="userRole" ng-options="role as role.activityName for role in allActivity | filter:search1" style="width: 250px"></select>         
+					</div>
+			 		
+			 		<div style="width:20%;float:left;padding-top:90px;padding-right:20px;padding-left:20px" align="center">
+			 			<div>
+			 			<a  class="btn btn-info btn-lg" ng-click="moveItem(userRole, allActivity,userActivity)" style="width:25px; height:20px;display:block;padding:0px">
+				        	  <span class="glyphicon glyphicon-arrow-right" ></span> 
+				        </a>
+				        </div>
+				        <div style="padding-top:20px">
+			 			<a  class="btn btn-info btn-lg" ng-click="moveItem(userSelectedRole,userActivity, allActivity)" style="width:25px; height:20px;display:block;padding:0px">
+				        	  <span class="glyphicon glyphicon-arrow-left" ></span> 
+				        </a>
+				        </div>
+			 		</div>
+			 		
+			 		<div style="width:40%;float:left" align="left">
+			 			<label align="right">Selected</label>
+			 			<input class="pull-left textbox" style="width: 240px" required ng-model="search2" placeholder="Enter search term"  />5
+			 			<select size="10" multiple ng-model="userSelectedRole" ng-options="userRole as userRole.activityName for userRole in userActivity| filter:search2" style="width: 250px"></select>
+   					</div>	
+				</div>
+			
+				
+			</div>
+						
+   			<div class="pull-middle">
+   				 <button type="submit" class="btn btn-primary" ng-click = "Reset()">Reset</button>
+   				 <button type="submit" class="btn btn-success" ng-click = "userActivityConfig()">Submit</button>
+			</div>
+   		 </form>
+   	
+	</div> 
+   </div>
+   
+   <div id="confirmation-dialog">
+      <div class="modal fade confirmation-dialog" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">{{confirmationDialogConfig.title}}</h4>
+            </div>
+            <div class="modal-body">
+              <div class="span5">{{confirmationDialogConfig.message +"  User: "+confirmationDialogConfig.userName}}</div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" ng-repeat="button in confirmationDialogConfig.buttons" ng-click="confirmUserDelete(confirmationDialogConfig.id)" class="btn btn-primary">{{button.label}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+</div>
+

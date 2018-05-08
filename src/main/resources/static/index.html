@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+
+<html class="no-js" ng-app="cdrApp" class="ng-cloak">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Activity Tracker</title>
+
+<!-- CSS -->
+
+
+<link rel="stylesheet"					href="./app/assets/bootstrap/css/bootstrap.min.css"></link>
+<link rel="stylesheet" 					href="./export/tableexport.min.css">
+<link rel="stylesheet" type="text/css"	href="./app/pagination/css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css"	href="./app/pagination/css/styles.css">
+<link rel="stylesheet" type="text/css"	href="./app/pagination/css/loading-bar.css">
+<link rel="stylesheet" type="text/css"	href="./app/pagination/css/Spinner.css">
+<link rel="stylesheet"					href="./app/assets/font-awesome/css/font-awesome.min.css"></link>
+<!-- <link rel="stylesheet" href="./app/assets/css/form-elements.css"></link> -->
+<link rel="stylesheet" 					href="./app/assets/css/style.css"></link>
+<link 									href="./app/css/toaster.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" media="screen"	href="./app/css/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="./app/css/style-top.css"></link>
+
+<!-- Favicon and touch icons -->
+<link rel="shortcut icon" href="./app/assets/ico/icon.png"></link>
+<style>
+.bg {
+	background: url(./app/assets/img/backgrounds/5.jpg) no-repeat 0 0;
+	background-size: cover;
+	background-position: center;
+	/* position: absolute; */
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	overflow: hidden;
+	z-index: 0;
+}
+</style>
+</head>
+
+<body ng-class="isProfilePage==false?'bg':''" class="ng-cloak">
+	<div id="header" ng-show="isProfilePage">
+		<header ng-include="'view/header.html'"></header>
+	</div>
+	<div id="scrollArea" class="container">
+		<div ui-view></div>
+	</div>
+	<div id="footer" ng-show="isProfilePage">
+		<footer ng-include="'view/footer.html'"></footer>
+	</div>
+	<a id="bottom"></a>
+	<modal visible="showModal"> </modal>
+	<!-- Javascript -->
+
+	<script src="./jquery/jquery-1.11.2.min.js"></script>
+	<script src="./app/js/jquery-1.9.1.js"></script>
+	<script
+		src="./app/js/jquery.min.js"></script>
+	<script type="text/javascript" src="./export/tableExport.js"></script>
+	<script type="text/javascript" src="./export/jquery.base64.js"></script>
+	<script type="text/javascript" src="./export/html2canvas.js"></script>
+	<script type="text/javascript" src="./export/sprintf.js"></script>
+	<script type="text/javascript" src="./export/base64.js"></script>
+
+	<script src="./app/js/jquery-ui.js"></script>
+	<script src="./app/assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src="./angular/angular.js"></script>
+	<script src="./app/pagination/lib/dirPagination.js"></script>
+	<script type="text/javascript" src="./angular/security/aes.js"></script>
+	<script type="text/javascript" src="./angular/security/pbkdf2.js"></script>
+	<script type="text/javascript" src="./angular/security/AesUtil.js"></script>
+	<script type="text/javascript" src="./angular/security/common.js"></script>
+	<script src="./angular/angular-route.js"></script>
+	<script src="./ui-router/angular-ui-router.js"></script>
+	<script src="./app/js/currentdate.js"></script>
+	<script src="./export/jspdf.js"></script>
+	<script src="./app/js/appConfig.js"></script>
+	<script src="./app/js/globalServices.js"></script>
+	<script src="./app/js/app.js"></script>
+	<script src="./app/js/userService.js"></script>
+	<script type="text/javascript">
+function autoHeight() {
+	   $('.container').css('min-height', 0);
+	   $('.container').css('min-height', (
+	     $(document).height() 
+	     - $('#header').height() 
+	     - $('#footer').height()
+	   ));
+	 }
+
+	 // onDocumentReady function bind
+	 $(document).ready(function() {
+	   autoHeight();
+	   
+	 });
+
+	 // onResize bind of the function
+	 $(window).resize(function() {
+	   autoHeight();
+	 });
+	 $(function(){
+	      // if text box value is not null, then darken reset icon
+	      $(".slinput input").keyup(function(){
+	        var val = $(this).val();   
+	        if(val.length > 0) {
+	           $(this).parent().find(".right-icon").css('color','#555');
+	        } else {
+	          $(this).parent().find(".right-icon").css('color','#ccc');
+	        }
+	      });
+	      
+	      // if user click on reset icon, clear text field
+	      $(".slinput .right-icon").click(function(){
+	        $(this).parent().find("input").val('');
+	        $(this).css('color','#ccc');
+	      });
+	      $(".slinputtext input").keyup(function(){
+		        var val = $(this).val();   
+		        if(val.length > 0) {
+		           $(this).parent().find(".right-icon").css('color','#555');
+		        } else {
+		          $(this).parent().find(".right-icon").css('color','#ccc');
+		        }
+		      });
+		      
+		      // if user click on reset icon, clear text field
+		      $(".slinputtext .right-icon").click(function(){
+		        $(this).parent().find("input").val('');
+		        $(this).css('color','#ccc');
+		      });
+	});
+	
+
+	  
+	
+</script>
+</body>
+
+</html>
