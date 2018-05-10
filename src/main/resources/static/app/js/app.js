@@ -88,7 +88,29 @@ angular.module('cdrApp').config(
 						controller :"monitoringController",
 						controllerAs : "monitoringController",
 						data:{requireLogin:true}
+					})
+					.state("reports",{
+						url : '/reports',
+						templateUrl :'view/reports.html',
+						controller :"reportsController",
+						controllerAs : "reportsController",
+						data:{requireLogin:true}
+					}).state("empSettings", {
+						url : '/empSettings',
+						templateUrl : 'view/empSettings.html',
+						controller : "empSettingsController",
+						controllerAs : "empSettingsController",
+						data:{requireLogin:true}
+
+					}).state("uploadEmpData",{
+						url : '/uploadEmpData',
+						templateUrl :'view/empUpload.html',
+						controller :"uploadEmpDataController",
+						controllerAs : "uploadEmpDataController",
+						data:{requireLogin:true}
 					});
+					
+					
 
 				} ]);
 
@@ -1763,19 +1785,21 @@ angular.module('cdrApp').controller(
 					}
 					
 					//Update Activity Details
+					
+					
 					$scope.updateActivityDetails=function(id,activityName){
 						
 							$scope.updateActivity="true";
-							
+							$scope.selectedUpdateId=id;
 							$scope.addApplication="true";
 							$scope.activityName=activityName;
-							console.log('appId:', id)
-							var viewDetailsUrl=appConstants.serverUrl+"/activity/selectedActivityDetails/"+id;
+							console.log('selectedUpdateId:', id)
+							var viewDetailsUrl=appConstants.serverUrl+"/activity/getselectedActivityDetails/"+id;
 							
 							$http.get(viewDetailsUrl).then(function(response) {
-								$scope.activityDetails = response.data;
+								$scope.selectedActivityDetails = response.data;
 								//$scope.appFoldersSaved=angular.copy($scope.appFolderDetails);
-								console.log('appFolderDetails result', $scope.appFolderDetails);
+								console.log('appFolderDetails result', $scope.selectedActivityDetails);
 								
 							}, function(response) {
 								$rootScope.buttonClicked = response.data;
@@ -1785,6 +1809,46 @@ angular.module('cdrApp').controller(
 								
 							});
 						}
+					$scope.setUpdatedActDetails=function(id,activityName){
+						
+						console.log('Update activity id:' , id)
+						var config = {
+								transformRequest : angular.identity,
+								transformResponse : angular.identity,
+								headers : {
+									'Content-Type' : undefined
+								}
+							}
+					var updateActUrl=appConstants.serverUrl+"/activity/updateActivity/";
+					var data = new FormData();
+					data.append("id" ,id);
+					data.append("activityName", activityName)
+					data.append("updatedBy", $rootScope.currentUser.userName);
+					console.log('conform delete to post' , data)
+					console.log(id)
+					console.log($rootScope.currentUser.userName)
+		
+					
+					$http.post(updateActUrl,data,config)
+					.success(function (response) {  
+		    
+					//console.log(response)
+					if(response=="Activity Updated Successfully"){
+						$rootScope.buttonClicked = response;
+						$rootScope.showModal = !$rootScope.showModal;
+						$rootScope.contentColor = "#78b266";
+						$state.go("activityTrackAdmin", {} , {reload: true} );
+					}
+					else{
+						$rootScope.buttonClicked = response;
+						$rootScope.showModal = !$rootScope.showModal;
+						$rootScope.contentColor = "#dd4b39";
+					}
+					 });
+					
+					
+						
+					};
 					
 					$scope.sort = function(keyname){
 						$scope.sortKey = keyname;   //set the sortKey to the param passed
@@ -1886,8 +1950,9 @@ angular.module('cdrApp').controller(
 		            
 		            $scope.Reset=function(){
 		            	
-	            		$scope.activityName = "";
-	            		$scope.activityDetails="";
+	            		
+	            		$scope.selectedActivityDetails.activityName="";
+	            		
 	            		
 		            }
 					
@@ -2183,10 +2248,6 @@ angular.module('cdrApp').controller(
 				'appConstants','userService','globalServices','AuthenticationService','$stateParams','anchorSmoothScroll','$location','$filter',
 				function($scope, $state, $rootScope, $window, $q,
 						$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,anchorSmoothScroll,$location,$filter) {
-					$scope.userRoles=[];
-					$scope.allRoles=[];
-					$scope.allActivity=[];
-					$scope.userActivity=[];
 					$scope.pageSize = 5;
 					$scope.inituser = function() {
 						var data = globalServices.isUserTokenAvailable();
@@ -2232,6 +2293,431 @@ angular.module('cdrApp').controller(
 							
 				
 				} ]);
+
+angular.module('cdrApp').controller(
+		'reportsController',
+		
+		[
+				'$scope',
+				'$state',
+				'$rootScope',
+				'$window',
+				'$q',
+				'$http',
+				'appConstants','userService','globalServices','AuthenticationService','$stateParams','anchorSmoothScroll','$location','$filter',
+				function($scope, $state, $rootScope, $window, $q,
+						$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,anchorSmoothScroll,$location,$filter) {
+					$scope.userId="";
+					$scope.showTable=false;
+					$scope.empdDetailsList=[];	
+					$scope.dateRange="";
+					$scope.myReportList=[];
+					$scope.exportHref="";
+					$scope.inituser = function() {
+						var data = globalServices.isUserTokenAvailable();
+						if (data == null || data == undefined) {
+							$rootScope.isProfilePage = false;
+							$state.go("login");
+						} else {
+							$rootScope.currentUser = userService.getCurrentUser();
+							if ($rootScope.currentUser != undefined
+									|| $rootScope.currentUser != null) {
+								$rootScope.isProfilePage = true;
+							} else {
+								$rootScope.isProfilePage = false;
+								$state.go("login");
+							}
+
+						}
+					}
+					
+					$scope.init=function(){
+						$scope.inituser();
+						$scope.myReportList=[];
+						
+						var getEmpDetailsUrl=appConstants.serverUrl+"/reports/getEmpDetails/";
+						console.log(getEmpDetailsUrl)
+						
+						$http.get(getEmpDetailsUrl).then(function(response) {
+							
+							$scope.empdDetailsList=response.data;
+							
+							console.log('employee  length', $scope.empdDetailsList.length)
+							console.log( response)
+							console.log('Employee Details List', $scope.empdDetailsList)
+							
+						}, function(response) {
+							$rootScope.buttonClicked = response.data;
+							$rootScope.showModal = !$rootScope.showModal;
+							$rootScope.contentColor = "#dd4b39";
+							
+							
+						});
+						
+						}
+					
+					$scope.getMyReport=function(dateRange){
+						$scope.showTable=true;
+						console.log(dateRange)
+						var selectedRange=dateRange;
+						var getMyReportUrl=appConstants.serverUrl+"/reports/getMyReport/?selectedRange="+selectedRange;
+						console.log(getMyReportUrl)
+						$http.get(getMyReportUrl).then(function(response) {
+                        	console.log(' My Report ' , response)
+                        	$scope.myReportList=response.data;	
+                        });
+						
+					};
+					
+					$scope.getTeamReport=function(dateRange){
+						$scope.showTable=true;
+						var selectedRange=dateRange;
+						var getTeamReportUrl=appConstants.serverUrl+"/reports/getTeamReport/?selectedRange="+selectedRange;
+						console.log(getTeamReportUrl)
+						$http.get(getTeamReportUrl).then(function(response) {
+                        	console.log(' Team Report ' , response)
+                        	$scope.myReportList=response.data;	
+                        });
+					};
+					
+					$scope.sort = function(keyname){
+						$scope.sortKey = keyname;   //set the sortKey to the param passed
+						$scope.reverse = !$scope.reverse; //if true make it false and vice versa
+						
+						
+					}
+				  $scope.showDialog = function(flag) {
+					        jQuery("#confirmation-dialog .modal").modal(flag ? 'show' : 'hide');
+					      };
+							
+				
+				} ]);
+
+angular.module('cdrApp').controller(
+		'uploadEmpDataController',
+		[
+				'$scope',
+				'$rootScope',
+				'$http',
+				'$window',
+				'$state',
+				'appConstants','userService','globalServices','AuthenticationService',
+				function($scope, $rootScope, $http, $window, $state,
+						appConstants,userService,globalServices,AuthenticationService) {
+					$scope.myFile="";
+					$rootScope.isProfilePage = false;
+					$rootScope.currentUser = {
+						
+					};
+
+					$scope.fileList = [];
+					
+			
+					$scope.dataLoading = false;
+			
+					$scope.inituser = function() {
+						var data = globalServices.isUserTokenAvailable();
+						if (data == null || data == undefined) {
+							$rootScope.isProfilePage = false;
+							$state.go("login");
+						} else {
+							$rootScope.currentUser = userService.getCurrentUser();
+							if ($rootScope.currentUser != undefined
+									|| $rootScope.currentUser != null) {
+								$rootScope.isProfilePage = true;
+							} else {
+								$rootScope.isProfilePage = false;
+								$state.go("login");
+							}
+
+						}
+					}
+					$scope.logout = function () {		
+						   AuthenticationService.ClearCredentials();  
+						   $rootScope.isProfilePage=false;
+						 
+					   }
+
+
+					$scope.doUploadFile = function() {
+						$scope.dataLoading = true;						
+						var file = $scope.myFile;
+						console.log($scope.myFile)
+						 var filename = $scope.myFile.name;
+					
+					}
+					
+					$scope.downloadSampleTemplate=function(fileName){
+						//\EMPLOYEE_DATA.xlsx
+						//alert("fileName"+fileName)
+						 $window.location = appConstants.serverUrl+'/admin/download?name=' + fileName;
+						   // window.open(downloadPath, '_blank', '');
+					
+					}
+					
+					$scope.init = function() {
+						$scope.inituser();
+					};
+
+				
+					$scope.init();
+
+				} ]);
+
+angular.module('cdrApp').controller(
+		'empSettingsController',
+		
+		[
+				'$scope',
+				'$state',
+				'$rootScope',
+				'$window',
+				'$q',
+				'$http',
+				'appConstants','userService','globalServices','AuthenticationService','$stateParams','anchorSmoothScroll','$location','$filter',
+				function($scope, $state, $rootScope, $window, $q,
+						$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,anchorSmoothScroll,$location,$filter) {
+					$scope.homepageContent = "settings dashboard page";
+					$scope.allEmployeeDetails=[];	
+					$scope.userName="";		
+					$scope.userId="";
+					$scope.employee={};
+					$scope.pageSize = 5;
+					$scope.inituser = function() {
+						var data = globalServices.isUserTokenAvailable();
+						if (data == null || data == undefined) {
+							$rootScope.isProfilePage = false;
+							$state.go("login");
+						} else {
+							$rootScope.currentUser = userService.getCurrentUser();
+							if ($rootScope.currentUser != undefined
+									|| $rootScope.currentUser != null) {
+								$rootScope.isProfilePage = true;
+							} else {
+								$rootScope.isProfilePage = false;
+								$state.go("login");
+							}
+
+						}
+					}
+					
+					$scope.init=function(){
+						$scope.employee.isRm=false;
+						$scope.employee.activeIndicator=false;
+						$scope.userName="";					                   	
+                        var allEmployeeDetailsUrl =  appConstants.serverUrl+"/admin/getAllEmployees/";
+                   
+                     
+                      var url =  appConstants.serverUrl+"/login/getUserAuthDetails/"+$window.sessionStorage.getItem('userToken');
+						
+						$http.get(url).then(function(response) {						
+										
+										$scope.roles=response.data.roles;	
+																		
+								});
+							
+                        $http.get(allEmployeeDetailsUrl).then(function(response){
+                        	$scope.allEmployeeDetails=angular.copy(response.data);
+                        	console.log($scope.allEmployeeDetails);
+                        });               
+                        
+							$scope.inituser();
+						}
+					
+					$scope.sort = function(keyname){
+						$scope.sortKey = keyname;   //set the sortKey to the param passed
+						$scope.reverse = !$scope.reverse; //if true make it false and vice versa
+						
+						
+					}
+					$scope.employeeConfig=function(employee){
+						console.log(employee)
+						var employeeConfigUrl=appConstants.serverUrl+"/admin/setEmployeeConfiguration/";
+						var data = {
+								empId : employee.empId,
+								id : employee.id,
+			            		 empName : employee.empName,
+			            		 rmId : employee.rmId,
+			            		 rmName :employee.rmName,
+			            		 isRm :employee.isRm,
+			            		 activeIndicator :employee.activeIndicator,
+			            		 createdBy :$rootScope.currentUser.userName,
+			            		 updatedBy :$rootScope.currentUser.userName
+			     		};
+						//console.log(data)
+											
+						if(employee.empId==null || employee.empId==undefined || employee.empId==""){
+							$rootScope.buttonClicked = "Please provide Employee Id";
+							$rootScope.showModal = !$rootScope.showModal;
+							  $rootScope.contentColor = "#dd4b39";
+							
+						}else if( employee.empName==null || employee.empName==undefined ||  employee.empName==""){
+							$rootScope.buttonClicked = "Please provide Employee Name";
+							$rootScope.showModal = !$rootScope.showModal;
+							  $rootScope.contentColor = "#dd4b39";
+							
+						}else if(employee.rmId==null ||employee.rmId==undefined ||employee.rmId==""){
+							$rootScope.buttonClicked = "Please provide Reporting Manager Id";
+							$rootScope.showModal = !$rootScope.showModal;
+							  $rootScope.contentColor = "#dd4b39";
+							
+						}else if( employee.rmName==null ||  employee.rmName==undefined ||  employee.rmName==""){
+							$rootScope.buttonClicked = "Please provide Reporting Manager Name";
+							$rootScope.showModal = !$rootScope.showModal;
+							  $rootScope.contentColor = "#dd4b39";
+							
+						}else if((typeof  employee.isRm !== 'boolean' &&  employee.isRm !== true)||(typeof  employee.isRm !== 'boolean' &&  employee.isRm !== false)){
+								$rootScope.buttonClicked = "Please Check Boolean value Reporting Manager or Not";
+							$rootScope.showModal = !$rootScope.showModal;
+							  $rootScope.contentColor = "#dd4b39";
+							
+						}else if((typeof  employee.activeIndicator !== 'boolean' &&  employee.activeIndicator !== true)||(typeof  employee.activeIndicator !== 'boolean' &&  employee.activeIndicator !== false)){
+							$rootScope.buttonClicked = "Please Check Boolean value active or Not";
+							$rootScope.showModal = !$rootScope.showModal;
+							  $rootScope.contentColor = "#dd4b39";
+							
+						}else{
+							//console.log('in else method')
+							
+							 $http.post(employeeConfigUrl,data,
+										{
+											headers : {
+												'Accept' : 'application/json',
+												'Content-Type' : 'application/json'
+											}
+										})
+							.success(function (response) {  
+	                
+							//console.log(response)
+							$rootScope.buttonClicked = response;
+							$rootScope.showModal = !$rootScope.showModal;
+							$rootScope.contentColor = "#78b266";
+							 $state.go("empSettings", {} , {reload: true} );
+							 });
+						
+						}
+					};
+					
+					$scope.employeeUpdate=function(rowId,methodName){
+						
+						$scope.empId="";
+						
+						
+						
+						if(methodName=="updateEmployee"){
+							for(var i=0; i<$scope.allEmployeeDetails.length; i++) {									
+								   if(rowId==$scope.allEmployeeDetails[i].empId){
+									   $scope.employeeExists="true";
+									   $scope.inputReadOnly="true";
+									   $scope.employee=$scope.allEmployeeDetails[i];
+									   $scope.employee.empId=$scope.allEmployeeDetails[i].empId;									  
+									   break;
+									   
+								   }
+							}
+							
+						}
+						if(methodName=="checkEmployeer"){
+							console.log(rowId)
+							var empId=rowId;
+							for(var i=0; i<$scope.allEmployeeDetails.length; i++) {	
+								console.log($scope.allEmployeeDetails[i].empId)
+								   if(empId==$scope.allEmployeeDetails[i].empId){
+									   $scope.employeeExists="true";
+									   $scope.inputReadOnly="true";
+									   $scope.employee=$scope.allEmployeeDetails[i];
+									   $scope.employee.empId=$scope.allEmployeeDetails[i].empId;									  
+									   break;
+								   }
+								   //$scope.empId=empId;
+								   //$scope.allEmployeeDetails=[];			  
+								  
+								  $scope.employeeExists="false";
+								  $scope.inputReadOnly="";
+								   
+							}
+							
+						}
+					}
+					
+					  $scope.showDialog = function(flag) {
+					        jQuery("#confirmation-dialog .modal").modal(flag ? 'show' : 'hide');
+					      };
+							
+					
+					$scope.employeeDelete=function(id,empName){
+						console.log('in  delete Employee')
+						$scope.confirmationDialogConfig = {
+							      title: "DELETE EMPLOYEE",
+							      message: "Are you sure you want to Delete Employee?",
+							      buttons: [{
+							        label: "Delete",
+							        action: "Delete"
+							      }],
+							      id:id,
+							      empName:empName
+							    };
+							    $scope.showDialog(true);
+					
+					}
+					$scope.confirmEmployeeDelete=function(id){
+						
+						if($rootScope.currentUser!=undefined){
+							
+							var config = {
+									transformRequest : angular.identity,
+									transformResponse : angular.identity,
+									headers : {
+										'Content-Type' : undefined
+									}
+								}
+						var url=appConstants.serverUrl+"/admin/deleteEmployee/";
+						var data = new FormData();
+						data.append("id" ,id);
+						data.append("updatedBy", $rootScope.currentUser.userName);
+						console.log('confirm delete to post' , data)
+						console.log(id)
+						console.log($rootScope.currentUser.userName)
+			
+						$http.post(url,data,config).then(
+								function(response){
+									console.log('in delete user post method')
+									  $('body').removeClass().removeAttr('style');
+									  $('.modal-backdrop').remove(); 
+									  $scope.showDialog(false);
+									      $rootScope.buttonClicked = response.data;
+										  $rootScope.showModal = !$rootScope.showModal;
+										  $rootScope.contentColor = "#78b266";
+										  $state.go("empSettings", {} , {reload: true} );
+										  //$state.go("app", {appId:$window.sessionStorage.getItem('appId')}, {reload: true}); 
+										
+								},function(response){
+									
+									  $('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); 
+									      $rootScope.buttonClicked = response.data;
+										  $rootScope.showModal = !$rootScope.showModal;
+										  $rootScope.contentColor = "#dd4b39";
+								});							
+						}
+					}
+					
+					//to check user availability in db
+					$scope.checkEmployee=function(){
+						console.log('in checkEmployee method')
+						$scope.employeeUpdate($scope.employee.empId,"checkEmployeer");
+					}
+					
+				        
+			            $scope.Reset=function(){
+			            	$scope.employee={};		
+			            	$scope.employee.empId='';
+			            	 $scope.employeeExists="false";
+							  $scope.inputReadOnly="";
+			            }
+			            $scope.init();
+			            
+				} ]);
+
 
 /*'use strict';
 angular.module('cdrApp').run([

@@ -1,0 +1,167 @@
+
+<style>
+
+.ui-datepicker-calendar {
+    display: none;
+    }
+    body{
+    overflow-x: none;
+  		overflow-y: none;}
+
+	 p.ext {
+    margin-left: 2cm;
+}
+     div.box {
+		height: 200px;
+		width: 600px;
+		border: 1px  ;
+		align: center;
+		background: #fbf2b7;
+		padding: 50px 0;
+		 top: 20%;
+  		bottom: 30%;
+  		left: 15%;
+  		right: 10%;
+  		margin-left: 250px;
+  		margin-right: 250px;
+  		overflow-x: none;
+  		overflow-y: none;
+  		
+		 
+ 
+	}
+	p.error{
+			float:left;
+			color:red;
+			font-size: 15px;
+	
+	}
+	p.success{
+			float:left;
+			color:green;
+			font-size: 15px;
+	
+	}
+
+</style>
+
+<script type="text/javascript">
+$(function() {
+    $('.date-picker').datepicker( {
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: false,
+        dateFormat: 'MM yy',
+        minDate: '-2M',
+        maxDate: '-1M',
+        onClose: function(dateText, inst) { 
+        	$(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+        	
+        }
+    });
+});
+
+
+</script>
+
+<div ng-controller="loginController" ng-init="init()">
+	<div class="overall" >
+		<nav class="navbar">
+
+			<ul>
+				<li><a ui-sref="home" ui-sref-opts="{reload:true}">
+					<span class="icon fa fa-home"></span>Home</a>
+					<span class="divider"></span>
+				</li>
+				<!-- <li ng-repeat="application in applications">
+					<a ui-sref="app({appId: application.id,appName:application.appName})" ui-sref-opts="{reload:true}"	>{{application.appName}}</a>
+					<span class="divider"></span>
+				</li>
+				
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="userSettings" >User Settings</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="applicationSettings" >Application Settings</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="jamesWeb" >James Web</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li> -->
+								
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="activityTrackAdmin" >ActivityTrack-Admin</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="activityTrackUser" >ActivityTrack-User</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="monitoring" >Monitoring</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="reports" ui-sref-opts="{reload:true}" >Reports</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="empSettings" >Employee Settings</a> 
+					
+				</li>
+			   <li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="uploadEmpData" >Upload Employee Details</a> 
+					
+				</li>
+				 <li><span  class="divider"></span></li>
+			</ul>
+		</nav>
+	</div>
+</div>
+	<div  ng-controller="uploadEmpDataController" ng-init="init()">
+   
+    <div> <h1  style="font-size:22px; color:#960;">Upload Employee Details</h1></div></br>
+    
+   <div class="box" >
+  
+		<div>&nbsp</div>
+  	
+	<div class="main" >
+		<form class="form-horizontal" >
+			 <button type="submit" class="pull-right" class="btn btn-info" ng-click ="downloadSampleTemplate('EMPLOYEE_DATA.xlsx')">Sample Template Download Here</button>
+				
+			 <div>&nbsp;</div>
+			
+					<div class="col-sm-5">
+						<input type="file" file-model="myFile"/>	
+					</div>
+		
+			 <div class="form-group " id="upload"> 
+				    <div class="pull-middle">				    	
+				    	<button type="submit" class="btn btn-success" ng-click ="doUploadFile()">Upload</button>
+				    </div>
+				    	
+				     <div ng-include="'view/loading.html'" ng-show="dataLoading"></div>
+			</div>
+				    
+		</form> 
+		
+	</div>	
+		
+	<!-- 	<div class="col-sm-offset-2">
+			<p class="error" ng-bind="uploadError"></p>
+			<p class="success" ng-bind="uploadSuccess"></p>
+		</div> -->
+	</div>
+	</div>

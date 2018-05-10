@@ -17,6 +17,7 @@ import org.joda.time.Minutes;
 import org.joda.time.Seconds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +30,7 @@ import com.cmacgm.cdrserver.model.Application;
 import com.cmacgm.cdrserver.model.ApplicationConfig;
 import com.cmacgm.cdrserver.model.ApplicationFileUploadConfig;
 import com.cmacgm.cdrserver.model.FolderMapping;
+import com.cmacgm.cdrserver.model.Role;
 import com.cmacgm.cdrserver.model.UserActivityTrack;
 import com.cmacgm.cdrserver.repository.ActivityConfigRepository;
 import com.cmacgm.cdrserver.repository.ActivityTrackRepository;
@@ -52,8 +54,44 @@ public class ActivityConfigController {
 		return activityConfigRepository.findAll();
 	}
 	
+	 @GetMapping("/getselectedActivityDetails/{id}")
+		public ActivitySettings  getselectedActivityDetails(@PathVariable(value="id") Long id){
+		 System.out.println(" for all roles" + id);
+			return activityConfigRepository.findById(id);
+		}
+	 
+		@RequestMapping(value = "/updateActivity", method = RequestMethod.POST , produces="application/json")
+	    public @ResponseBody String updateActivity(HttpServletRequest request, HttpServletResponse response) throws IllegalStateException, IOException {
+			String updateResponse="";
+			
+			Long id=Long.parseLong(request.getParameter("id"));
+			String activityName=request.getParameter("activityName");
+			String updatedBy=request.getParameter("updatedBy");
+			ActivitySettings activity=activityConfigRepository.findById(id);
+			System.out.println(" in update method server");
+			System.out.println(id+ activityName + updatedBy );
+			System.out.println(" from db" + activity);
+			if(activity!=null){
+				try{
+					activity.setActivityName(activityName);
+					activity.setActiveIndicator(true);
+					activity.setUpdatedBy(updatedBy);
+					System.out.println(activity.isActiveIndicator());
+					activityConfigRepository.save(activity);
+					updateResponse="Activity Updated Successfully";
+					
+				}catch(Exception e){
+					updateResponse="Activity-" + activity.getActivityName() +" failed to Update Please contact Application Support Team";
+				}
+				
+			}else{
+				updateResponse="Activity-" + activity.getActivityName()+" Not found in DB";
+			}
+			return updateResponse;
+		}
+	 
 	@RequestMapping(value = "/deleteActivity", method = RequestMethod.POST , produces="application/json")
-    public @ResponseBody String deleteApplication(HttpServletRequest request, HttpServletResponse response) throws IllegalStateException, IOException {
+    public @ResponseBody String deleteActivity(HttpServletRequest request, HttpServletResponse response) throws IllegalStateException, IOException {
 		String deleteResponse="";
 		
 		Long id=Long.parseLong(request.getParameter("id"));

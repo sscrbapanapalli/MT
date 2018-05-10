@@ -1,0 +1,350 @@
+<style>
+
+.ui-datepicker-calendar {
+    display: none;
+    }
+
+	 p.ext {
+    margin-left: 2cm;
+}
+     div.box {
+		height: 400px;
+		width: 800px;
+		border: 1px  ;
+		align: center;
+		background: #fbf2b7;
+		padding: 50px 0;
+		 top: 20%;
+  		bottom: 30%;
+  		left: 15%;
+  		right: 10%;
+  		margin-left: 250px;
+  		margin-right: 250px;
+  		overflow-x: hidden;
+  		overflow-y: scroll;
+  		
+		 
+ 
+	}
+	[tooltip]:before {
+    /* needed - do not touch */
+    content: attr(tooltip);
+    position: absolute;
+    opacity: 0;
+    
+    /* customizable */
+    transition: all 0.15s ease;
+    padding: 10px;
+    color: #333;
+    border-radius: 10px;
+    box-shadow: 2px 2px 1px silver;    
+}
+
+[tooltip]:hover:before {
+    /* needed - do not touch */
+    opacity: 1;
+    
+    /* customizable */
+    background: yellow;
+    margin-top: -50px;
+    margin-left: 20px;    
+}
+
+#test{
+    padding: 7px;
+   
+}
+
+
+</style>
+ <script>
+function myFunction() {
+    var checkBox = document.getElementById("employeeStatus");
+    
+    if (employeeStatus == true){
+        text2.style.display = "block";
+        text1.style.display = "none";
+    } else if(employeeStatus == false){
+    	text1.style.display = "block";
+      	 text2.style.display = "none";
+    }
+}
+
+function myFunctionIsRm() {
+    var checkBox = document.getElementById("isReportingManager");
+    
+    if (isReportingManager == true){
+        text2.style.display = "block";
+        text1.style.display = "none";
+    } else if(isReportingManager == false){
+    	text1.style.display = "block";
+      	 text2.style.display = "none";
+    }
+}
+
+
+</script> 
+
+<div ng-controller="loginController" ng-init="init()">
+	<div class="overall" >
+		<nav class="navbar">
+
+			<ul>
+				<li><a ui-sref="home" ui-sref-opts="{reload:true}">
+					<span class="icon fa fa-home"></span>Home</a>
+					<span class="divider"></span>
+				</li>
+				<!-- <li ng-repeat="application in applications">
+					<a ui-sref="app({appId: application.id,appName:application.appName})" ui-sref-opts="{reload:true}"	>{{application.appName}}</a>
+					<span class="divider"></span>
+				</li>
+				
+				<li><a   ui-sref="settings" ><span class="icon fa "></span>Admin Settings</a></li>
+
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="userSettings" >User Settings</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="applicationSettings" >Application Settings</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li> -->
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="activityTrackAdmin" >ActivityTrack-Admin</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="activityTrackUser" >ActivityTrack-User</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="monitoring" >Monitoring</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="reports" ui-sref-opts="{reload:true}" >Reports</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="empSettings" >Employee Settings</a> 
+					
+				</li>
+			   <li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="uploadEmpData" >Upload Employee Details</a> 
+					
+				</li>
+				 <li><span  class="divider"></span></li>
+			</ul>
+		</nav>
+	</div>
+</div>
+
+<div ng-controller="empSettingsController" ng-init="init()">
+
+	<div> <h1  style="font-size:22px; color:#960;" align="left">Employee Configuration</h1></div>
+
+	<div>
+		<div>
+			<div class="bs-component">
+				<form name='myform'>
+					<div>
+						<div class="slinputtext ">
+	  						 	<!-- <i class="fa fa-search left-icon"></i>  -->
+							    <input class="pull-left textbox" required ng-model="search" placeholder="Enter search term"  /> 
+							   <!--  <i class="fa fa-close right-icon" ng-click="resetParent()"></i> -->
+						</div>
+						<div class="col-xs-5 pull-right">
+							<label for="search">Record(s) per page</label> 
+								<input type="number"	min="1" max="10000" class="textboxNumber" ng-model="pageSize">
+								<button class="btn btn-warning btn-sm dropdown-toggle"	data-toggle="dropdown">
+									<i class="fa fa-bars"></i> Export Table Data
+								</button>
+								<ul class="dropdown-menu " role="menu">
+									<li class="divider"></li>
+									<li><a uisref="{{'.'}}"
+										onClick="generatePdf('parentId');">
+											<img src='./export/images/pdf.png' width='24px'> PDF
+									</a></li>
+									<li><a uisref="{{'.'}}"
+										onClick="$('#parentId').tableExport({tableName:'BatchHistory',type:'doc',escape:'false'});">
+											<img src='./export/images/word.png' width='24px'> Word
+									</a></li>
+									<li class="divider"></li>
+									<li><a uisref="{{'.'}}"
+										onClick="$('#parentId').tableExport({tableName:'BatchHistory',type:'csv',escape:'false'});">
+											<img src='./export/images/csv.png' width='24px'> CSV
+									</a></li>
+									<li><a uisref="{{'.'}}"
+										onClick="$('#parentId').tableExport({tableName:'BatchHistory',type:'excel',escape:'false'});">
+											<img src='./export/images/xls.png' width='24px'> XLS
+									</a></li>
+								</ul>
+								
+												
+						</div>	
+						
+							
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<table class="table" id="parentId" >
+			<thead>
+				<tr>
+					<th ng-click="sort('empName')">Employee Name <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					<th ng-click="sort('empId')">Employee Id
+					<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					<th ng-click="sort('rmName')">Manager Name
+					<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					<th ng-click="sort('rmId')">Manager Id
+					<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					<th ng-click="sort('isRm')">Is Manager<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					<th ng-click="sort('activeIndicator')">Is Active<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-class-odd="ClassOdd($index)"  ng-class-even="ClassEven($index)"
+					dir-paginate="obj in filtered= ( allEmployeeDetails | filter:search)| orderBy:sortKey:reverse |itemsPerPage:pageSize"
+					 >
+						<td align="left">{{obj.empName}}</td>
+     					<td align="left" class="text-uppercase">{{obj.empId}}</td>  
+     					<td align="left" class="text-uppercase">{{obj.rmName}}</td>
+     					<td align="left"  class="text-uppercase">{{obj.rmId}}</td>
+     					<td align="left" class="text-uppercase">{{obj.isRm}}</td>
+     					<td align="left" class="text-uppercase">{{obj.activeIndicator}}</td>
+     					<td class="pull-middle">
+  						 <button type="submit" class="btn btn-primary" ng-click = "employeeUpdate(obj.empId,'updateEmployee')">Update</button>
+		   			 <button type="submit" class="btn btn-failure" ng-click = "employeeDelete(obj.id,obj.empName)">Delete</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		
+			<div class=" pull-left" >
+			 	<dir-pagination-controls
+			       max-size="5"
+			       direction-links="true"
+			       boundary-links="true" >
+	   			 </dir-pagination-controls>
+	   			 &nbsp
+			</div>
+			<div  class="pull-right"ng-show="allEmployeeDetails !='undefined' && allEmployeeDetails.length>=0" class="pull-right">Filtered : ({{ filtered.length }})
+							record(s) out of ({{allEmployeeDetails.length }}) entries
+			</div>
+		
+			
+		
+</div>
+
+<div id="tablenodata"
+			ng-show=" allEmployeeDetails =='null'||  allEmployeeDetails =='undefined' ||  allEmployeeDetails.length==0">
+			<div>No Record Found.</div>
+
+		</div>
+		
+<div>&nbsp </div>
+<div>&nbsp</div>
+   <div class="box" >
+   	<div class="main" >
+   		<form class="form-horizontal" >
+		 	<div class="form-group" >
+				<div class="control-label col-sm-4"  ><label style="float:left;padding-left:100px;">Employee Id</label></div>
+				<div class="col-sm-5" tooltip="ex:SSC.ABC@CMA-CGM.COM" align="left">
+					<input class="text-uppercase"  type="email" size="35" name="empId" id="empId" ng-model="employee.empId" ng-blur="checkEmployee()"  ng-disabled="inputReadOnly" required />
+					
+				</div>
+				<div><a ng-if="employeeExists" > Employee Already Exist</a></div>
+			</div>
+			<div class="form-group" >
+			<div class="control-label col-sm-4"  ><label style="float:left;padding-left:100px;">Employee Name</label></div>
+				<div class="col-sm-5" tooltip="ex:SSC.ABC" align="left">
+					<input class="text-uppercase"  type="text" size="35" name="empName" id="empName" ng-model="employee.empName"   required />
+					
+				</div></div>
+				<div class="form-group" >
+				<div class="control-label col-sm-4"  ><label style="float:left;padding-left:100px;">Manager Name</label></div>
+				<div class="col-sm-5" tooltip="ex:SSC.ABC" align="left">
+						<input class="text-uppercase" type="text" size="35" name="rmName" id="rmName" ng-model="employee.rmName"  required />
+					
+				</div></div>
+				<div class="form-group" >
+				<div class="control-label col-sm-4"  ><label style="float:left;padding-left:100px;">Manager Id</label></div>
+				<div class="col-sm-5" tooltip="ex:SSC.ABC@CMA-CGM.COM" align="left">
+					<input class="text-uppercase" type="text" size="35" name="rmId" id="rmId" ng-model="employee.rmId"  required />
+					
+				</div>	
+				</div>			
+				
+			<div class="form-group">
+				<div class="control-label col-sm-4" ><label style="float:left;padding-left:100px;">Is Manager</label></div>
+				<div class="col-sm-5" align="left">
+					<input type="checkbox" id="isReportingManager" ng-model="employee.isRm" onclick="myFunctionIsRm()" ng-checked="{{employee.isRm}}" >
+				</div>
+				<!-- <div class="col-sm-4"  align="right" ><p align="left">(Check the box to enable User)</p></div> -->
+			</div>
+			<div class="form-group">
+				<div class="control-label col-sm-4" ><label style="float:left;padding-left:100px;">Is Active</label></div>
+				<div class="col-sm-5" align="left">
+					<input type="checkbox" id="employeeStatus" ng-model="employee.activeIndicator" onclick="myFunction()" ng-checked="{{employee.activeIndicator}}" >
+				</div>
+				<!-- <div class="col-sm-4"  align="right" ><p align="left">(Check the box to enable User)</p></div> -->
+			</div>
+				
+		
+				
+			
+			
+			
+   			<div class="pull-middle">
+   				 <button type="submit" class="btn btn-primary" ng-click = "Reset()">Reset</button>
+   				 <button type="submit" class="btn btn-success" ng-click = "employeeConfig(employee)">Submit</button>
+			</div>
+   		 </form>
+   	
+	</div> 
+   </div>
+   
+   <div id="confirmation-dialog">
+      <div class="modal fade confirmation-dialog" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">{{confirmationDialogConfig.title}}</h4>
+            </div>
+            <div class="modal-body">
+              <div class="span5">{{confirmationDialogConfig.message +"  Employee: "+confirmationDialogConfig.empName}}</div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" ng-repeat="button in confirmationDialogConfig.buttons" ng-click="confirmEmployeeDelete(confirmationDialogConfig.id)" class="btn btn-primary">{{button.label}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+</div>
+
+<script>  function generatePdf(tableId) {
+        var doc = new jsPDF('l', 'pt', 'a4');
+        // doc.text("From HTML", 40, 50);
+         //doc.text( 40, 50);
+         var res = doc.autoTableHtmlToJson(document.getElementById(tableId));
+         doc.autoTable(res.columns, res.data, {
+           startY: 60
+         });
+          doc.save();
+    }
+</script>

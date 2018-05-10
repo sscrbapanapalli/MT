@@ -15,7 +15,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name="Employee_Details")
+@Table(name="employee_details")
 public class EmployeeDetails {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -35,6 +35,9 @@ public class EmployeeDetails {
 
 	@Column(name="is_rm")
 	private Boolean isRm=false;
+	
+	 @Column(name="active_indicator")
+	  private boolean activeIndicator;
 	
 	
 	@CreationTimestamp
@@ -131,6 +134,14 @@ public class EmployeeDetails {
 
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+
+	public boolean isActiveIndicator() {
+		return activeIndicator;
+	}
+
+	public void setActiveIndicator(boolean activeIndicator) {
+		this.activeIndicator = activeIndicator;
 	}
 
 	

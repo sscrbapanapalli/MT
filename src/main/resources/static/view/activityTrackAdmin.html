@@ -106,6 +106,7 @@ function myFunction() {
 					
 				</li>
 				<li><span  class="divider"></span></li>
+				
 				<li ng-repeat="role in roles">
 					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="activityTrackUser" >ActivityTrack-User</a> 
 					
@@ -116,6 +117,21 @@ function myFunction() {
 					
 				</li>
 				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="reports" ui-sref-opts="{reload:true}" >Reports</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="empSettings" >Employee Settings</a> 
+					
+				</li>
+			   <li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="uploadEmpData" >Upload Employee Details</a> 
+					
+				</li>
+				 <li><span  class="divider"></span></li>
 			</ul>
 		</nav>
 	</div>
@@ -212,10 +228,9 @@ function myFunction() {
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-class-odd="ClassOdd($index)"  ng-class-even="ClassEven($index)"
-						ng-repeat="obj in activityDetails" >
+					<tr>
 						
-						<td><input type="text" value="{{obj.activityName}}" 	ng-model="obj.activityName" required/></td>
+						<td><input type="text" 	ng-model="selectedActivityDetails.activityName" required/></td>
 			         </tr>
 				</tbody>
 				
@@ -228,7 +243,7 @@ function myFunction() {
    		<div class="pull-middle">
    			 <button type="submit" class="btn btn-primary" ng-click = "Reset()">Reset</button>
    			 
-   			 <button type="submit" class="btn btn-success" ng-click = "">Submit</button>
+   			 <button type="submit" class="btn btn-success" ng-click = "setUpdatedActDetails(selectedActivityDetails.id,selectedActivityDetails.activityName)">Submit</button>
 		</div>
 
 	</div>

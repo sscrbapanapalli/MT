@@ -106,6 +106,7 @@ function myFunction() {
 					
 				</li>
 				<li><span  class="divider"></span></li>
+				
 				<li ng-repeat="role in roles">
 					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="activityTrackUser" >ActivityTrack-User</a> 
 					
@@ -116,6 +117,21 @@ function myFunction() {
 					
 				</li>
 				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="reports" ui-sref-opts="{reload:true}" >Reports</a> 
+					
+				</li>
+				<li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="empSettings" >Employee Settings</a> 
+					
+				</li>
+			   <li><span  class="divider"></span></li>
+				<li ng-repeat="role in roles">
+					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="uploadEmpData" >Upload Employee Details</a> 
+					
+				</li>
+				 <li><span  class="divider"></span></li>
 			</ul>
 		</nav>
 	</div>
