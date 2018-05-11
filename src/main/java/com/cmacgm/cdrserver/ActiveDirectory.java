@@ -57,7 +57,7 @@ public class ActiveDirectory {
         
     
    public static void main (String args[]){
-	  System.out.println( ActiveDirectory.getActiveDirectoryAuthentication("SSC.RBAPANAPALLI","Maha@555"));
+	  System.out.println( ActiveDirectory.getActiveDirectoryAuthentication("SSC.RBAPANAPALLI",""));
 	  	   
    }
 }

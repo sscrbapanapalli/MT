@@ -12,20 +12,19 @@
     margin-left: 2cm;
 }
      div.box {
-		height: 200px;
-		width: 600px;
+		height: 80px;
+		width: 450px;
 		border: 1px  ;
 		align: center;
-		background: #fbf2b7;
-		padding: 50px 0;
+		background: #ddd;
+		padding: 0px 0;
 		 top: 20%;
   		bottom: 30%;
   		left: 15%;
   		right: 10%;
-  		margin-left: 250px;
-  		margin-right: 250px;
-  		overflow-x: none;
-  		overflow-y: none;
+  		margin-left: 0px;
+  		margin-right: 0px;
+  		
   		
 		 
  
@@ -69,63 +68,44 @@ $(function() {
 		<nav class="navbar">
 
 			<ul>
-				<li><a ui-sref="home" ui-sref-opts="{reload:true}">
-					<span class="icon fa fa-home"></span>Home</a>
-					<span class="divider"></span>
-				</li>
-				<!-- <li ng-repeat="application in applications">
-					<a ui-sref="app({appId: application.id,appName:application.appName})" ui-sref-opts="{reload:true}"	>{{application.appName}}</a>
-					<span class="divider"></span>
-				</li>
-				
-				<li ng-repeat="role in roles">
-					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="userSettings" >User Settings</a> 
-					
-				</li>
-				<li><span  class="divider"></span></li>
-				<li ng-repeat="role in roles">
-					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="applicationSettings" >Application Settings</a> 
-					
-				</li>
-				<li><span  class="divider"></span></li>
-				<li ng-repeat="role in roles">
-					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="jamesWeb" >James Web</a> 
-					
-				</li>
-				<li><span  class="divider"></span></li> -->
-								
-				<li ng-repeat="role in roles">
-					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="activityTrackAdmin" >ActivityTrack-Admin</a> 
-					
-				</li>
-				<li><span  class="divider"></span></li>
-				
-				<li ng-repeat="role in roles">
-					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="activityTrackUser" >ActivityTrack-User</a> 
-					
-				</li>
-				<li><span  class="divider"></span></li>
-				<li ng-repeat="role in roles">
-					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="monitoring" >Monitoring</a> 
-					
-				</li>
-				<li><span  class="divider"></span></li>
-				<li ng-repeat="role in roles">
-					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="reports" ui-sref-opts="{reload:true}" >Reports</a> 
-					
-				</li>
-				<li><span  class="divider"></span></li>
-				<li ng-repeat="role in roles">
-					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="empSettings" >Employee Settings</a> 
-					
-				</li>
-			   <li><span  class="divider"></span></li>
-				<li ng-repeat="role in roles">
-					<a  ng-if="role.roleName=='ROLE_ADMIN' " ui-sref="uploadEmpData" >Upload Employee Details</a> 
-					
-				</li>
-				 <li><span  class="divider"></span></li>
-			</ul>
+                         
+                           <li><span  class="divider"></span></li> 
+                           
+                           
+                           <li >
+                                  <a ng-if="user.data.isAdmin==true" ui-sref="activityTrackAdmin" >Master Task List</a> 
+                                  
+                           </li>
+                           <li ><span ng-if="user.data.isAdmin==true"   class="divider"></span></li>
+                           
+                           <li>
+                                  <a  ui-sref="activityTrackUser" >Task Timer</a> 
+                                  
+                           </li>
+                           <!-- <li><span  class="divider"></span></li>
+                           <li >
+                                  <a   ui-sref="monitoring" >Active Time</a> 
+                                  
+                           </li> -->
+                           <li><span  class="divider"></span></li>
+                           <li >
+                                  <a  ui-sref="reports" ui-sref-opts="{reload:true}" >Reports</a> 
+                                  
+                           </li>
+                           <li><span  class="divider"></span></li>
+                           <li >
+                                  <a  ng-if="user.data.isAdmin==true"  ui-sref="empSettings" >Employee Settings</a> 
+                                  
+                           </li>
+                        <li ><span ng-if="user.data.isAdmin==true" class="divider"></span></li>
+                        
+                           <li >
+                                  <a  ng-if="user.data.isAdmin==true"  ui-sref="uploadEmpData" >Upload Employee Details</a> 
+                                  
+                           </li>
+                           <li ><span  ng-if="user.data.isAdmin==true"  class="divider"></span></li>
+                     </ul>
+
 		</nav>
 	</div>
 </div>
@@ -133,15 +113,11 @@ $(function() {
    
     <div> <h1  style="font-size:22px; color:#960;">Upload Employee Details</h1></div></br>
     
-   <div class="box" >
+   <div class="box" class=" pull-center">
   
 		<div>&nbsp</div>
   	
-	<div class="main" >
-		<form class="form-horizontal" >
-			 <button type="submit" class="pull-right" class="btn btn-info" ng-click ="downloadSampleTemplate('EMPLOYEE_DATA.xlsx')">Sample Template Download Here</button>
-				
-			 <div>&nbsp;</div>
+	
 			
 					<div class="col-sm-5">
 						<input type="file" file-model="myFile"/>	
@@ -154,14 +130,6 @@ $(function() {
 				    	
 				     <div ng-include="'view/loading.html'" ng-show="dataLoading"></div>
 			</div>
-				    
-		</form> 
-		
-	</div>	
-		
-	<!-- 	<div class="col-sm-offset-2">
-			<p class="error" ng-bind="uploadError"></p>
-			<p class="success" ng-bind="uploadSuccess"></p>
-		</div> -->
+	
 	</div>
 	</div>

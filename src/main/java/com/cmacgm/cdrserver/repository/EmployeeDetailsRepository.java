@@ -15,13 +15,13 @@ public interface EmployeeDetailsRepository extends JpaRepository<EmployeeDetails
 	
 	public EmployeeDetails findById(@Param("id") Long id);
 	
-	public EmployeeDetails findByEmpId(@Param("empId") String empId);
+	public EmployeeDetails findByEmailId(@Param("emailId") String emailId);
 	
 	
 	@Modifying(clearAutomatically = true)
 	@Transactional
-	@Query("update EmployeeDetails u set u.empName = :empName, u.rmId = :rmId, u.rmName = :rmName, u.isRm = :isRm where u.empId = :empId")
-	void setEmployee(@Param("empName") String empName,@Param("rmId")String rm_id,@Param("rmName") String rm_name, @Param("isRm") Boolean isRm,@Param("empId") String emp_id);
+	@Query("update EmployeeDetails u set u.empName = :empName, u.empId = :empId, u.rmId = :rmId, u.rmName = :rmName, u.isRm = :isRm , u.isAdmin = :isAdmin where u.emailId = :emailId")
+	void setEmployee(@Param("empName") String empName,@Param("empId") Long empId,@Param("rmId")String rm_id,@Param("rmName") String rm_name, @Param("isRm") Boolean isRm,@Param("isAdmin") Boolean isAdmin,@Param("emailId") String emailId);
 	
 	
 

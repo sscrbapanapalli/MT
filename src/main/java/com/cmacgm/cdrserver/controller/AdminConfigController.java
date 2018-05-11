@@ -338,16 +338,16 @@ public class AdminConfigController {
 			 
 			 if(employeeDetailsConfig==null)
 					return configResponse="Failure No Data Found";
-			 String empId=employeeDetailsConfig.getEmpId();
-			 empId=empId.toUpperCase();
+			 String emailId=employeeDetailsConfig.getEmailId();
+			 emailId=emailId.toUpperCase();
 					 
 			 String userDisplayName=null;
 			 EmployeeDetails checkEmployee=new EmployeeDetails();
 			 EmployeeDetails employee=new EmployeeDetails();
-			 checkEmployee=employeeDetailsRepository.findByEmpId(empId);
+			 checkEmployee=employeeDetailsRepository.findByEmailId(emailId);
 			 
 			 
-			 String[] words = empId.split("@");
+			 String[] words = emailId.split("@");
 				if (words[0] != null)
 					 userDisplayName = words[0];
 				userDisplayName = userDisplayName.toUpperCase();
@@ -355,8 +355,10 @@ public class AdminConfigController {
 				
 			 if(checkEmployee==null){
 				 employee.setEmpName(employeeDetailsConfig.getEmpName());
+				 employee.setEmailId(employeeDetailsConfig.getEmailId());
 				 employee.setEmpId(employeeDetailsConfig.getEmpId());
 				 employee.setRmName(employeeDetailsConfig.getRmName());
+				 employee.setIsAdmin(employeeDetailsConfig.getIsAdmin());
 				 employee.setRmId(employeeDetailsConfig.getRmId());
 				 employee.setIsRm(employeeDetailsConfig.getIsRm());
 				 employee.setActiveIndicator(employeeDetailsConfig.isActiveIndicator());
@@ -377,7 +379,9 @@ public class AdminConfigController {
 				 
 				 
 				 checkEmployee.setEmpName(userDisplayName);
+				 employee.setIsAdmin(employeeDetailsConfig.getIsAdmin());
 				 checkEmployee.setEmpId(employeeDetailsConfig.getEmpId());
+				 employee.setEmailId(employeeDetailsConfig.getEmailId());
 				 checkEmployee.setRmName(employeeDetailsConfig.getRmName());
 				 checkEmployee.setIsRm(employeeDetailsConfig.getIsRm());
 				 checkEmployee.setActiveIndicator(employeeDetailsConfig.isActiveIndicator());

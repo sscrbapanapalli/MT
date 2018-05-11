@@ -514,6 +514,10 @@ public class ApplicationController {
 	 	            	  errorlistEmpDetails=  getError(row);
 	 	               else if(row.getCell(4)==null)
 	 	            	  errorlistEmpDetails= getError(row);
+	 	              else if(row.getCell(5)==null)
+	 	            	  errorlistEmpDetails= getError(row);
+	 	             else if(row.getCell(6)==null)
+	 	            	  errorlistEmpDetails= getError(row);
 	 	             // else if(!Boolean.TRUE.equals(row.getCell(4).getBooleanCellValue()) || !Boolean.FALSE.equals(row.getCell(4).getBooleanCellValue()))
 	 	            	// errorlistEmpDetails=  getError(row);
 	            		   
@@ -521,19 +525,26 @@ public class ApplicationController {
 	   
 		                	  employeeDetails=new EmployeeDetails();
 		               		Cell empId=row.getCell(0);
-		            		employeeDetails.setEmpId(empId.getStringCellValue());
+		            		employeeDetails.setEmpId((long) empId.getNumericCellValue());
+		            		
+		            		Cell emailId=row.getCell(1);
+		            		employeeDetails.setEmailId(emailId.getStringCellValue());
 		            	
-		            		Cell empName=row.getCell(1);
+		            		Cell empName=row.getCell(2);
 		            		employeeDetails.setEmpName(empName.getStringCellValue());
 		            	
-		            		Cell rmId=row.getCell(2);
+		            		Cell rmId=row.getCell(3);
 		            		employeeDetails.setRmId(rmId.getStringCellValue());
 		            		
-		            		Cell rmName=row.getCell(3);
+		            		Cell rmName=row.getCell(4);
 		            		employeeDetails.setRmName(rmName.getStringCellValue());
 		            	
-		            		Cell isRm=row.getCell(4);
-		            		employeeDetails.setIsRm(isRm.getBooleanCellValue());  
+		            		Cell isRm=row.getCell(5);
+		            		employeeDetails.setIsRm(isRm.getBooleanCellValue());
+		            		
+		            		Cell isAdmin=row.getCell(6);
+		            		employeeDetails.setIsAdmin(isAdmin.getBooleanCellValue()); 
+		            		
 		            		employeeDetails.setCreatedBy(userName);
 		            		employeeDetails.setUpdatedBy(userName);
 		            		listEmpDetails.add(employeeDetails);
@@ -569,18 +580,25 @@ public class ApplicationController {
 			List<EmployeeErrorDetails> errorlistEmpDetails=new ArrayList<>();
 			Cell empId=row.getCell(0);
     		employeeDetails.setEmpId(empId.getStringCellValue());
+    		
+    		Cell emailId=row.getCell(1);
+    		employeeDetails.setEmpId(emailId.getStringCellValue());
     	
-    		Cell empName=row.getCell(1);
+    		Cell empName=row.getCell(2);
     		employeeDetails.setEmpName(empName.getStringCellValue());
     	
-    		Cell rmId=row.getCell(2);
+    		Cell rmId=row.getCell(3);
     		employeeDetails.setRmId(rmId.getStringCellValue());
     		
-    		Cell rmName=row.getCell(3);
+    		Cell rmName=row.getCell(4);
     		employeeDetails.setRmName(rmName.getStringCellValue());
     	
-    		Cell isRm=row.getCell(4);
-    		employeeDetails.setIsRm(isRm.getStringCellValue());  
+    		Cell isRm=row.getCell(5);
+    		employeeDetails.setIsRm(isRm.getStringCellValue()); 
+    		
+    		Cell isAdmin=row.getCell(6);
+    		employeeDetails.setIsRm(isAdmin.getStringCellValue()); 
+    		
     		errorlistEmpDetails.add(employeeDetails);
 			return errorlistEmpDetails;
 		}
@@ -589,9 +607,9 @@ public class ApplicationController {
 		   	HashMap<String,String> data=new HashMap<>();
 		   	for (EmployeeDetails employeeDetails : listEmpInsertDetails) {
 		   		EmployeeDetails employeeDetailsOld=new EmployeeDetails();
-		   		  employeeDetailsOld=employeeDetailsRepository.findByEmpId(employeeDetails.getEmpId());
+		   		  employeeDetailsOld=employeeDetailsRepository.findByEmailId(employeeDetails.getEmailId());
 		   		 if(employeeDetailsOld!=null)
-		   		  employeeDetailsRepository.setEmployee(employeeDetails.getEmpName(), employeeDetails.getRmId(), employeeDetails.getRmName(), employeeDetails.getIsRm(), employeeDetails.getEmpId());	
+		   		  employeeDetailsRepository.setEmployee(employeeDetails.getEmpName(), employeeDetails.getEmpId(),employeeDetails.getRmId(), employeeDetails.getRmName(), employeeDetails.getIsRm(), employeeDetails.getIsAdmin(),employeeDetails.getEmailId());	
 		   		  else
 		   			employeeDetailsRepository.save(employeeDetails);
 		     	}	

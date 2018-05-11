@@ -95,6 +95,7 @@ public class ReportsController {
 		List<UserActivityTrack> myRepList=new ArrayList<UserActivityTrack>();
 		List<UserActivityTrack> empTaskList=new ArrayList<UserActivityTrack>();
 		String datRange=req.getParameter("selectedRange");
+		System.out.println(datRange);
 		String[] splited = datRange.split("\\s+");
 		String d1=splited[0]+" "+"00:00:00";
 		String d2=splited[2]+" "+"23:59:59";
@@ -112,7 +113,7 @@ public class ReportsController {
 			 System.out.println(dateTo);
 			
 		for(EmployeeDetails obj:mgrReporteesList){
-			empList.add(obj.getEmpId());
+			empList.add(obj.getEmailId());
 			System.out.println(obj);
 			
 		}

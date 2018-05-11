@@ -21,9 +21,9 @@ public class EmployeeDetailsServiceImpl implements EmployeeDetailsService{
 	}
 
 	@Override
-	public EmployeeDetails findByEmpId(String empId) {
+	public EmployeeDetails findByEmpId(String emailId) {
 		// TODO Auto-generated method stub
-		 return employeeDetailsRepository.findByEmpId(empId);
+		 return employeeDetailsRepository.findByEmailId(emailId);
 	}
 
 }

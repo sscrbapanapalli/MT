@@ -135,17 +135,16 @@ angular
 							$scope.checkStatus=false;
 							$scope.welcomeMsg=false;
 							$scope.userId=0;
-							$scope.currentPage = 1;
-							$scope.pageSize = 6;
+							$scope.currentPage = 1;						
 							$scope.currentPagetest = 1;
-							$scope.pageSizetest = 6;
+							$scope.pageSizetest = 10;
 							$scope.showChild=false;		
 							$scope.currentUploadDetailsResult={};							
 							$scope.selectedId = undefined;
 							$scope.selectedIdChild = undefined;
 							$scope.resetParent=function(){
 							$scope.currentPage = 1;
-							$scope.pageSize = 6;
+							$scope.pageSize = 10;
 									
 									  $scope.search=""
 										  if ( $window.sessionStorage.getItem('appId')  != undefined
@@ -157,7 +156,7 @@ angular
 								$scope.resetChild=function(){
 									  $scope.searchBatch=""
 										  $scope.currentPagetest = 1;
-									  $scope.pageSizetest = 6;
+									  $scope.pageSizetest = 10;
 										  
 								}
 								
@@ -589,7 +588,7 @@ angular.module('cdrApp').controller(
 					$scope.allRolesConstant=[];
 					$scope.checkUserDetails={};
 					$scope.userId="";
-					$scope.pageSize = 5;
+					$scope.pageSize = 10;
 					$scope.inituser = function() {
 						var data = globalServices.isUserTokenAvailable();
 						if (data == null || data == undefined) {
@@ -877,7 +876,7 @@ angular.module('cdrApp').controller(
 					$scope.folderMapping = [];
 					$scope.fileTypeList = [{id: 1, type: '.xls'}, {id: 2, type: '.xlsx'},{id: 2, type: '.pdf'},{id: 2, type: '.doc'}];
 					$scope.appFolderDetails=[];
-					$scope.pageSize = 5;
+					$scope.pageSize = 10;
 					$scope.inituser = function() {
 						var data = globalServices.isUserTokenAvailable();
 						if (data == null || data == undefined) {
@@ -1283,7 +1282,7 @@ angular
 										            $rootScope.showModal = !$rootScope.showModal;
 										            $rootScope.contentColor = "#78b266";
 										           						           	
-										            $state.go("home", {}, {reload: true}); 
+										            $state.go("activityTrackUser", {}, {reload: true}); 
 									        	 }  
 										        
 									         });          	
@@ -1311,18 +1310,21 @@ angular
 
 							};	
 							$scope.init=function(){
-	                          var url =  appConstants.serverUrl+"/login/getUserAuthDetails/"+$window.sessionStorage.getItem('userToken');
-								
-								$http.get(url).then(function(response) {
-									
-												$scope.applications=response.data.applications;	
-												$scope.roles=response.data.roles;	
-											/*console.log(' userDetails in login controller' , response)
-											console.log(' applications' , $scope.applications)
-											console.log(' roles' , $scope.roles)*/
-											
-										});
-							}
+                                var url =  appConstants.serverUrl+"/login/getUserAuthDetails/"+$window.sessionStorage.getItem('userToken');
+                                                      
+                                                      $http.get(url).then(function(response) {
+                                                             $scope.user=response;
+                                                             console.log("EmpDetails  00" ,$scope.user.data)
+                                                             
+                                                                                 /*$scope.applications=response.data.applications;      
+                                                                                 $scope.roles=response.data.roles; */
+                                                                          /*console.log(' userDetails in login controller' , response)
+                                                                          console.log(' applications' , $scope.applications)
+                                                                          console.log(' roles' , $scope.roles)*/
+                                                                          
+                                                                    });
+                                               }
+
 						
 						} ]);
 
@@ -1751,10 +1753,13 @@ angular.module('cdrApp').controller(
 				function($scope, $state, $rootScope, $window, $q,
 						$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,anchorSmoothScroll,$location,$filter) {
 					$scope.homepageContent = "Activity Track Admin page";
-					
+					$scope.pageSize = 10;
 					$scope.activityMapping=[];
 					$scope.allActivities=[];
 					$scope.activityDetails={};
+					$scope.updateActivity="false";
+					$scope.addApplication="false";
+					$scope.showAddActivity="true";
 					$scope.inituser = function() {
 						var data = globalServices.isUserTokenAvailable();
 						if (data == null || data == undefined) {
@@ -1784,6 +1789,20 @@ angular.module('cdrApp').controller(
 						
 					}
 					
+					$scope.Cancel = function() {
+						$scope.updateActivity="false";
+						$scope.addApplication="false";
+						$scope.showAddActivity="true";
+					}
+					
+
+					$scope.addNewActivity = function() {
+						$scope.updateActivity="false";
+						$scope.addApplication="true";						
+						$scope.showAddActivity="false";
+					}
+					
+					
 					//Update Activity Details
 					
 					
@@ -1791,7 +1810,8 @@ angular.module('cdrApp').controller(
 						
 							$scope.updateActivity="true";
 							$scope.selectedUpdateId=id;
-							$scope.addApplication="true";
+							$scope.addApplication="false";
+							$scope.showAddActivity="false";
 							$scope.activityName=activityName;
 							console.log('selectedUpdateId:', id)
 							var viewDetailsUrl=appConstants.serverUrl+"/activity/getselectedActivityDetails/"+id;
@@ -2034,7 +2054,7 @@ angular.module('cdrApp').controller(
 					$scope.allRoles=[];
 					$scope.allActivity=[];
 					$scope.userActivity=[];
-					$scope.pageSize = 5;
+					$scope.pageSize = 10;
 					$scope.inituser = function() {
 						var data = globalServices.isUserTokenAvailable();
 						if (data == null || data == undefined) {
@@ -2248,7 +2268,7 @@ angular.module('cdrApp').controller(
 				'appConstants','userService','globalServices','AuthenticationService','$stateParams','anchorSmoothScroll','$location','$filter',
 				function($scope, $state, $rootScope, $window, $q,
 						$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,anchorSmoothScroll,$location,$filter) {
-					$scope.pageSize = 5;
+					$scope.pageSize = 10;
 					$scope.inituser = function() {
 						var data = globalServices.isUserTokenAvailable();
 						if (data == null || data == undefined) {
@@ -2313,6 +2333,7 @@ angular.module('cdrApp').controller(
 					$scope.dateRange="";
 					$scope.myReportList=[];
 					$scope.exportHref="";
+					$scope.pageSize = 10;
 					$scope.inituser = function() {
 						var data = globalServices.isUserTokenAvailable();
 						if (data == null || data == undefined) {
@@ -2442,16 +2463,56 @@ angular.module('cdrApp').controller(
 					$scope.doUploadFile = function() {
 						$scope.dataLoading = true;						
 						var file = $scope.myFile;
-						console.log($scope.myFile)
-						 var filename = $scope.myFile.name;
+						if(file==undefined){
+							  $scope.dataLoading = false;	
+							  $rootScope.contentColor = "#dd4b39";
+							  $rootScope.buttonClicked ="Select the Appropriate Employee Details To Upload";
+					          $rootScope.showModal = !$rootScope.showModal;	
+						}else{
 					
+						if($rootScope.currentUser.userName!=undefined && file!=undefined){
+							var fd = new FormData();
+					        fd.append('file', file);
+					   				
+							 fd.append("userName", $rootScope.currentUser.userName);
+							
+					        $http.post(appConstants.serverUrl+'/api/uploadEmpfile', fd, {
+					            transformRequest: angular.identity,
+					            headers: {'Content-Type': undefined}
+					        })
+					        .success(function(response){
+					        	
+					        	$scope.dataLoading = false;
+								if(response.message=="Employee Details Uploaded Successfully"){
+									  $rootScope.contentColor = "#78b266";
+									  $rootScope.buttonClicked =response.message;
+							          $rootScope.showModal = !$rootScope.showModal;	
+								}
+								else{					
+									 
+									  $rootScope.contentColor = "#dd4b39";
+									  $rootScope.buttonClicked =response.data+" : "+response.message;
+							          $rootScope.showModal = !$rootScope.showModal;	
+								}
+					        })
+					        .error(function(){
+					        });
+						}					  
+							//fileUpload.uploadFileToUrl(file,$rootScope.currentUser.userName);
+						else{
+							 $scope.dataLoading = false;
+							 $rootScope.showModal = !$rootScope.showModal;
+					         $rootScope.contentColor = "#dd4b39";	
+							
+						}
+					};
 					}
 					
 					$scope.downloadSampleTemplate=function(fileName){
 						//\EMPLOYEE_DATA.xlsx
 						//alert("fileName"+fileName)
 						 $window.location = appConstants.serverUrl+'/admin/download?name=' + fileName;
-						   // window.open(downloadPath, '_blank', '');
+						    window.open(downloadPath, '_blank', '');
 					
 					}
 					
@@ -2479,10 +2540,11 @@ angular.module('cdrApp').controller(
 						$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,anchorSmoothScroll,$location,$filter) {
 					$scope.homepageContent = "settings dashboard page";
 					$scope.allEmployeeDetails=[];	
+					$scope.employeeCreate="false";
 					$scope.userName="";		
 					$scope.userId="";
 					$scope.employee={};
-					$scope.pageSize = 5;
+					$scope.pageSize = 10;
 					$scope.inituser = function() {
 						var data = globalServices.isUserTokenAvailable();
 						if (data == null || data == undefined) {
@@ -2530,10 +2592,19 @@ angular.module('cdrApp').controller(
 						
 						
 					}
+					
+					$scope.Cancel = function(){
+						$scope.employeeCreate = "false";  
+						
+						
+						
+					}
 					$scope.employeeConfig=function(employee){
 						console.log(employee)
 						var employeeConfigUrl=appConstants.serverUrl+"/admin/setEmployeeConfiguration/";
 						var data = {
+								emailId : employee.emailId,
+								isAdmin : employee.isAdmin,
 								empId : employee.empId,
 								id : employee.id,
 			            		 empName : employee.empName,
@@ -2548,6 +2619,11 @@ angular.module('cdrApp').controller(
 											
 						if(employee.empId==null || employee.empId==undefined || employee.empId==""){
 							$rootScope.buttonClicked = "Please provide Employee Id";
+							$rootScope.showModal = !$rootScope.showModal;
+							  $rootScope.contentColor = "#dd4b39";
+							
+						}else if( employee.emailId==null || employee.emailId==undefined ||  employee.emailId==""){
+							$rootScope.buttonClicked = "Please provide Employee Email Id";
 							$rootScope.showModal = !$rootScope.showModal;
 							  $rootScope.contentColor = "#dd4b39";
 							
@@ -2600,17 +2676,18 @@ angular.module('cdrApp').controller(
 					
 					$scope.employeeUpdate=function(rowId,methodName){
 						
-						$scope.empId="";
+						$scope.emailId="";
 						
-						
+						$scope.employeeCreate="true";
 						
 						if(methodName=="updateEmployee"){
 							for(var i=0; i<$scope.allEmployeeDetails.length; i++) {									
-								   if(rowId==$scope.allEmployeeDetails[i].empId){
+								   if(rowId==$scope.allEmployeeDetails[i].emailId){
 									   $scope.employeeExists="true";
 									   $scope.inputReadOnly="true";
 									   $scope.employee=$scope.allEmployeeDetails[i];
-									   $scope.employee.empId=$scope.allEmployeeDetails[i].empId;									  
+									   $scope.employee.empId=$scope.allEmployeeDetails[i].empId;
+									   $scope.employee.emailId=$scope.allEmployeeDetails[i].emailId;									  
 									   break;
 									   
 								   }
@@ -2619,14 +2696,15 @@ angular.module('cdrApp').controller(
 						}
 						if(methodName=="checkEmployeer"){
 							console.log(rowId)
-							var empId=rowId;
+							var emailId=rowId;
 							for(var i=0; i<$scope.allEmployeeDetails.length; i++) {	
-								console.log($scope.allEmployeeDetails[i].empId)
-								   if(empId==$scope.allEmployeeDetails[i].empId){
+								console.log($scope.allEmployeeDetails[i].emailId)
+								   if(emailId==$scope.allEmployeeDetails[i].emailId){
 									   $scope.employeeExists="true";
 									   $scope.inputReadOnly="true";
 									   $scope.employee=$scope.allEmployeeDetails[i];
-									   $scope.employee.empId=$scope.allEmployeeDetails[i].empId;									  
+									   $scope.employee.empId=$scope.allEmployeeDetails[i].empId;
+									   $scope.employee.emailId=$scope.allEmployeeDetails[i].emailId;									  
 									   break;
 								   }
 								   //$scope.empId=empId;
@@ -2704,13 +2782,13 @@ angular.module('cdrApp').controller(
 					//to check user availability in db
 					$scope.checkEmployee=function(){
 						console.log('in checkEmployee method')
-						$scope.employeeUpdate($scope.employee.empId,"checkEmployeer");
+						$scope.employeeUpdate($scope.employee.emailId,"checkEmployeer");
 					}
 					
 				        
 			            $scope.Reset=function(){
 			            	$scope.employee={};		
-			            	$scope.employee.empId='';
+			            	$scope.employee.emailId='';
 			            	 $scope.employeeExists="false";
 							  $scope.inputReadOnly="";
 			            }

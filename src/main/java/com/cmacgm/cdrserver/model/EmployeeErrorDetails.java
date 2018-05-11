@@ -8,6 +8,8 @@ public class EmployeeErrorDetails {
 		
 
 	private String empName;
+
+	private String emailId;	
 	
 
 	private String rmId;	
@@ -16,7 +18,9 @@ public class EmployeeErrorDetails {
 	private String rmName;
 
 
-	private String isRm;
+	private String isRm;	
+
+	private Boolean isAdmin;
 
 
 	public String getEmpId() {
@@ -66,6 +70,26 @@ public class EmployeeErrorDetails {
 
 	public void setIsRm(String isRm) {
 		this.isRm = isRm;
+	}
+
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
+
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 	
 	

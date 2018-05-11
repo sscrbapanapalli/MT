@@ -22,7 +22,10 @@ public class EmployeeDetails {
 	private Long id;
 	
 	@Column(name="emp_id", length=100)
-	private String empId;	
+	private Long empId;	
+	
+	@Column(name="email_id", length=100)
+	private String emailId;	
 		
 	@Column(name="emp_name", length=100)
 	private String empName;
@@ -35,6 +38,9 @@ public class EmployeeDetails {
 
 	@Column(name="is_rm")
 	private Boolean isRm=false;
+	
+	@Column(name="is_admin")
+	private Boolean isAdmin=false;
 	
 	 @Column(name="active_indicator")
 	  private boolean activeIndicator;
@@ -64,11 +70,11 @@ public class EmployeeDetails {
 		this.id = id;
 	}
 
-	public String getEmpId() {
+	public Long getEmpId() {
 		return empId;
 	}
 
-	public void setEmpId(String empId) {
+	public void setEmpId(Long empId) {
 		this.empId = empId;
 	}
 
@@ -142,6 +148,22 @@ public class EmployeeDetails {
 
 	public void setActiveIndicator(boolean activeIndicator) {
 		this.activeIndicator = activeIndicator;
+	}
+
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 
 	
