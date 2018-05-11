@@ -1,5 +1,17 @@
 <style>
-
+.slinputtext input {
+    padding: 0px;
+    width: 40%;
+     height: 20px;
+    padding-left: 31px;
+    padding-right: 30px;
+    color: black;
+    font-family: arial,sans-serif;
+    font-size: 12px;
+}
+element.style {
+    width: 150px;
+}
 .ui-datepicker-calendar {
     display: none;
     }
@@ -104,11 +116,11 @@ function myFunctionIsAdmin() {
                                   <a  ui-sref="activityTrackUser" >Task Timer</a> 
                                   
                            </li>
-                           <!-- <li><span  class="divider"></span></li>
+                          <li><span ng-if="user.data.isAdmin==true" class="divider"></span></li>
                            <li >
-                                  <a   ui-sref="monitoring" >Active Time</a> 
+                                  <a  ng-if="user.data.isAdmin==true" ui-sref="monitoring"  ui-sref-opts="{reload:true}" >Active Time</a> 
                                   
-                           </li> -->
+                           </li>
                            <li><span  class="divider"></span></li>
                            <li >
                                   <a  ui-sref="reports" ui-sref-opts="{reload:true}" >Reports</a> 
@@ -127,13 +139,14 @@ function myFunctionIsAdmin() {
                            </li>
                            <li ><span  ng-if="user.data.isAdmin==true"  class="divider"></span></li>
                      </ul>
+
 		</nav>
 	</div>
 </div>
 
 <div ng-controller="empSettingsController" ng-init="init()">
 
-	<div> <h1  style="font-size:22px; color:#960;" align="left">Employee Configuration</h1></div>
+	<div> <h3  style="font-size:16px; color:#960;" align="left">Employee Configuration</h3></div>
    <div class="box "  ng-show="employeeCreate" >
    	<div class="main" >
    		<form class="form-horizontal" >

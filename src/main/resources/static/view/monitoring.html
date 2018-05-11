@@ -1,5 +1,17 @@
 <style>
-
+.slinputtext input {
+    padding: 0px;
+    width: 40%;
+     height: 20px;
+    padding-left: 31px;
+    padding-right: 30px;
+    color: black;
+    font-family: arial,sans-serif;
+    font-size: 12px;
+}
+element.style {
+    width: 150px;
+}
 .ui-datepicker-calendar {
     display: none;
     }
@@ -54,16 +66,7 @@
     padding: 7px;
    
 }
-.slinputtext input {
-    padding: 0px;
-    width: 40%;
-     height: 20px;
-    padding-left: 31px;
-    padding-right: 30px;
-    color: black;
-    font-family: arial,sans-serif;
-    font-size: 12px;
-}
+
 
 </style>
 <!-- <script>
@@ -99,11 +102,11 @@ function myFunction() {
                                   <a  ui-sref="activityTrackUser" >Task Timer</a> 
                                   
                            </li>
-                           <!-- <li><span  class="divider"></span></li>
+                          <li><span ng-if="user.data.isAdmin==true" class="divider"></span></li>
                            <li >
-                                  <a   ui-sref="monitoring" >Active Time</a> 
+                                  <a  ng-if="user.data.isAdmin==true" ui-sref="monitoring"  ui-sref-opts="{reload:true}" >Active Time</a> 
                                   
-                           </li> -->
+                           </li>
                            <li><span  class="divider"></span></li>
                            <li >
                                   <a  ui-sref="reports" ui-sref-opts="{reload:true}" >Reports</a> 
@@ -122,16 +125,16 @@ function myFunction() {
                            </li>
                            <li ><span  ng-if="user.data.isAdmin==true"  class="divider"></span></li>
                      </ul>
-
 		</nav>
 	</div>
 </div>
+
 <div ng-controller="monitoringController" ng-init="init()">
 
 	<div> <h3  style="font-size:16px; color:#960;" align="left">Active Time</h3></div>
 
 	 <div>
-			<div>
+		<div>
 			<div class="bs-component">
 				<form name='myform'>
 					<div>
@@ -181,47 +184,49 @@ function myFunction() {
 							<th ng-click="sort('id')">ID
 								<span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
 							</th>
-							<th ng-click="sort('user_name')">Employee Name
+							<th ng-click="sort('empUserName')">Employee Name
 								<span class="glyphicon sort-icon" ng-show="sortKey=='user_name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
 							</th>
-							<th ng-click="sort('department')">Department
+							<th ng-click="sort('machineName')">Machine ID
 								<span class="glyphicon sort-icon" ng-show="sortKey=='department'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
 							</th>
-							<th ng-click="sort('machine_name')">System Name
-								<span class="glyphicon sort-icon" ng-show="sortKey=='machine_name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-							</th>
-							<th ng-click="sort('curr_date')">Date
+							
+							<th ng-click="sort('currentDate')"> Current Date
 								<span class="glyphicon sort-icon" ng-show="sortKey=='curr_date'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
 							</th>
-							<th ng-click="sort('month')">Month
+							<th ng-click="sort('currentMonth')">Month
 								<span class="glyphicon sort-icon" ng-show="sortKey=='month'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
 							</th>
-							<th ng-click="sort('LogonTime')">System LoginTime
+							<th ng-click="sort('currentYear')">Year
 								<span class="glyphicon sort-icon" ng-show="sortKey=='LogonTime'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
 							</th>
-							<th ng-click="sort('LogoffTime')">System LogoffTime
+							<th ng-click="sort('LogonTime')">System LogonTime
 								<span class="glyphicon sort-icon" ng-show="sortKey=='LogoffTime'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
 							</th>
-							<th ng-click="sort('active_time')">Active Time
+							<th ng-click="sort('logoffTime')">System LogoffTime
+								<span class="glyphicon sort-icon" ng-show="sortKey=='LogoffTime'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							</th>
+							<th ng-click="sort('activeTime')">Active Time
 								<span class="glyphicon sort-icon" ng-show="sortKey=='active_time'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
 							</th>
-							<th ng-click="sort('idle_time')">Idle Time
+							<th ng-click="sort('idleTime')">Idle Time
 								<span class="glyphicon sort-icon" ng-show="sortKey=='idle_time'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
 							</th>
 						</tr>
 			</thead>
 			<tbody>
-				<tr dir-paginate="user in users|orderBy:sortKey:reverse|filter:search|itemsPerPage:pageSize">
+				<tr dir-paginate="user in monitorDataList|orderBy:sortKey:reverse|filter:search|itemsPerPage:3">
 							<td>{{user.id}}</td>
-							<td>{{user.user_name}}</td>
-							<td>{{user.department}}</td>
-							<td>{{user.machine_name}}</td>
-							<td>{{user.curr_date}}</td>
-							<td>{{user.month}}</td>
-							<td>{{user.LogonTime}}</td>
-							<td>{{user.LogoffTime}}</td>
-							<td>{{user.active_time}}</td>
-							<td>{{user.idle_time}}</td>
+							<td>{{user.empUserName}}</td>
+							<td>{{user.machineName}}</td>
+							
+							<td>{{user.currentDate|date:'yyyy-MM-dd'}}</td>
+							<td>{{user.currentMonth}}</td>
+							<td>{{user.currentYear}}</td>
+							<td>{{user.logOnTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td>{{user.logoffTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td>{{user.activeTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td>{{user.idleTime}}</td>
 						</tr>
 			</tbody>
 		</table>
@@ -233,7 +238,7 @@ function myFunction() {
 			       direction-links="true"
 			       boundary-links="true" >
 	   			 </dir-pagination-controls>
-	   			
+	   			 &nbsp
 			</div>
 			<div  class="pull-right"ng-show="userActivityList !='undefined' && userActivityList.length>=0" class="pull-right">Filtered : ({{ filtered.length }})
 							record(s) out of ({{userActivityList.length }}) entries
@@ -254,14 +259,3 @@ function myFunction() {
     
 </div>
 
-<script>  function generatePdf(tableId) {
-        var doc = new jsPDF('l', 'pt', 'a4');
-        // doc.text("From HTML", 40, 50);
-         //doc.text( 40, 50);
-         var res = doc.autoTableHtmlToJson(document.getElementById(tableId));
-         doc.autoTable(res.columns, res.data, {
-           startY: 60
-         });
-          doc.save();
-    }
-</script>

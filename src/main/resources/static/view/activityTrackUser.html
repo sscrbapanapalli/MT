@@ -120,11 +120,11 @@ function myFunction() {
                                   <a  ui-sref="activityTrackUser" >Task Timer</a> 
                                   
                            </li>
-                           <!-- <li><span  class="divider"></span></li>
+                          <li><span ng-if="user.data.isAdmin==true" class="divider"></span></li>
                            <li >
-                                  <a   ui-sref="monitoring" >Active Time</a> 
+                                  <a  ng-if="user.data.isAdmin==true" ui-sref="monitoring"  ui-sref-opts="{reload:true}" >Active Time</a> 
                                   
-                           </li> -->
+                           </li>
                            <li><span  class="divider"></span></li>
                            <li >
                                   <a  ui-sref="reports" ui-sref-opts="{reload:true}" >Reports</a> 
@@ -143,6 +143,7 @@ function myFunction() {
                            </li>
                            <li ><span  ng-if="user.data.isAdmin==true"  class="divider"></span></li>
                      </ul>
+
 
 		</nav>
 	</div>

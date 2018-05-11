@@ -59,38 +59,44 @@ public class LoginController {
 
 
 	@RequestMapping(value = "/loginUser", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
-	public @ResponseBody RetValue<HashMap> loginUser(@RequestBody UserLoginModel user) throws Exception {
-		Boolean authStatus = false;
-		try {
-			if (user.getUserName() != null && user.getPassword() != null
-					|| user.getUserName().trim() != "" && user.getPassword().trim() != "") {
-				String username = user.getUserName();			
-				String[] words = username.split("@");
-				if (words[0] != null)
-					username = words[0];
-				username = username.toUpperCase();
-				// System.out.println(" in cdr server login controller"+username
-				// + "-" + password );
-				authStatus = ActiveDirectory.getActiveDirectoryAuthentication(username, decrypt(user.getPassword()));
-          
-			     if(authStatus){
-						String token = generateToken(username);
-						map.put("userToken", token);
-						map.put("authStatus", authStatus);
-						httpSession.setAttribute("userName", username);
-						httpSession.setAttribute("userToken", token);
+    public @ResponseBody RetValue<HashMap> loginUser(@RequestBody UserLoginModel user) throws Exception {
+           Boolean authStatus = false;
+           try {
+                  if (user.getUserName() != null && user.getPassword() != null
+                               || user.getUserName().trim() != "" && user.getPassword().trim() != "") {
+                        String username = user.getUserName();                  
+                        String[] words = username.split("@");
+                        if (words[0] != null)
+                               username = words[0];
+                        username = username.toUpperCase();
+                        String userID=username+"@CMA-CGM.COM";
+                        // System.out.println(" in cdr server login controller"+username
+                        // + "-" + password );
+                        authStatus = ActiveDirectory.getActiveDirectoryAuthentication(username, decrypt(user.getPassword()));
+       
+                       if(authStatus){
+                                      String token = generateToken(username);
+                                      map.put("userToken", token);
+                                      map.put("authStatus", authStatus);
+                                      map.put("userName", username);
+                                      map.put("userId", userID);
+                                      
+                                      httpSession.setAttribute("userName", username);
+                                      httpSession.setAttribute("userToken", token);
 
-						return FrameworkUtil.getResponseValue(true, "success", map);
-			     }
+                                      return FrameworkUtil.getResponseValue(true, "success", map);
+                       }
 
-			}
+                  }
 
-			return FrameworkUtil.getResponseValue(true, "failure", null);
-		} catch (Exception e) {
-			
-			return FrameworkUtil.getResponseValue(true, "failure", null);
-		}
-	}
+                  return FrameworkUtil.getResponseValue(true, "failure", null);
+           } catch (Exception e) {
+                  
+                  return FrameworkUtil.getResponseValue(true, "failure", null);
+           }
+    }
+    
+
 	
 	
 	 /**

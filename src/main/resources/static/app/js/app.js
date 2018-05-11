@@ -1241,74 +1241,59 @@ angular
 							
 							
 							$scope.userLogin = function() {
-								 $scope.dataLoading = true;
-								var username = $scope.username;
-								var password = $scope.password;
+                                $scope.dataLoading = true;
+                                var username = $scope.username;
+                                var password = $scope.password;
 
-								if ((username != '' && username != null && username != undefined)
-										&& (password != '' && password != null && password != undefined)) {
-									 AuthenticationService.Login($scope.username, $scope.password, function(response) {
-										    console.log(response.message)
-										 if(response.message!='failure' && response.data.authStatus){	
-											
-							            	 $http.get(appConstants.serverUrl+'/login/getUserDetails/')
-									         .success(function (response) {   
-									        	 console.log('login response' , response)
-									        	 if(response.data==null){
-									        		 $scope.dataLoading = false;
-									        		 $rootScope.buttonClicked ="User Not Authorize to Access Application, Please Contact Application Support Team";
-									        		 $rootScope.showModal = !$rootScope.showModal;
-									        		 $rootScope.contentColor = "#dd4b39";
-									        		 
-									        	 }else if(!response.data.activeIndicator){
-									        		 $scope.dataLoading = false;
-									        		 $rootScope.buttonClicked ="User Access Disabled, Please Contact Application Support Team";
-										            	$rootScope.showModal = !$rootScope.showModal;
-										            	  $rootScope.contentColor = "#dd4b39";
-									        		 
-									        	 }else {
-									        		var currentUser = {
-															userId : response.data.userId,
-															email : response.data.email,
-															userName : response.data.userName,
-															//roleType : response.data.roleType,
-															userToken : response.data.userToken
-														};									        	
-									        	 AuthenticationService.SetCredentials(response);
-									        	 $window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));				        	
-									        	 $rootScope.currentUser=userService.getCurrentUser();				        	
-										            $rootScope.isProfilePage=true; 
-										            $rootScope.buttonClicked ="Welcome! "+$rootScope.currentUser.userName;
-										            $rootScope.showModal = !$rootScope.showModal;
-										            $rootScope.contentColor = "#78b266";
-										           						           	
-										            $state.go("activityTrackUser", {}, {reload: true}); 
-									        	 }  
-										        
-									         });          	
-							            	 
-							             } else {  							            	
-							            	
-							                    $scope.dataLoading = false;
-							                    $rootScope.buttonClicked ="Invalid Credentials";
-								            	$rootScope.showModal = !$rootScope.showModal;
-								            	  $rootScope.contentColor = "#dd4b39";
-							            								
-							             }
-							         });
-					
-								}else{
-							
-									 $scope.dataLoading = false;
-										
-										$rootScope.buttonClicked ="Enter Credentials";
-										$rootScope.showModal = !$rootScope.showModal;
-										$rootScope.contentColor = "#dd4b39";
-									
-								}
-								;
+                                if ((username != '' && username != null && username != undefined)
+                                              && (password != '' && password != null && password != undefined)) {
+                                       AuthenticationService.Login($scope.username, $scope.password, function(response) {
+                                                  console.log(response)
+                                              if(response.message!='failure' && response.data.authStatus){ 
+                                                    
+                                                    var currentUser = {
+                                                                                userId : response.data.userId,
+                                                                                email  : response.data.userId,
+                                                                                userName : response.data.userName,
+                                                                                userToken : response.data.userToken
+                                                                         };                                                                          
+                                                      AuthenticationService.SetCredentials(response);
+                                                     
+                                                      $window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));                                    
+                                                      $rootScope.currentUser=userService.getCurrentUser();                                     
+                                                          $rootScope.isProfilePage=true; 
+                                                          $rootScope.buttonClicked ="Welcome! "+$rootScope.currentUser.userName;
+                                                          $rootScope.showModal = !$rootScope.showModal;
+                                                          $rootScope.contentColor = "#78b266";
+                                                                                                            
+                                                          $state.go("activityTrackUser", {}, {reload: true}); 
+                                                            
+                                        
+                                      } else {                                                              
+                                       
+                                             $scope.dataLoading = false;
+                                             $rootScope.buttonClicked ="User Not Authorized to Access Application, Please Contact Application Support Team";
+                                              $rootScope.showModal = !$rootScope.showModal;
+                                                $rootScope.contentColor = "#dd4b39";
+                                                                                       
+                                      }
+                                  });
+           
+                                }else{
+                         
+                                       $scope.dataLoading = false;
+                                              
+                                              $rootScope.buttonClicked ="Enter Credentials";
+                                              $rootScope.showModal = !$rootScope.showModal;
+                                              $rootScope.contentColor = "#dd4b39";
+                                       
+                                }
+                                ;
 
-							};	
+                         };     
+
+
+						
 							$scope.init=function(){
                                 var url =  appConstants.serverUrl+"/login/getUserAuthDetails/"+$window.sessionStorage.getItem('userToken');
                                                       
@@ -2256,63 +2241,68 @@ angular.module('cdrApp').controller(
 
 
 angular.module('cdrApp').controller(
-		'monitoringController',
-		
-		[
-				'$scope',
-				'$state',
-				'$rootScope',
-				'$window',
-				'$q',
-				'$http',
-				'appConstants','userService','globalServices','AuthenticationService','$stateParams','anchorSmoothScroll','$location','$filter',
-				function($scope, $state, $rootScope, $window, $q,
-						$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,anchorSmoothScroll,$location,$filter) {
-					$scope.pageSize = 10;
-					$scope.inituser = function() {
-						var data = globalServices.isUserTokenAvailable();
-						if (data == null || data == undefined) {
-							$rootScope.isProfilePage = false;
-							$state.go("login");
-						} else {
-							$rootScope.currentUser = userService.getCurrentUser();
-							if ($rootScope.currentUser != undefined
-									|| $rootScope.currentUser != null) {
-								$rootScope.isProfilePage = true;
-							} else {
-								$rootScope.isProfilePage = false;
-								$state.go("login");
-							}
+        'monitoringController',
+        
+        [
+                     '$scope',
+                     '$state',
+                     '$rootScope',
+                     '$window',
+                     '$q',
+                     '$http',
+                      'appConstants','userService','globalServices','AuthenticationService','$stateParams','anchorSmoothScroll','$location','$filter',
+                     function($scope, $state, $rootScope, $window, $q,
+                                   $http,appConstants,userService,globalServices,AuthenticationService,$stateParams,anchorSmoothScroll,$location,$filter) {
+                            $scope.pageSize = 5;
+                            $scope.monitorDataList=[];
+                            $scope.inituser = function() {
+                                   var data = globalServices.isUserTokenAvailable();
+                                   if (data == null || data == undefined) {
+                                          $rootScope.isProfilePage = false;
+                                          $state.go("login");
+                                   } else {
+                                          $rootScope.currentUser = userService.getCurrentUser();
+                                          if ($rootScope.currentUser != undefined
+                                                        || $rootScope.currentUser != null) {
+                                                 $rootScope.isProfilePage = true;
+                                          } else {
+                                                 $rootScope.isProfilePage = false;
+                                                 $state.go("login");
+                                          }
 
-						}
-					}
-					
-					$scope.init=function(){
-						$scope.userName="";
-						$http.get("view/mockMonitoring.json").success(function(response){ 
-							$scope.users = response; 
-							console.log('test' , response)//ajax request to fetch data into $scope.data
-						})
-						 .error(function(data,status){    
-						     console.error('Fail to load data', status, data);    
-						     $scope.employees = { };     
-						   });    
-						
-						$scope.inituser();
-						}
-					
-					$scope.sort = function(keyname){
-						$scope.sortKey = keyname;   //set the sortKey to the param passed
-						$scope.reverse = !$scope.reverse; //if true make it false and vice versa
-						
-						
-					}
-				  $scope.showDialog = function(flag) {
-					        jQuery("#confirmation-dialog .modal").modal(flag ? 'show' : 'hide');
-					      };
-							
-				
-				} ]);
+                                   }
+                            }
+                            
+                            $scope.init=function(){
+                                   $scope.userName="";
+                                   
+                                   var url= appConstants.serverUrl+"/reports/getMonitoring/";
+                                   $http.get(url).success(function(response){ 
+                                          $scope.monitorDataList = response; 
+                                          console.log('test monitoring data' , response)//ajax request to fetch data into $scope.data
+                                   })
+                                   .error(function(data,status){    
+                                        console.error('Fail to load data', status, data);    
+                                        $scope.employees = { };     
+                                      });    
+                                   
+                                   $scope.inituser();
+                                   }
+                            
+                            $scope.sort = function(keyname){
+                                   $scope.sortKey = keyname;   //set the sortKey to the param passed
+                                   $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+                                   
+                                   
+                            }
+                       $scope.showDialog = function(flag) {
+                                    jQuery("#confirmation-dialog .modal").modal(flag ? 'show' : 'hide');
+                                  };
+                                          
+                     
+                     } ]);
+
+
 
 angular.module('cdrApp').controller(
 		'reportsController',

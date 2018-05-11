@@ -1,6 +1,5 @@
 package com.cmacgm.cdrserver.controller;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,18 +8,15 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.joda.time.DateTime;
-import org.joda.time.Hours;
-import org.joda.time.Minutes;
-import org.joda.time.Seconds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cmacgm.cdrserver.model.EmployeeDetails;
+import com.cmacgm.cdrserver.model.MonitoringDetails;
 import com.cmacgm.cdrserver.model.UserActivityTrack;
+import com.cmacgm.cdrserver.repository.ActiveMonitoringRepository;
 import com.cmacgm.cdrserver.repository.ActivityTrackRepository;
 import com.cmacgm.cdrserver.repository.ReportsRepository;
 
@@ -37,6 +33,10 @@ public class ReportsController {
 	ReportsRepository reportsRepository;
 	@Autowired
 	ActivityTrackRepository activityTrackRepository;
+	
+
+	@Autowired
+    ActiveMonitoringRepository activeMonitoringRepository;
 	
 	@RequestMapping("/getEmpDetails" )
 	public List<EmployeeDetails> getEmpDetails(){
@@ -82,6 +82,20 @@ public class ReportsController {
         return myRepList;
    		
    	}
+	
+
+@GetMapping(value="/getMonitoring")
+    public List<MonitoringDetails> getMonitoring(){
+           
+           String userName = (String) httpSession.getAttribute("userName");
+           String rmId=userName + "@CMA-CGM.COM";
+         //  System.out.println(rmId);
+           List<MonitoringDetails> test=activeMonitoringRepository.findAll();
+           System.out.println("monitor list"+ test);
+           return test;
+}
+
+
 	
 	@GetMapping("/getTeamReport")
 	public List<UserActivityTrack> getTeamReport(HttpServletRequest req){

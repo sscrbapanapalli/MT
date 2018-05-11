@@ -103,11 +103,11 @@ $(function() {
                                   <a  ui-sref="activityTrackUser" >Task Timer</a> 
                                   
                            </li>
-                           <!-- <li><span  class="divider"></span></li>
+                          <li><span ng-if="user.data.isAdmin==true" class="divider"></span></li>
                            <li >
-                                  <a   ui-sref="monitoring" >Active Time</a> 
+                                  <a  ng-if="user.data.isAdmin==true" ui-sref="monitoring"  ui-sref-opts="{reload:true}" >Active Time</a> 
                                   
-                           </li> -->
+                           </li>
                            <li><span  class="divider"></span></li>
                            <li >
                                   <a  ui-sref="reports" ui-sref-opts="{reload:true}" >Reports</a> 
@@ -126,6 +126,7 @@ $(function() {
                            </li>
                            <li ><span  ng-if="user.data.isAdmin==true"  class="divider"></span></li>
                      </ul>
+
 
 		</nav>
 	</div>
@@ -153,7 +154,7 @@ $(function() {
    <div>&nbsp</div>
    
  <div ng-show=showTable> 
-   <div> <h1  style="font-size:22px; color:#960;" align="left">Activity Details</h1></div>
+   <div> <h3  style="font-size:16px; color:#960;" align="left">Activity Details</h3></div>
 	
 	<div>
 				<div>

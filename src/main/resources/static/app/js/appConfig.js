@@ -1,7 +1,7 @@
  
  var config=angular.module("appConfigApp", [])
 .constant("appConstants",{
-	//serverUrl : "http://10.13.44.80:8080/MyTime",
+	//serverUrl : "http://10.13.44.33:8080/MyTime",
 	serverUrl : "http://10.13.56.64:8080",
 
 }).run(function($http, $window) {	
