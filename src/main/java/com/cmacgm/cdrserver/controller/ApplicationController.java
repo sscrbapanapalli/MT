@@ -514,8 +514,8 @@ public class ApplicationController {
 	 	            	  errorlistEmpDetails=  getError(row);
 	 	               else if(row.getCell(4)==null)
 	 	            	  errorlistEmpDetails= getError(row);
-	 	              else if(!Boolean.TRUE.equals(row.getCell(4).getBooleanCellValue()) || !Boolean.FALSE.equals(row.getCell(4).getBooleanCellValue()))
-	 	            	 errorlistEmpDetails=  getError(row);
+	 	             // else if(!Boolean.TRUE.equals(row.getCell(4).getBooleanCellValue()) || !Boolean.FALSE.equals(row.getCell(4).getBooleanCellValue()))
+	 	            	// errorlistEmpDetails=  getError(row);
 	            		   
 	                  else {
 	   

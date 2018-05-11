@@ -1,7 +1,7 @@
  
  var config=angular.module("appConfigApp", [])
 .constant("appConstants",{
-	//serverUrl : "http://10.13.44.80:8080/ActivityTracker",
+	//serverUrl : "http://10.13.44.80:8080/MyTime",
 	serverUrl : "http://localhost:8080",
 
 }).run(function($http, $window) {	
