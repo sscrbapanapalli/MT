@@ -1263,7 +1263,7 @@ angular
                                                       $rootScope.currentUser=userService.getCurrentUser();                                     
                                                           $rootScope.isProfilePage=true; 
                                                           $rootScope.buttonClicked ="Welcome! "+$rootScope.currentUser.userName;
-                                                          $rootScope.showModal = !$rootScope.showModal;
+                                                          //$rootScope.showModal = !$rootScope.showModal;
                                                           $rootScope.contentColor = "#78b266";
                                                                                                             
                                                           $state.go("activityTrackUser", {}, {reload: true}); 
@@ -1273,8 +1273,9 @@ angular
                                        
                                              $scope.dataLoading = false;
                                              $rootScope.buttonClicked ="User Not Authorized to Access Application, Please Contact Application Support Team";
-                                              $rootScope.showModal = !$rootScope.showModal;
-                                                $rootScope.contentColor = "#dd4b39";
+                                             $rootScope.showModal = !$rootScope.showModal;
+                                             $rootScope.contentColor = "#dd4b39";
+                                             
                                                                                        
                                       }
                                   });
@@ -1332,13 +1333,12 @@ angular.module('cdrApp').directive('modal', ['$timeout', function ($timeout) {
       link: function postLink(scope, element, attrs) {
     	  $timeout(function() { // Timeout 
     		  $(element).modal('hide');
-    		  }, 7000);
+    		  }, 3000);
           scope.$watch(attrs.visible, function(value){
           if(value == true)
             $(element).modal('show');
           else       	 
-        		  $(element).modal('hide');
-          
+        	 $(element).modal('hide'); 
          
         });
 

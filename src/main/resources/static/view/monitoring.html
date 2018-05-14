@@ -146,30 +146,11 @@ function myFunction() {
 						<div class="col-xs-5 pull-right">
 							<label for="search">Record(s) per page</label> 
 								<input type="number"	min="1" max="100" class="textboxNumber" ng-model="pageSize">
-								<button class="btn btn-warning btn-sm dropdown-toggle"	data-toggle="dropdown">
-									<i class="fa fa-bars"></i> Export
-								</button>
-								<ul class="dropdown-menu " role="menu">
-									<li class="divider"></li>
-									<li><a uisref="{{'.'}}"
-										onClick="generatePdf('parentId');">
-											<img src='./export/images/pdf.png' width='24px'> PDF
-									</a></li>
-									<li><a uisref="{{'.'}}"
-										onClick="$('#parentId').tableExport({tableName:'ActiveTime',type:'doc',escape:'false'});">
-											<img src='./export/images/word.png' width='24px'> Word
-									</a></li>
-									<li class="divider"></li>
-									<li><a uisref="{{'.'}}"
-										onClick="$('#parentId').tableExport({tableName:'ActiveTime',type:'csv',escape:'false'});">
-											<img src='./export/images/csv.png' width='24px'> CSV
-									</a></li>
-									<li><a uisref="{{'.'}}"
+								<a uisref="{{'.'}}"
 										onClick="$('#parentId').tableExport({tableName:'ActiveTime',type:'excel',escape:'false'});">
-											<img src='./export/images/xls.png' width='24px'> XLS
-									</a></li>
-								</ul>
-						
+											<img src='./export/images/xls.png' width='24px'>
+									</a>
+								
 						</div>
 						
 						

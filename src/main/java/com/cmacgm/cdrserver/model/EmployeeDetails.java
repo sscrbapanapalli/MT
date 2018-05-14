@@ -42,8 +42,8 @@ public class EmployeeDetails {
 	@Column(name="is_admin")
 	private Boolean isAdmin=false;
 	
-	 @Column(name="active_indicator")
-	  private boolean activeIndicator;
+	@Column(name="active_indicator")
+	private boolean activeIndicator;
 	
 	
 	@CreationTimestamp

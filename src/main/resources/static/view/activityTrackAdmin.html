@@ -133,7 +133,7 @@ function myFunction() {
 <div ng-controller="activityTrackController" ng-init="init()">
 
 	<div> <h3  style="font-size:16px; color:#960;" align="left">Master Task List</h3></div>
-	<button type="submit" class="btn btn-primary pull-right" ng-show="showAddActivity" ng-click = "addNewActivity()">Add New Activity</button>
+	<button type="submit" class="btn btn-primary pull-left" ng-show="showAddActivity" ng-click = "addNewActivity()">Add New Activity</button>
 	<div ng-show="updateActivity">
 	<div  align="left"> <h1  style="font-size:18px; color:#333;"> Update Activity Name for - {{activityName}}</h1></div>
 
@@ -207,7 +207,7 @@ function myFunction() {
 	   			 <button type="submit" class="btn btn-success" ng-click = "activityConfig()">Submit</button>
 	   			  <button type="submit" class="btn btn-warning" ng-click = "Cancel()">Cancel</button>
 			</div>
-			  <div>&nbsp;</div>  
+			 <!--  <div>&nbsp;</div> -->
    		 </form>
    		</div> 
    		</div>
@@ -219,38 +219,18 @@ function myFunction() {
 			<div class="bs-component">
 				<form name='myform'>
 					<div>
-						<div class="slinputtext ">
+						<div class="slinputtext "><br>
 	  						 	<!-- <i class="fa fa-search left-icon"></i>  -->
 							    <input class="pull-left textbox" required ng-model="search" placeholder="Enter search term"  /> 
 							   <!--  <i class="fa fa-close right-icon" ng-click="resetParent()"></i> -->
 						</div>
-						<div class="col-xs-5 pull-right">
+						<div class="">
 							<label for="search">Record(s) per page</label> 
 								<input type="number"	min="1" max="100" class="textboxNumber" ng-model="pageSize">
-								<button class="btn btn-warning btn-sm dropdown-toggle"	data-toggle="dropdown">
-									<i class="fa fa-bars"></i> Export
-								</button>
-								<ul class="dropdown-menu " role="menu">
-									<li class="divider"></li>
-									<li><a uisref="{{'.'}}"
-										onClick="generatePdf('parentId');">
-											<img src='./export/images/pdf.png' width='24px'> PDF
-									</a></li>
-									<li><a uisref="{{'.'}}"
-										onClick="$('#parentId').tableExport({tableName:'MasterTaskList',type:'doc',escape:'false'});">
-											<img src='./export/images/word.png' width='24px'> Word
-									</a></li>
-									<li class="divider"></li>
-									<li><a uisref="{{'.'}}"
-										onClick="$('#parentId').tableExport({tableName:'MasterTaskList',type:'csv',escape:'false'});">
-											<img src='./export/images/csv.png' width='24px'> CSV
-									</a></li>
-									<li><a uisref="{{'.'}}"
+						        <a uisref="{{'.'}}"
 										onClick="$('#parentId').tableExport({tableName:'MasterTaskList',type:'excel',escape:'false'});">
-											<img src='./export/images/xls.png' width='24px'> XLS
-									</a></li>
-								</ul>
-						
+											<img src='./export/images/xls.png' width='24px'>
+									</a>					
 						</div>
 						
 						
@@ -259,7 +239,7 @@ function myFunction() {
 			</div>
 		</div>
 
-	<table class="table" id="parentId">
+	<table class="table" id="parentId" style="width:75%">
 		<thead>
 			<tr>
 				<th ng-click="sort('activityName')">Activity Name
@@ -280,15 +260,22 @@ function myFunction() {
 		<tbody>
 			<tr ng-class-odd="ClassOdd($index)"  ng-class-even="ClassEven($index)"
 				dir-paginate="obj in filtered = (allActivities | filter:search) |orderBy:sortKey:reverse | itemsPerPage:pageSize ">
-				<td align="left">{{obj.activityName}}</td>
-				<td align="left" class="text-uppercase">{{obj.activeIndicator}}</td>  
-				<td align="left">{{obj.createdBy}}</td>
-				<td align="left">{{obj.updatedBy}}</td>
+				<td align="left">&nbsp;{{obj.activityName}}</td>
+				<td align="left" class="text-uppercase">&nbsp;{{obj.activeIndicator}}</td>  
+				<td align="left">&nbsp;{{obj.createdBy}}</td>
+				<td align="left">&nbsp;{{obj.updatedBy}}</td>
 				<td class="pull-middle">
 					 <!-- <button type="submit" class="btn btn-primary" ng-click = "viewAppDetails(obj.id,obj.activityName)">View</button> -->
-					 <button type="submit" class="btn btn-success" ng-click = "updateActivityDetails(obj.id,obj.activityName)">Update</button>
-	 			 	 <button type="submit" class="btn btn-failure" ng-click = "deleteActivityDetails(obj.id,obj.activityName)">Delete</button>
-				</td>
+  					<!--  <button type="submit" class="btn btn-success" ng-click = "updateActivityDetails(obj.id,obj.activityName)">Update</button>
+	 			 	 <button type="submit" class="btn btn-failure" ng-click = "deleteActivityDetails(obj.id,obj.activityName)">Delete</button> -->
+					<a ng-click="updateActivityDetails(obj.id,obj.activityName)"> 
+						<img src='./app/images/Edit_32x32.png' width='24px'>
+					</a>
+					<a ng-click="deleteActivityDetails(obj.id,obj.activityName)"> 
+						<img src='./app/images/Delete_32x32.png' width='24px'>
+					</a>
+
+					</td>
 			</tr>
 		</tbody>
 	</table>

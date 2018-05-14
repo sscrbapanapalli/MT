@@ -162,32 +162,14 @@ function myFunction() {
 							    <input class="pull-left textbox" required ng-model="search" placeholder="Enter search term"  /> 
 							   <!--  <i class="fa fa-close right-icon" ng-click="resetParent()"></i> -->
 						</div>
-						<div class="col-xs-5 pull-right">
+						<div class="col-sm-10 pull-right">
 							<label for="search">Record(s) per page</label> 
 								<input type="number"	min="1" max="100" class="textboxNumber" ng-model="pageSize">
-								<button class="btn btn-warning btn-sm dropdown-toggle"	data-toggle="dropdown">
-									<i class="fa fa-bars"></i> Export
-								</button>
-								<ul class="dropdown-menu " role="menu">
-									<li class="divider"></li>
-									<li><a uisref="{{'.'}}"
-										onClick="generatePdf('parentId');">
-											<img src='./export/images/pdf.png' width='24px'> PDF
-									</a></li>
-									<li><a uisref="{{'.'}}"
-										onClick="$('#parentId').tableExport({tableName:'TaskTimer',type:'doc',escape:'false'});">
-											<img src='./export/images/word.png' width='24px'> Word
-									</a></li>
-									<li class="divider"></li>
-									<li><a uisref="{{'.'}}"
-										onClick="$('#parentId').tableExport({tableName:'TaskTimer',type:'csv',escape:'false'});">
-											<img src='./export/images/csv.png' width='24px'> CSV
-									</a></li>
-									<li><a uisref="{{'.'}}"
+								<a uisref="{{'.'}}"
 										onClick="$('#parentId').tableExport({tableName:'TaskTimer',type:'excel',escape:'false'});">
-											<img src='./export/images/xls.png' width='24px'> XLS
-									</a></li>
-								</ul>
+											<img src='./export/images/xls.png' width='24px'>
+									</a>
+								
 						
 						</div>
 						
@@ -197,32 +179,37 @@ function myFunction() {
 			</div>
 		</div>
 
-		<table class="table" id="parentId">
+		<table class="table" id="parentId" style="width:68%">
 			<thead>
 				<tr>
-					<th ng-click="sort('activityName')">Activity Name <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('activityStatus')">Activity Status <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('activityStartTime')">Start Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('activityEndTime')">End Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('activityTotTime')">Total Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th>Actions</th>
-					
-					
+					<th ng-click="sort('activityName')" style="width:15%">Activity Name <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					<th ng-click="sort('activityStatus')" style="width:15%">Activity Status <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					<th ng-click="sort('activityStartTime')" style="width:15%">Start Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					<th ng-click="sort('activityEndTime')" style="width:15%">End Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					<th ng-click="sort('activityTotTime')" style="width:10%">Total Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					<th style="width:5%">Actions </th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-class-odd="ClassOdd($index)"  ng-class-even="ClassEven($index)"
 					dir-paginate="obj in filtered= ( userActivityList | filter:search)| orderBy:sortKey:reverse |itemsPerPage:pageSize"
 					 >
-						<td align="left">{{obj.activityName}}</td>
-						<td align="left">{{obj.activityStatus}}</td>
-     					<td align="left">{{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-						<td align="left">{{obj.activityEndTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>  
-						<td align="left">{{obj.activityTotTime}}</td> 
+						<td align="left">&nbsp;{{obj.activityName}}</td>
+						<td align="left">&nbsp;{{obj.activityStatus}}</td>
+     					<td align="left">&nbsp;&nbsp;{{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+						<td align="left">&nbsp;&nbsp;{{obj.activityEndTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>  
+						<td align="left">&nbsp;&nbsp;{{obj.activityTotTime|date: 'HH:mm:ss'}}</td> 
      					
      					<td class="pull-middle">
-  						 <button type="submit" class="btn btn-primary" ng-click = "startTask(obj.id)">Start</button>
-		   			 <button type="submit" class="btn btn-danger" ng-click = "stopTask(obj.id)">Stop</button>
+     					<a ng-click="startTask(obj.id)">
+											<img src='./app/images/Play_32x32.png' width='24px'> </a>
+  			
+  			<a ng-click="stopTask(obj.id)" ng-show="obj.activityStatus!='Not Started'">
+											<img src='./app/images/Stop_32x32.png' width='24px'> </a>
+  			
+  			<!--  	<button type="submit" class="btn btn-primary" ng-click = "startTask(obj.id)">Start</button>
+  				 <button type="submit" class="btn btn-danger" ng-click = "stopTask(obj.id)">Stop</button> -->
+		   			 
 					</td>
 				</tr>
 			</tbody>
@@ -237,7 +224,7 @@ function myFunction() {
 	   			 </dir-pagination-controls>
 	   			
 			</div>
-			<div  class="pull-right" ng-show="userActivityList !='undefined' && userActivityList.length>=0" class="pull-right">Filtered : ({{ filtered.length }})
+			<div  class="col-sm-10 pull-right" ng-show="userActivityList !='undefined' && userActivityList.length>=0" class="pull-right">Filtered : ({{ filtered.length }})
 							record(s) out of ({{userActivityList.length }}) entries
 			</div>
 		
@@ -262,7 +249,7 @@ function myFunction() {
 					<div style="width:25%;float:left" align="left">
 						<label class="pull-left" style="padding-top:5px;padding-bottom:0px" >Available</label>					
 						<input class="pull-left textbox_multi" style="width: 240px" required ng-model="search1" placeholder="Enter search term"  /> 
-						<select size="10"   multiple ng-model="userRole" ng-options="role as role.activityName for role in allActivity | filter:search1" style="width: 250px"></select>         
+						<select size="10"   multiple ng-model="userRole" ng-options="role as role.activityName for role in allActivity | filter:search1" style="width: 240px"></select>         
 					</div>
 					
 					
@@ -276,7 +263,7 @@ function myFunction() {
 					</div>
 					</div> -->
 			 		
-			 		<div style="width:5%;float:left;padding-top:90px;padding-right:10px;padding-left:20px" align="center">
+			 		<div style="width:5%;float:left;padding-top:90px;padding-right:50px" align="center">
 			 			<div>
 			 			<a  class="btn btn-info btn-lg" ng-click="moveItem(userRole, allActivity,userActivity)" style="width:25px; height:20px;display:block;padding:0px">
 				        	  <span class="glyphicon glyphicon-arrow-right" ></span> 
@@ -289,10 +276,10 @@ function myFunction() {
 				        </div>
 			 		</div>
 			 				
-			 		<div style="width:24%;float:left" align="left">
+			 		<div style="width:24%;float:left;padding-top:5px;" align="left">
 			 			<label class="pull-left" >Selected</label>	
 			 			<input class="pull-left textbox_multi" style="width: 240px" required ng-model="search2" placeholder="Enter search term"  />
-			 			<select size="10" multiple ng-model="userSelectedRole" ng-options="userRole as userRole.activityName for userRole in userActivity| filter:search2" style="width: 250px"></select>
+			 			<select size="10" multiple ng-model="userSelectedRole" ng-options="userRole as userRole.activityName for userRole in userActivity| filter:search2" style="width: 240px"></select>
    					</div>	
 				</div>
 			

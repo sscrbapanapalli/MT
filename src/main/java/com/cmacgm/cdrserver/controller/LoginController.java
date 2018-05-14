@@ -61,6 +61,7 @@ public class LoginController {
 	@RequestMapping(value = "/loginUser", method = RequestMethod.POST, produces = "application/json", consumes = "application/json")
     public @ResponseBody RetValue<HashMap> loginUser(@RequestBody UserLoginModel user) throws Exception {
            Boolean authStatus = false;
+           System.out.println("Login User Method is reached");
            try {
                   if (user.getUserName() != null && user.getPassword() != null
                                || user.getUserName().trim() != "" && user.getPassword().trim() != "") {
@@ -73,7 +74,7 @@ public class LoginController {
                         // System.out.println(" in cdr server login controller"+username
                         // + "-" + password );
                         authStatus = ActiveDirectory.getActiveDirectoryAuthentication(username, decrypt(user.getPassword()));
-       
+                       
                        if(authStatus){
                                       String token = generateToken(username);
                                       map.put("userToken", token);
@@ -305,7 +306,6 @@ public class LoginController {
 			String userName = (String) httpSession.getAttribute("userName");
 			userDetail = new EmployeeDetails();
 			userDetail=employeeDetailsRepository.findByEmailId(userName + "@CMA-CGM.COM");
-			
 				
 				return userDetail;
 		}
