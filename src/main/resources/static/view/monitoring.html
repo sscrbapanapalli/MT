@@ -93,18 +93,18 @@ function myFunction() {
                            
                            
                            <li >
-                                  <a ng-if="user.data.isAdmin==true" ui-sref="activityTrackAdmin" >Master Task List</a> 
+                                  <a ng-if="user.data.admin==true" ui-sref="activityTrackAdmin" >Master Task List</a> 
                                   
                            </li>
-                           <li ><span ng-if="user.data.isAdmin==true"   class="divider"></span></li>
+                           <li ><span ng-if="user.data.admin==true"   class="divider"></span></li>
                            
                            <li>
                                   <a  ui-sref="activityTrackUser" >Task Timer</a> 
                                   
                            </li>
-                          <li><span ng-if="user.data.isAdmin==true" class="divider"></span></li>
+                          <li><span ng-if="user.data.admin==true" class="divider"></span></li>
                            <li >
-                                  <a  ng-if="user.data.isAdmin==true" ui-sref="monitoring"  ui-sref-opts="{reload:true}" >Active Time</a> 
+                                  <a  ng-if="user.data.admin==true" ui-sref="monitoring"  ui-sref-opts="{reload:true}" >Active Time</a> 
                                   
                            </li>
                            <li><span  class="divider"></span></li>
@@ -114,17 +114,19 @@ function myFunction() {
                            </li>
                            <li><span  class="divider"></span></li>
                            <li >
-                                  <a  ng-if="user.data.isAdmin==true"  ui-sref="empSettings" >Employee Settings</a> 
+                                  <a  ng-if="user.data.admin==true"  ui-sref="empSettings" >Employee Settings</a> 
                                   
                            </li>
-                        <li ><span ng-if="user.data.isAdmin==true" class="divider"></span></li>
+                        <li ><span ng-if="user.data.admin==true" class="divider"></span></li>
                         
                            <li >
-                                  <a  ng-if="user.data.isAdmin==true"  ui-sref="uploadEmpData" >Upload Employee Details</a> 
+                                  <a  ng-if="user.data.admin==true"  ui-sref="uploadEmpData" >Upload Employee Details</a> 
                                   
                            </li>
-                           <li ><span  ng-if="user.data.isAdmin==true"  class="divider"></span></li>
+                           <li ><span  ng-if="user.data.admin==true"  class="divider"></span></li>
                      </ul>
+
+
 		</nav>
 	</div>
 </div>

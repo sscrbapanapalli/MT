@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.cmacgm.cdrserver.model.ActivitySettings;
-import com.cmacgm.cdrserver.model.User;
 
 public interface ActivityConfigRepository extends JpaRepository<ActivitySettings, Long>{
 	

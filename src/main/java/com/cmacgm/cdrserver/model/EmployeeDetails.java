@@ -35,15 +35,15 @@ public class EmployeeDetails {
 		
 	@Column(name="rm_name", length=100)
 	private String rmName;
+	
+	@Column(name="is_admin",nullable = false, columnDefinition = "TINYINT(1)")
+	 private boolean isAdmin;
 
-	@Column(name="is_rm")
-	private Boolean isRm=false;
-	
-	@Column(name="is_admin")
-	private Boolean isAdmin=false;
-	
-	@Column(name="active_indicator")
-	private boolean activeIndicator;
+	 @Column(name="active_indicator",nullable = false, columnDefinition = "TINYINT(1)")
+	 private boolean activeIndicator;
+	 
+	 @Column(name="ref_column", length=100)
+	  private String refColumn;
 	
 	
 	@CreationTimestamp
@@ -78,6 +78,14 @@ public class EmployeeDetails {
 		this.empId = empId;
 	}
 
+	public String getEmailId() {
+		return emailId;
+	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
 	public String getEmpName() {
 		return empName;
 	}
@@ -102,12 +110,28 @@ public class EmployeeDetails {
 		this.rmName = rmName;
 	}
 
-	public Boolean getIsRm() {
-		return isRm;
+	public boolean isAdmin() {
+		return isAdmin;
 	}
 
-	public void setIsRm(Boolean isRm) {
-		this.isRm = isRm;
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public boolean isActiveIndicator() {
+		return activeIndicator;
+	}
+
+	public void setActiveIndicator(boolean activeIndicator) {
+		this.activeIndicator = activeIndicator;
+	}
+
+	public String getRefColumn() {
+		return refColumn;
+	}
+
+	public void setRefColumn(String refColumn) {
+		this.refColumn = refColumn;
 	}
 
 	public Date getCreatedDate() {
@@ -142,31 +166,6 @@ public class EmployeeDetails {
 		this.updatedBy = updatedBy;
 	}
 
-	public boolean isActiveIndicator() {
-		return activeIndicator;
-	}
-
-	public void setActiveIndicator(boolean activeIndicator) {
-		this.activeIndicator = activeIndicator;
-	}
-
-	public String getEmailId() {
-		return emailId;
-	}
-
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-
-	public Boolean getIsAdmin() {
-		return isAdmin;
-	}
-
-	public void setIsAdmin(Boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-
 	
-    
 
 }

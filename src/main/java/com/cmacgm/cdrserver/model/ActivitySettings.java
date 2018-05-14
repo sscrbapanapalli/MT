@@ -37,8 +37,8 @@ public class ActivitySettings {
     @Column(name="updated_date")
     private Date updatedDate;
     
-    @Column(name="active_indicator")
-    private boolean activeIndicator;
+    @Column(name="active_indicator",nullable = false, columnDefinition = "TINYINT(1)")
+	 private boolean activeIndicator;
     
     @Column(name="created_by",length = 100)    
     private String createdBy;

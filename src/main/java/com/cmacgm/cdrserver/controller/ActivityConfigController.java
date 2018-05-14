@@ -26,11 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cmacgm.cdrserver.model.ActivityConfig;
 import com.cmacgm.cdrserver.model.ActivitySettings;
-import com.cmacgm.cdrserver.model.Application;
-import com.cmacgm.cdrserver.model.ApplicationConfig;
-import com.cmacgm.cdrserver.model.ApplicationFileUploadConfig;
-import com.cmacgm.cdrserver.model.FolderMapping;
-import com.cmacgm.cdrserver.model.Role;
 import com.cmacgm.cdrserver.model.UserActivityTrack;
 import com.cmacgm.cdrserver.repository.ActivityConfigRepository;
 import com.cmacgm.cdrserver.repository.ActivityTrackRepository;

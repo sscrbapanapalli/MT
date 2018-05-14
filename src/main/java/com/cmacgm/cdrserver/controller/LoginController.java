@@ -20,12 +20,9 @@ import com.cmacgm.cdrserver.ActiveDirectory;
 import com.cmacgm.cdrserver.model.EmployeeDetails;
 import com.cmacgm.cdrserver.model.FrameworkUtil;
 import com.cmacgm.cdrserver.model.RetValue;
-import com.cmacgm.cdrserver.model.User;
 import com.cmacgm.cdrserver.model.UserHomeModel;
 import com.cmacgm.cdrserver.model.UserLoginModel;
-import com.cmacgm.cdrserver.model.UserModel;
 import com.cmacgm.cdrserver.repository.EmployeeDetailsRepository;
-import com.cmacgm.cdrserver.repository.UserRepository;
 import com.security.SecurityInfo;
 import com.security.SecurityUtil;
 
@@ -46,8 +43,6 @@ public class LoginController {
 	@Autowired(required = true)
 	private HttpSession httpSession;
 
-	@Autowired
-	UserRepository userRepository;
 	
 	
 	@Autowired
@@ -200,101 +195,6 @@ public class LoginController {
 
 	}
 
-	/*@RequestMapping(value = "/getUserDetails", method = RequestMethod.GET)
-	public @ResponseBody RetValue<UserModel> getUserDetails()
-			throws Exception {
-		UserModel userModel = null;
-		if (httpSession.getAttribute("userName") != null && httpSession.getAttribute("userToken") != null) {
-			String userName = (String) httpSession.getAttribute("userName");
-			User user = userRepository.findByUserId(userName + "@CMA-CGM.COM");
-			System.out.println("getUserDetails" + user);
-			if (user != null) {
-
-				userModel = new UserModel();
-				userModel.setUserToken(httpSession.getAttribute("userToken").toString());
-				userModel.setUserId(user.getUserId());
-				userModel.setUserName(user.getUserDisplayName());
-				userModel.setEmail(user.getUserId());
-				userModel.setActiveIndicator(user.isActiveIndicator());
-				//userModel.setRoleType(user.getRoles().iterator().next().getRoleName());
-
-				return FrameworkUtil.getResponseValue(true, HttpStatus.OK.toString(), userModel);
-			}
-		}
-
-		return FrameworkUtil.getResponseValue(true, HttpStatus.NOT_FOUND.toString(), null);
-
-	}*/
-	@RequestMapping(value = "/getUserDetails", method = RequestMethod.GET)
-	public @ResponseBody RetValue<UserModel> getUserDetails()
-			throws Exception {
-		UserModel userModel = null;
-		if (httpSession.getAttribute("userName") != null && httpSession.getAttribute("userToken") != null) {
-			String userName = (String) httpSession.getAttribute("userName");
-			User user = userRepository.findByUserId(userName + "@CMA-CGM.COM");
-			System.out.println("getUserDetails" + user);
-			if (user != null) {
-
-				userModel = new UserModel();
-				userModel.setUserToken(httpSession.getAttribute("userToken").toString());
-				userModel.setUserId(user.getUserId());
-				userModel.setUserName(user.getUserDisplayName());
-				userModel.setEmail(user.getUserId());
-				userModel.setActiveIndicator(user.isActiveIndicator());
-				//userModel.setRoleType(user.getRoles().iterator().next().getRoleName());
-
-				return FrameworkUtil.getResponseValue(true, HttpStatus.OK.toString(), userModel);
-			}
-		}
-
-		return FrameworkUtil.getResponseValue(true, HttpStatus.NOT_FOUND.toString(), null);
-
-	}
-
-
-
-	@RequestMapping(value = "/getRole", method = RequestMethod.GET)
-	public @ResponseBody RetValue<String> GetRole() throws Exception {
-		
-		if (httpSession.getAttribute("userName") != null && httpSession.getAttribute("userToken") != null) {
-			String userName = (String) httpSession.getAttribute("userName");
-			User user = userRepository.findByUserId(userName + "@CMA-CGM.COM");
-			if (user != null) {
-
-				return FrameworkUtil.getResponseValue(true, HttpStatus.OK.toString(),
-						user.getRoles().iterator().next().getRoleName());
-			}
-		}
-
-		return FrameworkUtil.getResponseValue(true, HttpStatus.NOT_FOUND.toString(), null);
-
-	}
-	
-	/*@RequestMapping(value = "/getUserAuthDetails/{userToken}", method = RequestMethod.GET)
-	public UserHomeModel  getUserAuthDetails(@PathVariable("userToken") String userToken)
-			throws Exception {
-		User user = null;
-		UserHomeModel obj=new UserHomeModel();
-		Collection<Application> appList=new ArrayList<>();
-		if (httpSession.getAttribute("userName") != null && httpSession.getAttribute("userToken") != null
-				&& !userToken.isEmpty() && userToken.equals(httpSession.getAttribute("userToken").toString())) {
-			String userName = (String) httpSession.getAttribute("userName");
-			user = new User();
-			user=userRepository.findByUserId(userName + "@CMA-CGM.COM");
-			if(user!=null){
-			obj.setApplications(user.getApplications());
-			obj.setRoles(user.getRoles());
-			obj.setActiveIndicator(user.isActiveIndicator());
-			obj.setId(user.getId());
-			}
-				
-				return obj;
-		}
-		return  null;
-
-		
-
-	}*/
 	@RequestMapping(value = "/getUserAuthDetails/{userToken}", method = RequestMethod.GET)
 	public EmployeeDetails  getUserAuthDetails(@PathVariable("userToken") String userToken)
 			throws Exception {
