@@ -1,6 +1,7 @@
 <style>
 body {
 	margin: 0;
+	background:url('./app/images/mytime.jpg') !important;
 }
 
 .navbar {
@@ -36,7 +37,11 @@ body {
 		<div>
 			<div class="customRow"></div>
 			<div class="row">
-				<div class="col-sm-6 col-sm-offset-3 form-box">
+			
+		
+			<br/>
+			<br/>
+				<div class="col-sm-5 col-sm-offset-2 form-box">
 					<div class="form-top">
 						<div class="form-top-left">
 							<h3>MyTime Login</h3>
@@ -44,9 +49,9 @@ body {
 							<h2 ng-bind="uploadResult"></h2>
 						</div>
 
-						<div class="form-top-center" style="padding-top:30px;">
+						<div class="form-top-center" >
 						<img
-				style="width: 100px; height: 60px; padding-top: 5px;; padding-left: 10px;"
+				style="width: 100px; height: 60px; padding-top: 5px;; padding-left: 10px;margin-top: 10px;"
 				alt="logo" src="./app/images/Logo_CMACGM.png" />
 							<!-- <i class="fa fa-lock"></i> -->
 						</div>
@@ -72,10 +77,22 @@ body {
 							</div>
 							<button type="submit" class="form-submit-button pull-right">Sign
 								in!</button>
+								<br/>
 							<div ng-include="'view/loading.html'" ng-show="dataLoading">
 						</form>
 					</div>
+					
+					
 				</div>
+			
+			
+				
+			</div>
+			
+						<div class="col-sm-6 form-box" style="float: left;display:none;">
+			<img
+				style="width: 97%; height: 41vh; padding-top: 5px;; padding-left: 10px;"
+				alt="logo" src="./app/images/mytime.jpg" />
 			</div>
 
 		</div>

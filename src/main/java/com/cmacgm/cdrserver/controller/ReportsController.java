@@ -1,16 +1,20 @@
 package com.cmacgm.cdrserver.controller;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cmacgm.cdrserver.model.EmployeeDetails;
@@ -154,4 +158,37 @@ public class ReportsController {
 		return myRepList;
 	}
 
+	
+	 @RequestMapping(value = "/overrideEmployeeTime", method = RequestMethod.POST , produces="application/json")
+	    public @ResponseBody String deleteEmployee(HttpServletRequest request, HttpServletResponse response) throws IllegalStateException, IOException {
+			String deleteResponse="";
+			  String updatedBy = (String) httpSession.getAttribute("userName");
+			Long id=Long.parseLong(request.getParameter("id"));
+			String activityStartTime=request.getParameter("activityStartTime");
+			String comments=request.getParameter("comments");
+			String activityEndTime=request.getParameter("activityEndTime");
+			//String activityTotTime=request.getParameter("activityTotTime");
+			SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+			Date dateFrom=null;
+			Date dateTo=null;
+			System.out.println(updatedBy);
+			System.out.println(activityStartTime);
+			System.out.println(activityEndTime);
+			System.out.println(id);
+			System.out.println(comments);
+			
+				try{
+					//dateFrom = format.parse(activityStartTime);
+					//dateTo = format.parse(activityEndTime);
+					
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+				activityTrackRepository.overrideEmployeeTime(comments,updatedBy,id);
+		       //activityTrackRepository.overrideEmployeeTime(dateFrom,dateTo,activityTotTime,comments,updatedBy,id);
+		
+			
+			return deleteResponse;
+		}
+	
 }

@@ -108,7 +108,7 @@ public class EmployeeDetails {
 
 	public void setRmName(String rmName) {
 		this.rmName = rmName;
-	}
+	}	
 
 	public boolean isAdmin() {
 		return isAdmin;

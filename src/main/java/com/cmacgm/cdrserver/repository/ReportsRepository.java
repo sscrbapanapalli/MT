@@ -9,5 +9,8 @@ import com.cmacgm.cdrserver.model.EmployeeDetails;
 
 public interface ReportsRepository extends JpaRepository<EmployeeDetails, Long> {
 
-	public List<EmployeeDetails> findByRmId(@Param("rmId") String rmId);
+	public List<EmployeeDetails> findByRmId(@Param("rmId") String rmId);	
+
+
+	
 }

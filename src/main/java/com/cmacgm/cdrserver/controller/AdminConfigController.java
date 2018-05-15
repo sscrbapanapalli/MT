@@ -76,7 +76,6 @@ public class AdminConfigController {
 	    public @ResponseBody String setEmployeeConfiguration(@RequestBody EmployeeDetails employeeDetailsConfig) throws IllegalStateException, IOException {
 			
 			 String configResponse="Success";
-			 
 			 if(employeeDetailsConfig==null)
 					return configResponse="Failure No Data Found";
 			 String emailId=employeeDetailsConfig.getEmailId();
@@ -118,10 +117,10 @@ public class AdminConfigController {
 			 }else{
 				 
 				 
-				 checkEmployee.setEmpName(userDisplayName);
-				 employee.setAdmin(employeeDetailsConfig.isAdmin());
+				 checkEmployee.setEmpName(employeeDetailsConfig.getEmpName());
+				 checkEmployee.setAdmin(employeeDetailsConfig.isAdmin());
 				 checkEmployee.setEmpId(employeeDetailsConfig.getEmpId());
-				 employee.setEmailId(employeeDetailsConfig.getEmailId());
+				 checkEmployee.setEmailId(employeeDetailsConfig.getEmailId());
 				 checkEmployee.setRmName(employeeDetailsConfig.getRmName());				
 				 checkEmployee.setActiveIndicator(employeeDetailsConfig.isActiveIndicator());
 				 checkEmployee.setRmId(employeeDetailsConfig.getRmId());

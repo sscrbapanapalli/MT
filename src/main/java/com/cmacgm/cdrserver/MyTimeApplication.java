@@ -22,14 +22,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableAutoConfiguration
 @EnableAspectJAutoProxy
 @ComponentScan
-public class CdrApplication  extends SpringBootServletInitializer  {
+public class MyTimeApplication  extends SpringBootServletInitializer  {
 
 	
 	   protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-	        return application.sources(CdrApplication.class);
+	        return application.sources(MyTimeApplication.class);
 	    }
 	    public static void main(String[] args) throws Exception {
-	        SpringApplication.run(CdrApplication.class, args);
+	        SpringApplication.run(MyTimeApplication.class, args);
 	    }
 
 	@Bean

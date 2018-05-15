@@ -51,6 +51,9 @@ public class UserActivityTrack {
 	@Column(name="activity_tot_time")
     private String activityTotTime;
 	
+	@Column(name="comments")
+    private String comments;
+	
 	
 	
 	@CreationTimestamp
@@ -199,6 +202,16 @@ public class UserActivityTrack {
 		this.activityCurDate = activityCurDate;
 	}
 
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	
+	
 	 /*@Override
 	    public String toString() {
 	        final StringBuilder builder = new StringBuilder();

@@ -92,31 +92,25 @@ angular
 				
 			$rootScope.isProfilePage = false;
 			 $scope.dataLoading = false;						
-			$rootScope.currentUser = {
-				roleType : '',
-				email : '',
-				userId : '',
-				userName : '',
-				userToken : ''
-			};
+		
 									
-							$scope.inituser = function() {
-								var data = globalServices.isUserTokenAvailable();
-								if (data == null || data == undefined) {
-									$rootScope.isProfilePage = false;
-									$state.go("login");
-								} else {
-									$rootScope.currentUser = userService.getCurrentUser();
-									if ($rootScope.currentUser != undefined
-											|| $rootScope.currentUser != null) {
-										$rootScope.isProfilePage = true;
-									} else {
-										$rootScope.isProfilePage = false;
-										$state.go("login");
-									}
+			 $scope.inituser = function() {
+					var data = globalServices.isUserTokenAvailable();
+					if (data == null || data == undefined) {
+						$rootScope.isProfilePage = false;
+						$state.go("login");
+					} else {
+						$rootScope.currentUser = userService.getCurrentUser();
+						if ($rootScope.currentUser != undefined
+								|| $rootScope.currentUser != null) {
+							$rootScope.isProfilePage = true;
+						} else {
+							$rootScope.isProfilePage = false;
+							$state.go("login");
+						}
 
-								}
-							}
+					}
+				}
 							
 							$scope.logout = function () {		
 								   AuthenticationService.ClearCredentials();  
@@ -305,7 +299,7 @@ angular
                                        AuthenticationService.Login($scope.username, $scope.password, function(response) {
                                                   console.log(response)
                                               if(response.message!='failure' && response.data.authStatus){ 
-                                                    
+                                                    console.log(response)
                                                     var currentUser = {
                                                                                 userId : response.data.userId,
                                                                                 email  : response.data.userId,
@@ -1122,6 +1116,7 @@ angular.module('cdrApp').controller(
 				'appConstants','userService','globalServices','AuthenticationService','$stateParams','anchorSmoothScroll','$location','$filter',
 				function($scope, $state, $rootScope, $window, $q,
 						$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,anchorSmoothScroll,$location,$filter) {
+					$scope.isEditable=false;
 					$scope.userId="";
 					$scope.showTable=false;
 					$scope.empdDetailsList=[];	
@@ -1173,6 +1168,7 @@ angular.module('cdrApp').controller(
 						}
 					
 					$scope.getMyReport=function(dateRange){
+						$scope.isEditable=false;
 						$scope.showTable=true;
 						console.log(dateRange)
 						var selectedRange=dateRange;
@@ -1186,6 +1182,7 @@ angular.module('cdrApp').controller(
 					};
 					
 					$scope.getTeamReport=function(dateRange){
+						$scope.isEditable=true;
 						$scope.showTable=true;
 						var selectedRange=dateRange;
 						var getTeamReportUrl=appConstants.serverUrl+"/reports/getTeamReport/?selectedRange="+selectedRange;
@@ -1195,7 +1192,38 @@ angular.module('cdrApp').controller(
                         	$scope.myReportList=response.data;	
                         });
 					};
-					
+					$scope.overrideEmployeeTime=function(id,startTime,endTime,comments){
+						alert("dfdfdf")
+						console.log(id,startTime,endTime,comments)
+                 if($rootScope.currentUser!=undefined){
+							
+							var config = {
+									transformRequest : angular.identity,
+									transformResponse : angular.identity,
+									headers : {
+										'Content-Type' : undefined
+									}
+								}
+						var url=appConstants.serverUrl+"/reports/overrideEmployeeTime/";
+						var data = new FormData();
+						data.append("id" ,id);
+						data.append("activityStartTime", startTime);
+						data.append("activityEndTime", endTime);
+						data.append("activityTotTime", "11:20");
+						data.append("comments",comments);					
+			
+						$http.post(url,data,config).then(
+								function(response){
+									
+										  $state.go("reports", {} , {reload: true} );
+										
+										
+								},function(response){									
+									
+								});							
+						}
+						
+					}
 					$scope.sort = function(keyname){
 						$scope.sortKey = keyname;   //set the sortKey to the param passed
 						$scope.reverse = !$scope.reverse; //if true make it false and vice versa
@@ -1358,9 +1386,7 @@ angular.module('cdrApp').controller(
 						}
 					}
 					
-					$scope.init=function(){
-						$scope.employee.isAdmin=false;
-						$scope.employee.activeIndicator=false;
+					$scope.init=function(){					
 						$scope.userName="";					                   	
                         var allEmployeeDetailsUrl =  appConstants.serverUrl+"/admin/getAllEmployees/";
                    
@@ -1394,12 +1420,12 @@ angular.module('cdrApp').controller(
 						
 						
 					}
-					$scope.employeeConfig=function(employee){
-						console.log(employee)
+					$scope.employeeConfig=function(employee){	
+						
 						var employeeConfigUrl=appConstants.serverUrl+"/admin/setEmployeeConfiguration/";
 						var data = {
 								emailId : employee.emailId,
-								isAdmin : employee.isAdmin,
+								admin : employee.admin,
 								empId : employee.empId,
 								id : employee.id,
 			            		 empName : employee.empName,
@@ -1409,8 +1435,7 @@ angular.module('cdrApp').controller(
 			            		 createdBy :$rootScope.currentUser.userName,
 			            		 updatedBy :$rootScope.currentUser.userName
 			     		};
-						//console.log(data)
-											
+																
 						if(employee.empId==null || employee.empId==undefined || employee.empId==""){
 							$rootScope.buttonClicked = "Please provide Employee Id";
 							$rootScope.showModal = !$rootScope.showModal;
@@ -1436,8 +1461,8 @@ angular.module('cdrApp').controller(
 							$rootScope.showModal = !$rootScope.showModal;
 							  $rootScope.contentColor = "#dd4b39";
 							
-						}else if((typeof  employee.isAdmin !== 'boolean' &&  employee.isAdmin !== true)||(typeof  employee.isAdmin !== 'boolean' &&  employee.isAdmin !== false)){
-								$rootScope.buttonClicked = "Please Check Boolean value Reporting Manager or Not";
+						}else if((typeof  employee.admin !== 'boolean' &&  employee.admin !== true)||(typeof  employee.admin !== 'boolean' &&  employee.admin !== false)){
+								$rootScope.buttonClicked = "Please Check Boolean value isAdmin or Not";
 							$rootScope.showModal = !$rootScope.showModal;
 							  $rootScope.contentColor = "#dd4b39";
 							
@@ -1480,7 +1505,7 @@ angular.module('cdrApp').controller(
 									   $scope.employeeExists="true";
 									   $scope.inputReadOnly="true";
 									   $scope.employee=$scope.allEmployeeDetails[i];
-									   $scope.employee.empId=$scope.allEmployeeDetails[i].empId;
+									   $scope.employee.empId=$scope.allEmployeeDetails[i].empId;									
 									   $scope.employee.emailId=$scope.allEmployeeDetails[i].emailId;									  
 									   break;
 									   
@@ -1488,16 +1513,18 @@ angular.module('cdrApp').controller(
 							}
 							
 						}
-						if(methodName=="checkEmployeer"){
-							console.log(rowId)
+						
+						
+						if(methodName=="checkEmployee"){
+						
 							var emailId=rowId;
 							for(var i=0; i<$scope.allEmployeeDetails.length; i++) {	
 								console.log($scope.allEmployeeDetails[i].emailId)
 								   if(emailId==$scope.allEmployeeDetails[i].emailId){
 									   $scope.employeeExists="true";
-									   $scope.inputReadOnly="true";
-									   $scope.employee=$scope.allEmployeeDetails[i];
-									   $scope.employee.empId=$scope.allEmployeeDetails[i].empId;
+									   $scope.inputReadOnly="true";									 
+									   $scope.employee=$scope.allEmployeeDetails[i];									
+									   $scope.employee.empId=$scope.allEmployeeDetails[i].empId;									
 									   $scope.employee.emailId=$scope.allEmployeeDetails[i].emailId;									  
 									   break;
 								   }
@@ -1532,6 +1559,9 @@ angular.module('cdrApp').controller(
 							    $scope.showDialog(true);
 					
 					}
+					
+				
+					
 					$scope.confirmEmployeeDelete=function(id){
 						
 						if($rootScope.currentUser!=undefined){
@@ -1576,7 +1606,7 @@ angular.module('cdrApp').controller(
 					//to check user availability in db
 					$scope.checkEmployee=function(){
 						console.log('in checkEmployee method')
-						$scope.employeeUpdate($scope.employee.emailId,"checkEmployeer");
+						$scope.employeeUpdate($scope.employee.emailId,"checkEmployee");
 					}
 					
 				        

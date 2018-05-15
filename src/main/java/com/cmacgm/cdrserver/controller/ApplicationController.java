@@ -125,9 +125,10 @@ public class ApplicationController {
 	 	               else if(row.getCell(3)==null)
 	 	            	  errorlistEmpDetails=  getError(row);
 	 	               else if(row.getCell(4)==null)
-	 	            	  errorlistEmpDetails= getError(row);	 	   	       
-	 	             else if(!Boolean.TRUE.equals(row.getCell(5).getBooleanCellValue()) || !Boolean.FALSE.equals(row.getCell(5).getBooleanCellValue()))
-	 	            	 errorlistEmpDetails=  getError(row);
+	 	            	  errorlistEmpDetails= getError(row);	 
+	 	              else if(row.getCell(5)==null)
+	 	            	  errorlistEmpDetails= getError(row); 
+	 	           
 	            		   
 	                  else {
 	   
@@ -184,10 +185,10 @@ public class ApplicationController {
 			 employeeDetails=new EmployeeErrorDetails();
 			List<EmployeeErrorDetails> errorlistEmpDetails=new ArrayList<>();
 			Cell empId=row.getCell(0);
-    		employeeDetails.setEmpId(empId.getStringCellValue());
+    		employeeDetails.setEmpId((long) empId.getNumericCellValue());
     		
     		Cell emailId=row.getCell(1);
-    		employeeDetails.setEmpId(emailId.getStringCellValue());
+    		employeeDetails.setEmailId(emailId.getStringCellValue());
     	
     		Cell empName=row.getCell(2);
     		employeeDetails.setEmpName(empName.getStringCellValue());

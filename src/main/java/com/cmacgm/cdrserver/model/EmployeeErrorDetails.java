@@ -4,7 +4,7 @@ public class EmployeeErrorDetails {
 	
 	
 
-	private String empId;	
+	private Long empId;	
 		
 
 	private String empName;
@@ -22,14 +22,16 @@ public class EmployeeErrorDetails {
 	private boolean isAdmin;
 
 
+	
 
-	public String getEmpId() {
+
+	public Long getEmpId() {
 		return empId;
 	}
 
 
 
-	public void setEmpId(String empId) {
+	public void setEmpId(Long empId) {
 		this.empId = empId;
 	}
 

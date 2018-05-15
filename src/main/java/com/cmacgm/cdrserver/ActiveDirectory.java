@@ -37,7 +37,7 @@ public class ActiveDirectory {
         
         properties.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         //properties.put(Context.PROVIDER_URL, "LDAP://ad0001.inchessc.com");
-        properties.put(Context.PROVIDER_URL, "LDAP://mum2-vs-001.inchessc.com");
+        properties.put(Context.PROVIDER_URL, "LDAP://10.13.44.7");
         //properties.put(Context.PROVIDER_URL, " LDAP://svmumdc01.inchessc.com");
         properties.put(Context.SECURITY_PRINCIPAL, username + "@inchessc.com");
         properties.put(Context.SECURITY_CREDENTIALS, password);

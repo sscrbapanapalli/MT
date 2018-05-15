@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.cmacgm</groupId>
-	<artifactId>ActivityTracker</artifactId>
+	<artifactId>MyTime</artifactId>
 
 	<packaging>war</packaging>
 
-	<name>ActivityTracker</name>
+	<name>MyTime</name>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -64,12 +64,6 @@
 			<scope>test</scope>
 		</dependency>
 
-
-		<!--  <dependency>
-			<groupId>com.microsoft.sqlserver</groupId>
-			<artifactId>sqljdbc4</artifactId>
-			<version>4.0</version>
-		</dependency>  -->
 		<!-- use excel file -->
 	   	<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -158,5 +152,5 @@
 	</build>
 
 
-	<description>Activity Tracker</description>
+	<description>MyTime</description>
 </project>

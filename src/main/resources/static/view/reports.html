@@ -1,5 +1,19 @@
-<style>
 
+
+<style>
+.slinputtext input {
+    padding: 0px;
+    width: 40%;
+     height: 20px;
+    padding-left: 31px;
+    padding-right: 30px;
+    color: black;
+    font-family: arial,sans-serif;
+    font-size: 12px;
+}
+element.style {
+    width: 150px;
+}
 .ui-datepicker-calendar {
     display: none;
     }
@@ -143,7 +157,7 @@ $(function() {
  				  <span></span> <i class="fa fa-caret-down"></i> -->
 				</input>
 		</div>
-						
+					
    		<div style="float:left; padding-right:25px;padding-left:100px" align="left">
    				 <button type="submit" class="btn btn-primary"  ng-click = "getMyReport(dateRange)">My Report</button>
    				 <button type="submit" class="btn btn-primary" ng-show="empdDetailsList.length>0"  ng-click = "getTeamReport(dateRange)">Team Report</button>
@@ -192,7 +206,8 @@ $(function() {
 					<th ng-click="sort('activityStartTime')">Start Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 					<th ng-click="sort('activityEndTime')">End Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 					<th ng-click="sort('activityTotTime')">Total Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					
+						<th ng-click="sort('comments')"  ng-show="isEditable" >Comments <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th  ng-show="isEditable" >Actions</th>
 					
 					
 				</tr>
@@ -204,9 +219,14 @@ $(function() {
 					 	<td align="left">{{obj.userId}}</td>
 						<td align="left">{{obj.activityName}}</td>
 						<td align="left">{{obj.activityStatus}}</td>
-     					<td align="left">{{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-						<td align="left">{{obj.activityEndTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>  
+     					<td align="left"> <div ng-show="isEditable==false" >{{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</div><input  id="demo1"  type="text"   ng-show="isEditable" value="{{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}" />
+						<td align="left"><div ng-show="isEditable==false" >{{obj.activityEndTime|date:'yyyy-MM-dd HH:mm:ss'}}</div><input type="text"  ng-show="isEditable"  value="{{obj.activityEndTime|date:'yyyy-MM-dd HH:mm:ss'}}" /></td>  
 						<td align="left">{{obj.activityTotTime}}</td> 
+						<td align="left"  ng-show="isEditable" ><input type="text"  value="{{obj.comments}}" /></td> 
+				       <td align="left"  ng-show="isEditable">   <a ng-click=""> 
+						<img src='./app/images/Edit_32x32.png' width='24px'>
+					</a></td>
+				
      					
 				</tr>
 			</tbody>
@@ -230,7 +250,10 @@ $(function() {
     
 </div>
 
-<script>  function generatePdf(tableId) {
+
+<script>
+
+function generatePdf(tableId) {
         var doc = new jsPDF('l', 'pt', 'a4');
         // doc.text("From HTML", 40, 50);
          //doc.text( 40, 50);

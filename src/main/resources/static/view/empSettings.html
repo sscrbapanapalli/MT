@@ -59,7 +59,7 @@ element.style {
 
 </style>
  <script>
-function myFunction() {
+/* function myFunction() {
     var checkBox = document.getElementById("employeeStatus");
     
     if (employeeStatus == true){
@@ -93,7 +93,7 @@ function myFunctionIsAdmin() {
       	 text2.style.display = "none";
     }
 }
-
+ */
 
 </script> 
 
@@ -186,24 +186,24 @@ function myFunctionIsAdmin() {
 				</div>	
 				</div>			
 				
-			<div class="form-group">
+		<!-- 	<div class="form-group">
 				<div class="control-label col-sm-4" ><label style="float:left;padding-left:100px;">Is Manager</label></div>
 				<div class="col-sm-5" align="left">
 					<input type="checkbox" id="isReportingManager" ng-model="employee.isRm" onclick="myFunctionIsRm()" ng-checked="{{employee.isRm}}" >
 				</div>
-				<!-- <div class="col-sm-4"  align="right" ><p align="left">(Check the box to enable User)</p></div> -->
-			</div>
+				<div class="col-sm-4"  align="right" ><p align="left">(Check the box to enable User)</p></div>
+			</div> -->
 			<div class="form-group">
 				<div class="control-label col-sm-4" ><label style="float:left;padding-left:100px;">Is Active</label></div>
 				<div class="col-sm-5" align="left">
-					<input type="checkbox" id="employeeStatus" ng-model="employee.activeIndicator" onclick="myFunction()" ng-checked="{{employee.activeIndicator}}" >
+					<input type="checkbox"  id="activeIndicator" ng-model="employee.activeIndicator" ng-checked="{{employee.activeIndicator}}" >
 				</div>
 				<!-- <div class="col-sm-4"  align="right" ><p align="left">(Check the box to enable User)</p></div> -->
 			</div>
 			<div class="form-group">
 				<div class="control-label col-sm-4" ><label style="float:left;padding-left:100px;">Is Admin</label></div>
 				<div class="col-sm-5" align="left">
-					<input type="checkbox" id="isAdmin" ng-model="employee.isAdmin" onclick="myFunctionIsAdmin()" ng-checked="{{employee.isAdmin}}" >
+					<input type="checkbox" id="admin" ng-model="employee.admin"  ng-checked="{{employee.admin}}" >
 				</div>
 				<!-- <div class="col-sm-4"  align="right" ><p align="left">(Check the box to enable User)</p></div> -->
 			</div>
@@ -261,10 +261,8 @@ function myFunctionIsAdmin() {
 					<th ng-click="sort('rmName')">Manager Name
 					<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 					<th ng-click="sort('rmId')">Manager Id
-					<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('isRm')">Is Manager<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>					
 					<th ng-click="sort('activeIndicator')">Is Active<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					
 					<th>Actions</th>
 				</tr>
 			</thead>
@@ -276,8 +274,7 @@ function myFunctionIsAdmin() {
 						<td align="left" class="text-uppercase">&nbsp;{{obj.emailId}}</td> 
      					<td align="left" >&nbsp;{{obj.empId}}</td>  
      					<td align="left" class="text-uppercase">&nbsp;{{obj.rmName}}</td>
-     					<td align="left"  class="text-uppercase">&nbsp;{{obj.rmId}}</td>
-     					<td align="left" class="text-uppercase">&nbsp;{{obj.isRm}}</td>
+     					<td align="left"  class="text-uppercase">&nbsp;{{obj.rmId}}</td>     				
      					<td align="left" class="text-uppercase">&nbsp;{{obj.activeIndicator}}</td>
      					<td class="pull-middle">
   					   <!--  <button type="submit" class="btn btn-primary" ng-click = "employeeUpdate(obj.emailId,'updateEmployee')">Update</button>
