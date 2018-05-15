@@ -27,8 +27,8 @@ public interface ActivityTrackRepository extends JpaRepository<UserActivityTrack
 	
 	@Modifying(clearAutomatically = true)
 	@Transactional
-	@Query("update UserActivityTrack u set u.comments = :comments, u.updatedBy = :updatedBy where u.id = :id")
-	void overrideEmployeeTime(@Param("comments") String comments,@Param("updatedBy") String updatedBy,@Param("id") Long id);
+	@Query("update UserActivityTrack u set u.activityStatus = :activityStatus, u.updatedBy = :updatedBy where u.id = :id")
+	void overrideEmployeeTime(@Param("activityStatus") String activityStatus,@Param("updatedBy") String updatedBy,@Param("id") Long id);
 	
 
 }

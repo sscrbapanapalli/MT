@@ -45,13 +45,18 @@ public class ReportsController {
 	@RequestMapping("/getEmpDetails" )
 	public List<EmployeeDetails> getEmpDetails(){
 		String userName = (String) httpSession.getAttribute("userName");
-		String rmId=userName + "@CMA-CGM.COM";
+		List<EmployeeDetails> data=null;
+		//String rmId=userName + "@CMA-CGM.COM";
 		//String rmId="SSC.BAMMU" + "@CMA-CGM.COM";
-		System.out.println(rmId);
-		 List<EmployeeDetails> data=reportsRepository.findByRmId(rmId);
+		System.out.println(userName);
+		if(userName==null){
+			return data;
+		}else{
+		  data=reportsRepository.findByRmId(userName);
 		 System.out.println(data);
 		
 		return data;
+		}
 	}
 	
 	@GetMapping("/getMyReport")
@@ -105,8 +110,8 @@ public class ReportsController {
 	public List<UserActivityTrack> getTeamReport(HttpServletRequest req){
 		
 		String userName = (String) httpSession.getAttribute("userName");
-		String rmId=userName + "@CMA-CGM.COM";
-		List<EmployeeDetails> mgrReporteesList=reportsRepository.findByRmId(rmId);
+		//String rmId=userName + "@CMA-CGM.COM";
+		List<EmployeeDetails> mgrReporteesList=reportsRepository.findByRmId(userName);
 		
 		System.out.println("Employes under a manager" + mgrReporteesList.size());
 		List<String> empList=new ArrayList<String>();
@@ -162,9 +167,10 @@ public class ReportsController {
 	 @RequestMapping(value = "/overrideEmployeeTime", method = RequestMethod.POST , produces="application/json")
 	    public @ResponseBody String deleteEmployee(HttpServletRequest request, HttpServletResponse response) throws IllegalStateException, IOException {
 			String deleteResponse="";
+			
 			  String updatedBy = (String) httpSession.getAttribute("userName");
 			Long id=Long.parseLong(request.getParameter("id"));
-			String activityStartTime=request.getParameter("activityStartTime");
+			/*String activityStartTime=request.getParameter("activityStartTime");
 			String comments=request.getParameter("comments");
 			String activityEndTime=request.getParameter("activityEndTime");
 			//String activityTotTime=request.getParameter("activityTotTime");
@@ -175,7 +181,7 @@ public class ReportsController {
 			System.out.println(activityStartTime);
 			System.out.println(activityEndTime);
 			System.out.println(id);
-			System.out.println(comments);
+			System.out.println(comments);*/
 			
 				try{
 					//dateFrom = format.parse(activityStartTime);
@@ -184,7 +190,7 @@ public class ReportsController {
 				}catch(Exception e){
 					e.printStackTrace();
 				}
-				activityTrackRepository.overrideEmployeeTime(comments,updatedBy,id);
+				activityTrackRepository.overrideEmployeeTime("Approved",updatedBy,id);
 		       //activityTrackRepository.overrideEmployeeTime(dateFrom,dateTo,activityTotTime,comments,updatedBy,id);
 		
 			

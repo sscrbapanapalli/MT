@@ -1224,6 +1224,31 @@ angular.module('cdrApp').controller(
 						}
 						
 					}
+					
+					$scope.approveOverride=function(id){
+						var config = {
+								transformRequest : angular.identity,
+								transformResponse : angular.identity,
+								headers : {
+									'Content-Type' : undefined
+								}
+							}
+					var url=appConstants.serverUrl+"/reports/overrideEmployeeTime/";
+					var data = new FormData();
+					data.append("id" ,id);
+					$http.post(url,data,config).then(
+							function(response){
+								$scope.getTeamReport($scope.dateRange);
+								
+									 // $state.go("reports", {} , {reload: true} );
+									
+									
+							},function(response){									
+								
+							});	
+						
+						
+					}
 					$scope.sort = function(keyname){
 						$scope.sortKey = keyname;   //set the sortKey to the param passed
 						$scope.reverse = !$scope.reverse; //if true make it false and vice versa

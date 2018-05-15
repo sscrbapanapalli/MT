@@ -207,7 +207,8 @@ $(function() {
 					<th ng-click="sort('activityEndTime')">End Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 					<th ng-click="sort('activityTotTime')">Total Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 						<th ng-click="sort('comments')"  ng-show="isEditable" >Comments <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-						<th  ng-show="isEditable" >Actions</th>
+						<th  ng-show="isEditable" >Override</th>
+						<th  ng-show="isEditable" >Approve</th>
 					
 					
 				</tr>
@@ -226,6 +227,10 @@ $(function() {
 				       <td align="left"  ng-show="isEditable">   <a ng-click=""> 
 						<img src='./app/images/Edit_32x32.png' width='24px'>
 					</a></td>
+					<td align="left"  ng-show="isEditable">   <a ng-if="obj.activityStatus!='Approved'" ng-click="approveOverride(obj.id)"> 
+						<img src='./app/images/approve.png' width='24px'>
+					</a>
+					<div ng-if="obj.activityStatus=='Approved'" style="color:green"> Approved</div></td>
 				
      					
 				</tr>
