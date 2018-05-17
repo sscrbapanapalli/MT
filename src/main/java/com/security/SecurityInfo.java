@@ -1,6 +1,6 @@
 package com.security;
 
-import com.cmacgm.cdrserver.controller.LoginController;
+import com.cmacgm.mytime.controller.LoginController;
 
 /**
  * At 0th position there will always be CipherText At 1st position -> IV At 2nd

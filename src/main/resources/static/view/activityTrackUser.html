@@ -207,11 +207,10 @@ function myFunction() {
 						<td align="left">&nbsp;&nbsp;{{obj.activityTotTime|date: 'HH:mm:ss'}}</td> 
      					
      					<td class="pull-middle">
-     					<a ng-click="startTask(obj.id)">
-											<img src='./app/images/Play_32x32.png' width='24px'> </a>
-  			
-  			<a ng-click="stopTask(obj.id)" ng-show="obj.activityStatus!='Not Started'">
-											<img src='./app/images/Stop_32x32.png' width='24px'> </a>
+     					<a ng-click="startTask(obj.id)" ng-hide="obj.activityStatus=='In Progress'" >
+							<img src='./app/images/Play_32x32.png' width='24px'> </a>
+  						<a ng-click="stopTask(obj.id)" ng-show="obj.activityStatus=='In Progress'">
+							<img src='./app/images/Stop_32x32.png' width='24px'> </a>
   			
   			<!--  	<button type="submit" class="btn btn-primary" ng-click = "startTask(obj.id)">Start</button>
   				 <button type="submit" class="btn btn-danger" ng-click = "stopTask(obj.id)">Stop</button> -->
@@ -258,25 +257,14 @@ function myFunction() {
 						<select size="10"   multiple ng-model="userRole" ng-options="role as role.activityName for role in allActivity | filter:search1" style="width: 240px"></select>         
 					</div>
 					
-					
-					<!-- <div style="width:25%;float:left" align="left">
-					<div style="padding-top:5px;padding-bottom:0px" > <label class="pull-left" >Available</label> </div>
-					<div style="padding-top:5px;padding-bottom:0px" >						
-						<input class="pull-left textbox_multi" style="width: 240px" required ng-model="search1" placeholder="Enter search term"  /> 
-					</div>
-					<div style="padding-top:5px;padding-bottom:0px" >	
-						<select size="10"   multiple ng-model="userRole" ng-options="role as role.activityName for role in allActivity | filter:search1" style="width: 250px"></select>         
-					</div>
-					</div> -->
-			 		
 			 		<div style="width:5%;float:left;padding-top:90px;padding-right:50px" align="center">
 			 			<div>
-			 			<a  class="btn btn-info btn-lg" ng-click="moveItem(userRole, allActivity,userActivity)" style="width:25px; height:20px;display:block;padding:0px">
+			 			<a  class="btn btn-info btn-lg" ng-click="moveItemLeft(userRole, allActivity,userActivity)" style="width:25px; height:20px;display:block;padding:0px">
 				        	  <span class="glyphicon glyphicon-arrow-right" ></span> 
 				        </a>
 				        </div>
 				        <div style="padding-top:20px">
-			 			<a  class="btn btn-info btn-lg" ng-click="moveItem(userSelectedRole,userActivity, allActivity)" style="width:25px; height:20px;display:block;padding:0px">
+			 			<a  class="btn btn-info btn-lg" ng-click="moveItemRight(userSelectedRole,userActivity, allActivity)" style="width:25px; height:20px;display:block;padding:0px">
 				        	  <span class="glyphicon glyphicon-arrow-left" ></span> 
 				        </a>
 				        </div>
@@ -294,7 +282,7 @@ function myFunction() {
 						
    			<div class="pull-left">
    				 <button type="submit" class="btn btn-primary" ng-click = "Reset()">Reset</button>
-   				 <button type="submit" class="btn btn-success" ng-click = "userActivityConfig()">Submit</button>
+   				 <button type="submit" class="btn btn-success" ng-click = "userActivityConfig(userActivityList)">Submit</button>
 			</div>
    		 </form>
    	

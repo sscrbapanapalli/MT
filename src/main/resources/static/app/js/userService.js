@@ -1,4 +1,4 @@
-angular.module('cdrApp').service('userService', ['$window', '$q','$http','appConstants', function ($window, $q,$http,appConstants) {
+angular.module('myTimeApp').service('userService', ['$window', '$q','$http','appConstants', function ($window, $q,$http,appConstants) {
  
     this.getCurrentUser = function () {
     	

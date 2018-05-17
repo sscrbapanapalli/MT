@@ -4,10 +4,10 @@
  */
 
 'use strict';
-angular.module("cdrApp", [ "ui.router",'appConfigApp' ,'commonServiceApp','angularUtils.directives.dirPagination']);
+angular.module("myTimeApp", [ "ui.router",'appConfigApp' ,'commonServiceApp','angularUtils.directives.dirPagination']);
 
 'use strict';
-angular.module('cdrApp').config(
+angular.module('myTimeApp').config(
 		[ '$stateProvider', '$urlRouterProvider',
 				function($stateProvider, $urlRouterProvider) {
 				
@@ -75,7 +75,7 @@ angular.module('cdrApp').config(
 
 
 angular
-		.module('cdrApp')
+		.module('myTimeApp')
 		.controller(
 				'homeController',
 				[
@@ -132,7 +132,7 @@ angular
 
 
 
-angular.module('cdrApp').service('anchorSmoothScroll', function(){
+angular.module('myTimeApp').service('anchorSmoothScroll', function(){
     
     this.scrollTo = function(eID) {
 
@@ -185,7 +185,7 @@ angular.module('cdrApp').service('anchorSmoothScroll', function(){
     };
     
 });
-angular.module('cdrApp')
+angular.module('myTimeApp')
 .factory('AuthenticationService',
 	    [ '$http', '$state',"$window",'$rootScope','appConstants','globalServices',
 	    function ($http, $state,$window,$rootScope,appConstants,globalServices) {
@@ -242,18 +242,18 @@ angular.module('cdrApp')
 								 $window.sessionStorage.removeItem('appId');
 								
 								  $http.defaults.headers.common['userToken']==null;
-								  $rootScope.buttonClicked = "Logout Successfully";
+								/*  $rootScope.buttonClicked = "Logout Successfully";
 									$rootScope.showModal = !$rootScope.showModal;
-									  $rootScope.contentColor = "#78b266";
+									  $rootScope.contentColor = "#78b266";*/
 				 
 								  $rootScope.isProfilePage=false;
 								  $state.go("login");
 																
 							}else{
 								 $('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); // added by me
-								  $rootScope.buttonClicked = "LogOut Error";
+								  /*$rootScope.buttonClicked = "LogOut Error";
 									$rootScope.showModal = !$rootScope.showModal;
-									  $rootScope.contentColor = "#dd4b39";
+									  $rootScope.contentColor = "#dd4b39";*/
 							}
 								
 						
@@ -272,7 +272,7 @@ angular.module('cdrApp')
 
 
 angular
-.module('cdrApp')
+.module('myTimeApp')
 .controller(
 		'loginController',
 		[
@@ -364,7 +364,7 @@ angular
 						
 						} ]);
 
-angular.module('cdrApp').directive('modal', ['$timeout', function ($timeout) {
+angular.module('myTimeApp').directive('modal', ['$timeout', function ($timeout) {
     return {
       template: '<div class="modal fade">' + 
           '<div class="modal-dialog" style="width: 750px; margin: auto;">' + 
@@ -411,7 +411,7 @@ angular.module('cdrApp').directive('modal', ['$timeout', function ($timeout) {
 
 
 
-angular.module('cdrApp').directive('multiselectDropdown', [function() {
+angular.module('myTimeApp').directive('multiselectDropdown', [function() {
     return function(scope, element, attributes) {
             
         // Below setup the dropdown:
@@ -463,7 +463,7 @@ angular.module('cdrApp').directive('multiselectDropdown', [function() {
 }]);
 
 'use strict';
-angular.module('cdrApp').run([
+angular.module('myTimeApp').run([
 			'$state','$http','$rootScope','globalServices','userService',function ( $state,$http,$rootScope,globalServices,userService) {
 				
 	   $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams) {	
@@ -483,7 +483,7 @@ angular.module('cdrApp').run([
 
 	}]);
 
-angular.module('cdrApp').run([
+/*angular.module('myTimeApp').run([
                   			'$state','$http','$rootScope','$timeout','$document','AuthenticationService',function ( $state,$http,$rootScope,$timeout,$document,AuthenticationService) {
                 				
     console.log('starting run');
@@ -520,10 +520,10 @@ angular.module('cdrApp').run([
     }
 
 }]);
+*/
 
 
-
-angular.module('cdrApp').controller(
+angular.module('myTimeApp').controller(
 		'activityTrackController',
 		
 		[
@@ -821,7 +821,7 @@ angular.module('cdrApp').controller(
 
 // Activity Tracker Controller for User - activityTrackUserController
 
-angular.module('cdrApp').controller(
+angular.module('myTimeApp').controller(
 		'activityTrackUserController',
 		
 		[
@@ -1039,7 +1039,7 @@ angular.module('cdrApp').controller(
 				} ]);
 
 
-angular.module('cdrApp').controller(
+angular.module('myTimeApp').controller(
         'monitoringController',
         
         [
@@ -1052,7 +1052,7 @@ angular.module('cdrApp').controller(
                       'appConstants','userService','globalServices','AuthenticationService','$stateParams','anchorSmoothScroll','$location','$filter',
                      function($scope, $state, $rootScope, $window, $q,
                                    $http,appConstants,userService,globalServices,AuthenticationService,$stateParams,anchorSmoothScroll,$location,$filter) {
-                            $scope.pageSize = 5;
+                            $scope.pageSize = 10;
                             $scope.monitorDataList=[];
                             $scope.inituser = function() {
                                    var data = globalServices.isUserTokenAvailable();
@@ -1103,7 +1103,7 @@ angular.module('cdrApp').controller(
 
 
 
-angular.module('cdrApp').controller(
+angular.module('myTimeApp').controller(
 		'reportsController',
 		
 		[
@@ -1117,9 +1117,13 @@ angular.module('cdrApp').controller(
 				function($scope, $state, $rootScope, $window, $q,
 						$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,anchorSmoothScroll,$location,$filter) {
 					$scope.isEditable=false;
+					$scope.showAuditHistroyTable=false;
+					$scope.revActivityStartTime="";
+					$scope.revActivityEndTime="";
 					$scope.userId="";
 					$scope.showTable=false;
 					$scope.empdDetailsList=[];	
+					$scope.myAuditList=[];
 					$scope.dateRange="";
 					$scope.myReportList=[];
 					$scope.exportHref="";
@@ -1141,11 +1145,16 @@ angular.module('cdrApp').controller(
 
 						}
 					}
-					
+					  $scope.showDialog = function(flag) {
+					        jQuery("#confirmation-dialog .modal").modal(flag ? 'show' : 'hide');
+					      };
+					      
 					$scope.init=function(){
 						$scope.inituser();
 						$scope.myReportList=[];
-						
+						$scope.myAuditList=[];
+						$scope.revActivityStartTime="";
+						$scope.revActivityEndTime="";
 						var getEmpDetailsUrl=appConstants.serverUrl+"/reports/getEmpDetails/";
 						console.log(getEmpDetailsUrl)
 						
@@ -1170,6 +1179,7 @@ angular.module('cdrApp').controller(
 					$scope.getMyReport=function(dateRange){
 						$scope.isEditable=false;
 						$scope.showTable=true;
+						$scope.showAuditHistroyTable=false;
 						console.log(dateRange)
 						var selectedRange=dateRange;
 						var getMyReportUrl=appConstants.serverUrl+"/reports/getMyReport/?selectedRange="+selectedRange;
@@ -1181,9 +1191,11 @@ angular.module('cdrApp').controller(
 						
 					};
 					
+					
 					$scope.getTeamReport=function(dateRange){
 						$scope.isEditable=true;
 						$scope.showTable=true;
+						$scope.showAuditHistroyTable=false;
 						var selectedRange=dateRange;
 						var getTeamReportUrl=appConstants.serverUrl+"/reports/getTeamReport/?selectedRange="+selectedRange;
 						console.log(getTeamReportUrl)
@@ -1192,77 +1204,118 @@ angular.module('cdrApp').controller(
                         	$scope.myReportList=response.data;	
                         });
 					};
-					$scope.overrideEmployeeTime=function(id,startTime,endTime,comments){
-						alert("dfdfdf")
-						console.log(id,startTime,endTime,comments)
-                 if($rootScope.currentUser!=undefined){
-							
-							var config = {
-									transformRequest : angular.identity,
-									transformResponse : angular.identity,
-									headers : {
-										'Content-Type' : undefined
-									}
-								}
-						var url=appConstants.serverUrl+"/reports/overrideEmployeeTime/";
-						var data = new FormData();
-						data.append("id" ,id);
-						data.append("activityStartTime", startTime);
-						data.append("activityEndTime", endTime);
-						data.append("activityTotTime", "11:20");
-						data.append("comments",comments);					
-			
-						$http.post(url,data,config).then(
-								function(response){
-									
-										  $state.go("reports", {} , {reload: true} );
-										
-										
-								},function(response){									
-									
-								});							
-						}
+					
+					$scope.getAuditHistoryReport=function(dateRange){
+						$scope.isEditable=false;
+						$scope.showTable=false;
+						$scope.showAuditHistroyTable=true;
+						var selectedRange=dateRange;
+						var getTeamReportUrl=appConstants.serverUrl+"/reports/getAuditHistoryReport/?selectedRange="+selectedRange;
+						console.log(getTeamReportUrl)
+						$http.get(getTeamReportUrl).then(function(response) {
+                        	console.log('Audit History Report ' , response)
+                        	$scope.myAuditList=response.data;	
+                        });
+					};
+					
+					$scope.doRevise = function(id){
+						console.log('in  do Revise')
+					
+						 $scope.confirmationDialogConfig = {
+						      title: "Override StartTime and EndTime",
+						      message: "Are you sure you want to Override StartTime and EndTime?",
+						      buttons: [{
+						        label: "Override",
+						        action: "Override"
+						      }],
+						      id:id	
+						    };
+						    $scope.showDialog(true);			    
 						
+					
 					}
 					
-					$scope.approveOverride=function(id){
-						var config = {
-								transformRequest : angular.identity,
-								transformResponse : angular.identity,
-								headers : {
-									'Content-Type' : undefined
-								}
-							}
-					var url=appConstants.serverUrl+"/reports/overrideEmployeeTime/";
-					var data = new FormData();
-					data.append("id" ,id);
-					$http.post(url,data,config).then(
-							function(response){
-								$scope.getTeamReport($scope.dateRange);
-								
-									 // $state.go("reports", {} , {reload: true} );
-									
-									
-							},function(response){									
-								
-							});	
-						
-						
+					$scope.cancelRevise=function(){
+						 $scope.showDialog(false);	
+						  $( "#revstartdate" ).val("");
+						   $( "#revenddate" ).val("");
+						    $( "#comments" ).val("");		
 					}
-					$scope.sort = function(keyname){
-						$scope.sortKey = keyname;   //set the sortKey to the param passed
-						$scope.reverse = !$scope.reverse; //if true make it false and vice versa
+					
+					$scope.overrideEmployeeTime=function(id){
+					    $("#reviseform").validate({
+					        rules: {
+					            "revstartdate": {
+					                required: true
+					               
+					            },
+					            "revenddate": {
+					                required: true
+					               
+					            },
+					            "comments": {
+					                required: true
+					               
+					            }
+					        },
+					        messages: {
+					            "revstartdate": {
+					                required: "Please Select Override StartTime"
+					            },
+					            "revenddate": {
+					                required: "Please Select Override EndTime"
+					              
+					            },
+					            "comments": {
+					                required: "Please enter the Comments"
+					              
+					            }
+					        },
+					        submitHandler: function (form) { // for demo
+					        	if($rootScope.currentUser!=undefined){
+									var data = {
+											revActivityStartTime : $( "#revstartdate" ).val(),
+											revActivityEndTime :  $( "#revenddate" ).val(),								
+											id : id,										            		
+						            		 createdBy :$rootScope.currentUser.userName,
+						            		 updatedBy :$rootScope.currentUser.userName,
+						            		 comments :$( "#comments" ).val()		
+						     		};           
+																
+										var url=appConstants.serverUrl+"/reports/overrideEmployeeTime/";						
+									
+									$http.post(url,data,
+											{
+										headers : {
+											'Accept' : 'application/json',
+											'Content-Type' : 'application/json'
+										}}).then(
+											function(response){	
+												  $scope.showDialog(false);	
+												  $( "#revstartdate" ).val("");
+												   $( "#revenddate" ).val("");
+												    $( "#comments" ).val("");									   
+												$scope.getTeamReport($scope.dateRange);
+													
+											},function(response){									
+												  $scope.showDialog(true);									
+											      $rootScope.buttonClicked = response.data;
+												  $rootScope.showModal = !$rootScope.showModal;
+												  $rootScope.contentColor = "#dd4b39";							   
+											});							
+									}
+					            return false; // for demo
+					        }
+					    });
+						    	
 						
-						
-					}
-				  $scope.showDialog = function(flag) {
-					        jQuery("#confirmation-dialog .modal").modal(flag ? 'show' : 'hide');
-					      };
-							
+					}	
 				
 				} ]);
 
-angular.module('cdrApp').controller(
+
+
+angular.module('myTimeApp').controller(
 		'uploadEmpDataController',
 		[
 				'$scope',
@@ -1356,13 +1409,7 @@ angular.module('cdrApp').controller(
 					};
 					}
 					
-					$scope.downloadSampleTemplate=function(fileName){
-						//\EMPLOYEE_DATA.xlsx
-						//alert("fileName"+fileName)
-						 $window.location = appConstants.serverUrl+'/admin/download?name=' + fileName;
-						    window.open(downloadPath, '_blank', '');
 					
-					}
 					
 					$scope.init = function() {
 						$scope.inituser();
@@ -1373,7 +1420,7 @@ angular.module('cdrApp').controller(
 
 				} ]);
 
-angular.module('cdrApp').controller(
+angular.module('myTimeApp').controller(
 		'empSettingsController',
 		
 		[
@@ -1383,9 +1430,9 @@ angular.module('cdrApp').controller(
 				'$window',
 				'$q',
 				'$http',
-				'appConstants','userService','globalServices','AuthenticationService','$stateParams','anchorSmoothScroll','$location','$filter',
+				'appConstants','userService','globalServices','AuthenticationService','$stateParams','$location','$filter',
 				function($scope, $state, $rootScope, $window, $q,
-						$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,anchorSmoothScroll,$location,$filter) {
+						$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,$location,$filter) {
 					$scope.homepageContent = "settings dashboard page";
 					$scope.allEmployeeDetails=[];	
 					$scope.employeeCreate="false";
@@ -1513,6 +1560,7 @@ angular.module('cdrApp').controller(
 							$rootScope.showModal = !$rootScope.showModal;
 							$rootScope.contentColor = "#78b266";
 							 $state.go("empSettings", {} , {reload: true} );
+							
 							 });
 						
 						}
@@ -1645,7 +1693,7 @@ angular.module('cdrApp').controller(
 			            
 				} ]);
 
-angular.module('cdrApp').directive('fileModel', [ '$parse', function($parse) {
+angular.module('myTimeApp').directive('fileModel', [ '$parse', function($parse) {
     return {
         restrict : 'A',
         link : function(scope, element, attrs) {
