@@ -85,9 +85,9 @@ angular
 						'$window',
 						'$q',
 						'$http',
-						'appConstants','userService','globalServices','AuthenticationService','$stateParams','anchorSmoothScroll','$location','$filter',
+						'appConstants','userService','globalServices','AuthenticationService','$stateParams','$location','$filter',
 						function($scope, $state, $rootScope, $window, $q,
-								$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,anchorSmoothScroll,$location,$filter) {
+								$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,$location,$filter) {
 						
 				
 			$rootScope.isProfilePage = false;
@@ -132,59 +132,7 @@ angular
 
 
 
-angular.module('myTimeApp').service('anchorSmoothScroll', function(){
-    
-    this.scrollTo = function(eID) {
 
-        // This scrolling function 
-        // is from http://www.itnewb.com/tutorial/Creating-the-Smooth-Scroll-Effect-with-JavaScript
-        
-        var startY = currentYPosition();
-        var stopY = elmYPosition(eID);
-        var distance = stopY > startY ? stopY - startY : startY - stopY;
-        if (distance < 100) {
-            scrollTo(0, stopY); return;
-        }
-        var speed = Math.round(distance / 100);
-        if (speed >= 20) speed = 20;
-        var step = Math.round(distance / 25);
-        var leapY = stopY > startY ? startY + step : startY - step;
-        var timer = 0;
-        if (stopY > startY) {
-            for ( var i=startY; i<stopY; i+=step ) {
-                setTimeout("window.scrollTo(0, "+leapY+")", timer * speed);
-                leapY += step; if (leapY > stopY) leapY = stopY; timer++;
-            } return;
-        }
-        for ( var i=startY; i>stopY; i-=step ) {
-            setTimeout("window.scrollTo(0, "+leapY+")", timer * speed);
-            leapY -= step; if (leapY < stopY) leapY = stopY; timer++;
-        }
-        
-        function currentYPosition() {
-            // Firefox, Chrome, Opera, Safari
-            if (self.pageYOffset) return self.pageYOffset;
-            // Internet Explorer 6 - standards mode
-            if (document.documentElement && document.documentElement.scrollTop)
-                return document.documentElement.scrollTop;
-            // Internet Explorer 6, 7 and 8
-            if (document.body.scrollTop) return document.body.scrollTop;
-            return 0;
-        }
-        
-        function elmYPosition(eID) {
-            var elm = document.getElementById(eID);
-            var y = elm.offsetTop;
-            var node = elm;
-            while (node.offsetParent && node.offsetParent != document.body) {
-                node = node.offsetParent;
-                y += node.offsetTop;
-            } return y;
-        }
-
-    };
-    
-});
 angular.module('myTimeApp')
 .factory('AuthenticationService',
 	    [ '$http', '$state',"$window",'$rootScope','appConstants','globalServices',
@@ -533,9 +481,9 @@ angular.module('myTimeApp').controller(
 				'$window',
 				'$q',
 				'$http',
-				'appConstants','userService','globalServices','AuthenticationService','$stateParams','anchorSmoothScroll','$location','$filter',
+				'appConstants','userService','globalServices','AuthenticationService','$stateParams','$location','$filter',
 				function($scope, $state, $rootScope, $window, $q,
-						$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,anchorSmoothScroll,$location,$filter) {
+						$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,$location,$filter) {
 					$scope.homepageContent = "Activity Track Admin page";
 					$scope.pageSize = 10;
 					$scope.activityMapping=[];
@@ -819,7 +767,7 @@ angular.module('myTimeApp').controller(
 					
 		} ]);
 
-// Activity Tracker Controller for User - activityTrackUserController
+//Activity Tracker Controller for User - activityTrackUserController
 
 angular.module('myTimeApp').controller(
 		'activityTrackUserController',
@@ -831,14 +779,16 @@ angular.module('myTimeApp').controller(
 				'$window',
 				'$q',
 				'$http',
-				'appConstants','userService','globalServices','AuthenticationService','$stateParams','anchorSmoothScroll','$location','$filter',
+				'appConstants','userService','globalServices','AuthenticationService','$stateParams','$location','$filter',
 				function($scope, $state, $rootScope, $window, $q,
-						$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,anchorSmoothScroll,$location,$filter) {
+						$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,$location,$filter) {
 					$scope.userRoles=[];
 					$scope.allRoles=[];
 					$scope.allActivity=[];
 					$scope.userActivity=[];
 					$scope.pageSize = 10;
+					$scope.startTaskCount=0;
+					$scope.userActivityList=[];
 					$scope.inituser = function() {
 						var data = globalServices.isUserTokenAvailable();
 						if (data == null || data == undefined) {
@@ -865,14 +815,14 @@ angular.module('myTimeApp').controller(
                         var userActivityUrl=appConstants.serverUrl+"/activity/getUserActivity/";
                        
                         $http.get(activiActivityUrl).then(function(response) {
-                        	console.log(' allActivity ' , response)
+                        	//console.log(' allActivity ' , response)
                         	$scope.allActivityConstant=angular.copy(response.data);
                         	$scope.allActivity=response.data;	
                         	
                         });
                         
                         $http.get(userActivityUrl).then(function(response) {
-                        	console.log(' user Activity ' , response)
+                        	//console.log(' user Activity ' , response)
                         	//$scope.allRolesConstant=angular.copy(response.data);
                         	$scope.userActivityList=response.data;	
                         	
@@ -894,16 +844,35 @@ angular.module('myTimeApp').controller(
 							
 					
 					// To move items from allRoles to userRoles
-					$scope.moveItem = function(items, from, to) {
+					$scope.moveItemLeft = function(items, from, to) {
+						items.forEach(function(item) {
+				        	for(var j = 0; j < $scope.userActivityList.length; j++){
+								if (item.activityName==$scope.userActivityList[j].activityName) {	  
+									$rootScope.buttonClicked ="Task "+"'" +item.activityName+"' " +"already added to user " ;
+									 $rootScope.showModal = !$rootScope.showModal;
+							         $rootScope.contentColor = "#dd4b39";
+							         $scope.userActivity=[];
+							       }
+							}
+				         var idx = from.indexOf(item);
+				        	console.log('selected index:' +idx)
+				          if (idx != -1) {
+				              from.splice(idx, 1);
+				              to.push(item);      
+				          }
+				        });
+				    };
+				    
+					$scope.moveItemRight = function(items, from, to) {
 
-				        console.log('Move items: ' + items + ' From: ' + from + ' To: ' + to)
-				        console.log('in user init role constant in move', $scope.allRolesConstant)
+				        //console.log('Move items: ' + items + ' From: ' + from + ' To: ' + to)
+				        //console.log('in user init role constant in move', $scope.allRolesConstant)
 				        //Here from is returned as blank and to as undefined
 
 				        items.forEach(function(item) {
-				        	console.log('in move item method' + item)
+				        	//console.log('in move item method' + item)
 				          var idx = from.indexOf(item);
-				        	console.log('selected index:' +idx)
+				        	//console.log('selected index:' +idx)
 				          if (idx != -1) {
 				              from.splice(idx, 1);
 				              to.push(item);      
@@ -921,16 +890,15 @@ angular.module('myTimeApp').controller(
 			            }
 			            
 			          
-			            $scope.userActivityConfig=function(){
-							
-							var addUserActivityUrl=appConstants.serverUrl+"/activity/addUserActivity/";
-							console.log($scope.userActivity)
+			            $scope.userActivityConfig=function(userActivityList){
+			            	//var duplicate=0;
+			            	var addUserActivityUrl=appConstants.serverUrl+"/activity/addUserActivity/";
 							var data = {
 				            		 
 									activityTracker : $scope.userActivity,
 									userName :$rootScope.currentUser.userName
 				     		};
-							console.log(data)
+							
 												
 							if( $scope.userActivity==null ||  $scope.userActivity==undefined ||  $scope.userActivity==""){
 								$rootScope.buttonClicked = "Please select User Activity";
@@ -938,9 +906,19 @@ angular.module('myTimeApp').controller(
 								  $rootScope.contentColor = "#dd4b39";
 								
 							}else{
-								//console.log('in else method')
 								
-								 $http.post(addUserActivityUrl,data,
+							/*	for (var i = 0; i < $scope.userActivity.length; i++) {
+								  for(var j = 0; j < userActivityList.length; j++){
+									if ($scope.userActivity[i].activityName == userActivityList[j].activityName) {	
+										duplicate=duplicate+1;
+										 $rootScope.buttonClicked ="Task " +$scope.userActivity[i].activityName+"already added to user " ;
+										 $rootScope.showModal = !$rootScope.showModal;
+								         $rootScope.contentColor = "#dd4b39";									
+																   
+										}
+								}
+								 }*/
+								$http.post(addUserActivityUrl,data,
 											{
 												headers : {
 													'Accept' : 'application/json',
@@ -948,19 +926,17 @@ angular.module('myTimeApp').controller(
 												}
 											})
 								.success(function (response) {  
-		                
-								//console.log(response)
 								$rootScope.buttonClicked = response;
 								$rootScope.showModal = !$rootScope.showModal;
 								$rootScope.contentColor = "#78b266";
 								 $state.go("activityTrackUser", {} , {reload: true} );
 								 });
-							
+								
 							}
 						};
 						
 						$scope.startTask =function(id){
-							   
+							//var startTaskCount=0;
 							if($rootScope.currentUser!=undefined){
 								
 								var config = {
@@ -970,29 +946,47 @@ angular.module('myTimeApp').controller(
 											'Content-Type' : undefined
 										}
 									}
+								var startTaskCountUrl=appConstants.serverUrl+"/activity/getStartTaskCount/";
 								var startTaskUrl=appConstants.serverUrl+"/activity/startActivity/";
-							var data = new FormData();
-							
-							data.append("userName", $rootScope.currentUser.userName);
-							data.append("id", id);
-							console.log(data)
+								
+								$http.get(startTaskCountUrl).then(function(response) {
+									$scope.startTaskCount=response.data;
+                                    console.log("startTaskCountUrl=" ,$scope.startTaskCount)
+                                    
+										var data = new FormData();
+										
+										data.append("userName", $rootScope.currentUser.userName);
+										data.append("id", id);
+										console.log(data)
 				
-							$http.post(startTaskUrl,data,config).then(
-									function(response){
-										
-										  $('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); 
-										      $rootScope.buttonClicked = response.data;
-											  $rootScope.showModal = !$rootScope.showModal;
-											  $rootScope.contentColor = "#78b266";
-											  $state.go("activityTrackUser",{}, {reload: true}); 
-											
-									},function(response){
-										
-										  $('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); 
-										      $rootScope.buttonClicked = response.data;
-											  $rootScope.showModal = !$rootScope.showModal;
-											  $rootScope.contentColor = "#dd4b39";
-									});							
+                                    if($scope.startTaskCount<2){
+                    					   					 console.log("in true cond=" ,$scope.startTaskCount)
+                    							$http.post(startTaskUrl,data,config).then(
+                    									function(response){
+                    										
+                    										  $('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); 
+                    										      $rootScope.buttonClicked = response.data;
+                    											  $rootScope.showModal = !$rootScope.showModal;
+                    											  $rootScope.contentColor = "#78b266";
+                    											  $state.go("activityTrackUser",{}, {reload: true}); 
+                    											
+                    									},function(response){
+                    										
+                    										  $('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); 
+                    										      $rootScope.buttonClicked = response.data;
+                    											  $rootScope.showModal = !$rootScope.showModal;
+                    											  $rootScope.contentColor = "#dd4b39";
+                    									});	
+                    							}else{
+                    								
+                    							 console.log("in false cond=" ,$scope.startTaskCount)
+                    								$('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); 
+                    							      $rootScope.buttonClicked = "Exceeds max tasks";
+                    								  $rootScope.showModal = !$rootScope.showModal;
+                    								  $rootScope.contentColor = "#dd4b39";
+                    							}
+                                      });
+                      
 							}
 							
 						}
@@ -1039,6 +1033,7 @@ angular.module('myTimeApp').controller(
 				} ]);
 
 
+
 angular.module('myTimeApp').controller(
         'monitoringController',
         
@@ -1049,9 +1044,9 @@ angular.module('myTimeApp').controller(
                      '$window',
                      '$q',
                      '$http',
-                      'appConstants','userService','globalServices','AuthenticationService','$stateParams','anchorSmoothScroll','$location','$filter',
+                      'appConstants','userService','globalServices','AuthenticationService','$stateParams','$location','$filter',
                      function($scope, $state, $rootScope, $window, $q,
-                                   $http,appConstants,userService,globalServices,AuthenticationService,$stateParams,anchorSmoothScroll,$location,$filter) {
+                                   $http,appConstants,userService,globalServices,AuthenticationService,$stateParams,$location,$filter) {
                             $scope.pageSize = 10;
                             $scope.monitorDataList=[];
                             $scope.inituser = function() {
@@ -1113,9 +1108,9 @@ angular.module('myTimeApp').controller(
 				'$window',
 				'$q',
 				'$http',
-				'appConstants','userService','globalServices','AuthenticationService','$stateParams','anchorSmoothScroll','$location','$filter',
+				'appConstants','userService','globalServices','AuthenticationService','$stateParams','$location','$filter',
 				function($scope, $state, $rootScope, $window, $q,
-						$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,anchorSmoothScroll,$location,$filter) {
+						$http,appConstants,userService,globalServices,AuthenticationService,$stateParams,$location,$filter) {
 					$scope.isEditable=false;
 					$scope.showAuditHistroyTable=false;
 					$scope.revActivityStartTime="";
