@@ -1,103 +1,97 @@
 
 
 <style>
+.input-group .form-control {
+	position: relative;
+	/* z-index: 2; */
+	height: 42px;
+	/* float: left; */
+	width: 158px;
+	/* margin-bottom: 0; */
+}
 
-.input-group .form-control  {
-    position: relative;
-    /* z-index: 2; */
-    height: 42px;
-    /* float: left; */
-    width: 158px;
-    /* margin-bottom: 0; */
-}
 label.required::before {
-  content: '*';
-  margin-right: 4px;
-  color: red;
+	content: '*';
+	margin-right: 4px;
+	color: red;
 }
+
 input.error {
-    border: 1px solid red;
+	border: 1px solid red;
 }
 
 label.error {
-    font-weight: normal;
-    color: red;
+	font-weight: normal;
+	color: red;
 }
 
 .slinputtext input {
-    padding: 0px;
-    width: 40%;
-     height: 20px;
-    padding-left: 0px;
-    padding-right: 0px;
-    color: black;
-    font-family: arial,sans-serif;
-    font-size: 12px;
+	padding: 0px;
+	width: 40%;
+	height: 20px;
+	padding-left: 0px;
+	padding-right: 0px;
+	color: black;
+	font-family: arial, sans-serif;
+	font-size: 12px;
 }
-element.style {
-    width: 150px;
-}
-.ui-datepicker-calendar {
-    display: none;
-    }
 
-	 p.ext {
-    margin-left: 2cm;
+element.style {
+	width: 150px;
 }
-     div.box {
-		height: 40px;
-		width: 780px;
-		border: 1px  ;
-		align: center;
-		background: #ddd;
-		padding: 0px 0;
-		 top: 20%;
-  		bottom: 30%;
-  		left: 0%;
-  		right: 0%;
-  		margin-left: 0px;
-  		margin-right: 0px;
-  		
-  		
-		 
- 
-	}
-	[tooltip]:before {
-    /* needed - do not touch */
-    content: attr(tooltip);
-    position: absolute;
-    opacity: 0;
-    
-    /* customizable */
-    transition: all 0.15s ease;
-    padding: 10px;
-    color: #333;
-    border-radius: 10px;
-    box-shadow: 2px 2px 1px silver;    
+
+.ui-datepicker-calendar {
+	display: none;
+}
+
+p.ext {
+	margin-left: 2cm;
+}
+
+div.box {
+	height: 40px;
+	width: 780px;
+	border: 1px;
+	align: center;
+	background: #ddd;
+	padding: 0px 0;
+	top: 20%;
+	bottom: 30%;
+	left: 0%;
+	right: 0%;
+	margin-left: 0px;
+	margin-right: 0px;
+}
+
+[tooltip]:before {
+	/* needed - do not touch */
+	content: attr(tooltip);
+	position: absolute;
+	opacity: 0;
+	/* customizable */
+	transition: all 0.15s ease;
+	padding: 10px;
+	color: #333;
+	border-radius: 10px;
+	box-shadow: 2px 2px 1px silver;
 }
 
 [tooltip]:hover:before {
-    /* needed - do not touch */
-    opacity: 1;
-    
-    /* customizable */
-    background: yellow;
-    margin-top: -50px;
-    margin-left: 20px;    
+	/* needed - do not touch */
+	opacity: 1;
+	/* customizable */
+	background: yellow;
+	margin-top: -50px;
+	margin-left: 20px;
 }
 
-#test{
-    padding: 7px;
-   
+#test {
+	padding: 7px;
 }
 
 .modal.confirmation-dialog {
- 
-    background-color: none !important;    
+	background-color: none !important;
 }
-
-
-
 </style>
 <script type="text/javascript">
 $(function() {
@@ -128,310 +122,390 @@ $(function() {
 
 <!-- <div class="control-label col-sm-3" ><label style="float:left;padding-left:20px;"></label></div> -->
 <div ng-controller="loginController" ng-init="init()">
-	<div class="overall" >
+	<div class="overall">
 		<nav class="navbar">
 
 			<ul>
-                         
-                           <li><span  class="divider"></span></li> 
-                           
-                           
-                           <li >
-                                  <a ng-if="user.data.admin==true" ui-sref="activityTrackAdmin" >Master Task List</a> 
-                                  
-                           </li>
-                           <li ><span ng-if="user.data.admin==true"   class="divider"></span></li>
-                           
-                           <li>
-                                  <a  ui-sref="activityTrackUser" >Task Timer</a> 
-                                  
-                           </li>
-                          <li><span ng-if="user.data.admin==true" class="divider"></span></li>
-                           <li >
-                                  <a  ng-if="user.data.admin==true" ui-sref="monitoring"  ui-sref-opts="{reload:true}" >Active Time</a> 
-                                  
-                           </li>
-                           <li><span  class="divider"></span></li>
-                           <li >
-                                  <a  ui-sref="reports" ui-sref-opts="{reload:true}" >Reports</a> 
-                                  
-                           </li>
-                           <li><span  class="divider"></span></li>
-                           <li >
-                                  <a  ng-if="user.data.admin==true"  ui-sref="empSettings" >Employee Settings</a> 
-                                  
-                           </li>
-                        <li ><span ng-if="user.data.admin==true" class="divider"></span></li>
-                        
-                           <li >
-                                  <a  ng-if="user.data.admin==true"  ui-sref="uploadEmpData" >Upload Employee Details</a> 
-                                  
-                           </li>
-                           <li ><span  ng-if="user.data.admin==true"  class="divider"></span></li>
-                     </ul>
+
+				<li><span class="divider"></span></li>
+
+
+				<li><a ng-if="user.data.admin==true"
+					ui-sref="activityTrackAdmin">Master Task List</a></li>
+				<li><span ng-if="user.data.admin==true" class="divider"></span></li>
+
+				<li><a ui-sref="activityTrackUser">Task Timer</a></li>
+				<li><span ng-if="user.data.admin==true" class="divider"></span></li>
+				<li><a ng-if="user.data.admin==true" ui-sref="monitoring"
+					ui-sref-opts="{reload:true}">Active Time</a></li>
+				<li><span class="divider"></span></li>
+				<li><a ui-sref="reports" ui-sref-opts="{reload:true}">Reports</a>
+
+				</li>
+				<li><span class="divider"></span></li>
+				<li><a ng-if="user.data.admin==true" ui-sref="empSettings">Employee
+						Settings</a></li>
+				<li><span ng-if="user.data.admin==true" class="divider"></span></li>
+
+				<li><a ng-if="user.data.admin==true" ui-sref="uploadEmpData">Upload
+						Employee Details</a></li>
+				<li><span ng-if="user.data.admin==true" class="divider"></span></li>
+			</ul>
 
 
 		</nav>
 	</div>
 </div>
 <div ng-controller="reportsController" ng-init="init()">
-<div> <h3  style="font-size:16px; color:#960;" align="left">Generate Reports</h3></div>
-<div class="box" >
-   
-   		<div style="float:left; padding-right:25px;padding-left:25px; padding-top:2px" align="left"><label for="startDate">Date Range:</label>	</div>
-		<div style="float:left; padding-right:25px;padding-left:25px;padding-top:2px" align="left">
-		
-				<input id="reportrange" ng-model="dateRange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
-  				  <!-- <i class="fa fa-calendar"></i>&nbsp;
+	<div>
+		<h3 style="font-size: 16px; color: #960;" align="left">Generate
+			Reports</h3>
+	</div>
+	<div class="box">
+
+		<div
+			style="float: left; padding-right: 25px; padding-left: 25px; padding-top: 2px"
+			align="left">
+			<label for="startDate">Date Range:</label>
+		</div>
+		<div
+			style="float: left; padding-right: 25px; padding-left: 25px; padding-top: 2px"
+			align="left">
+
+			<input id="reportrange" ng-model="dateRange"
+				style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+			<!-- <i class="fa fa-calendar"></i>&nbsp;
  				  <span></span> <i class="fa fa-caret-down"></i> -->
-				</input>
-		</div>
-					
-   		<div style="float:left; padding-right:15px;padding-left:10px;padding-top:3px" align="left">
-   				 <button type="submit" class="btn btn-primary"  ng-click = "getMyReport(dateRange)">My Report</button>
-   				 <button type="submit" class="btn btn-primary" ng-show="empdDetailsList.length>0"  ng-click = "getTeamReport(dateRange)">Team Report</button>
-   				  <button type="submit" class="btn btn-primary" ng-show="empdDetailsList.length>0"  ng-click = "getAuditHistoryReport(dateRange)">Audit History Report</button>
-		</div>
- 
-   </div>
-   
-   <div>&nbsp</div>
-   <div ng-show=showAuditHistroyTable> 
-   <div> <h3  style="font-size:16px; color:#960;" align="left">Audit History Details</h3></div>
-	
-	<div>
-				<div>
-			<div class="bs-component">
-				<form name='myform'>
-					<div>
-						<div class="slinputtext ">
-	  						 	<!-- <i class="fa fa-search left-icon"></i>  -->
-							    <input class="pull-left textbox" required ng-model="search" placeholder="Enter search term"  /> 
-							   <!--  <i class="fa fa-close right-icon" ng-click="resetParent()"></i> -->
-						</div>
-						<div class="col-xs-6 pull-right">
-							<label for="search">Record(s) per page</label> 
-								<input type="number"	min="1" max="100" class="textboxNumber" ng-model="pageSize">
-								<a uisref="{{'.'}}"
-										onClick="$('#parentId').tableExport({tableName:'AuditHistoryDetails',type:'excel',escape:'false'});">
-											<img src='./export/images/xls.png' width='24px'>
-									</a>
-								
-						
-						</div>
-						
-						
-					</div>
-				</form>
-			</div>
+			</input>
 		</div>
 
-	<table class="table" id="parentId">
-			<thead>
-				<tr>
-					<th ng-click="sort('userId')">User Name <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('activityName')">Activity Name<span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('activityStartTime')">Start Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('activityEndTime')">End Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('revisedActivityStartTime')">Revised Start Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('revisedActivityEndTime')">Revised End Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('updatedBy')">Revised By<span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('updatedDate')">Last Updated Date<span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('comments')" >Comments <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-									
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-class-odd="ClassOdd($index)"  ng-class-even="ClassEven($index)"
-					dir-paginate="obj in filtered= ( myAuditList | filter:search)| orderBy:sortKey:reverse |itemsPerPage:pageSize"
-					 >
-					 	<td align="left">{{obj.userId}}</td>
-					 	<td align="left">{{obj.activityName}}</td>					
-     					<td align="left"> {{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-						<td align="left">{{obj.activityEndTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>  
-						<td align="left"> {{obj.revisedActivityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-						<td align="left">{{obj.revisedActivityEndTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>  
-						<td align="left">{{obj.updatedBy}}</td>	
-						<td align="left">{{obj.updatedDate|date:'yyyy-MM-dd HH:mm:ss'}}</td>	
-						<td align="left">{{obj.comments}}</td> 
-				      
-					
-				</tr>
-			</tbody>
-		</table>
-			
-	<div>
-		<dir-pagination-controls class="pull-left" max-size="5" direction-links="true" boundary-links="true" >
-	   	</dir-pagination-controls>
-	</div>	 
-		<div id="tablenodata" ng-show=" myAuditList =='null'||  myAuditList =='undefined' || myAuditList.length==0">
-			<div>No Record Found.</div>
-		</div>
-		<div  class=" pull-right"ng-show="myAuditList !='undefined' && myAuditList.length>=0" class="pull-right">Filtered : ({{ filtered.length }})
-							record(s) out of ({{myAuditList.length }}) entries
-		</div>
-		
-</div>
-  
-    </div> 
- <div ng-show=showTable> 
-   <div> <h3  style="font-size:16px; color:#960;" align="left">Activity Details</h3></div>
-	
-	<div>
-				<div>
-			<div class="bs-component">
-				<form name='myform'>
-					<div>
-						<div class="slinputtext ">
-	  						 	<!-- <i class="fa fa-search left-icon"></i>  -->
-							    <input class="pull-left textbox" required ng-model="search" placeholder="Enter search term"  /> 
-							   <!--  <i class="fa fa-close right-icon" ng-click="resetParent()"></i> -->
-						</div>
-						<div class="col-xs-5 pull-right">
-							<label for="search">Record(s) per page</label> 
-								<input type="number"	min="1" max="100" class="textboxNumber" ng-model="pageSize">
-								<a uisref="{{'.'}}"
-										onClick="$('#parentId').tableExport({tableName:'ActivityDetails',type:'excel',escape:'false'});">
-											<img src='./export/images/xls.png' width='24px'>
-									</a>
-								
-						
-						</div>
-						
-						
-					</div>
-				</form>
-			</div>
+		<div
+			style="float: left; padding-right: 15px; padding-left: 10px; padding-top: 3px"
+			align="left">
+			<button type="submit" class="btn btn-primary"
+				ng-click="getMyReport(dateRange)">My Report</button>
+			<button type="submit" class="btn btn-primary"
+				ng-show="empdDetailsList.length>0"
+				ng-click="getTeamReport(dateRange)">Team Report</button>
+			<button type="submit" class="btn btn-primary"
+				ng-show="empdDetailsList.length>0"
+				ng-click="getAuditHistoryReport(dateRange)">Audit History
+				Report</button>
 		</div>
 
-	<table class="table" id="parentId">
-			<thead>
-				<tr>
-					<th ng-click="sort('userId')">User Name <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('activityName')">Activity Name <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('activityStatus')">Activity Status <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('activityStartTime')">Start Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('activityEndTime')">End Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('activityTotTime')">Total Time(HH:mm:ss) <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-						<th ng-click="sort('comments')"  >Comments <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-						<th  ng-show="isEditable" >Override</th>
-					
-					
-					
-				</tr>
-			</thead>
-			<tbody>
-				<tr ng-class-odd="ClassOdd($index)"  ng-class-even="ClassEven($index)"
-					dir-paginate="obj in filtered= ( myReportList | filter:search)| orderBy:sortKey:reverse |itemsPerPage:pageSize"
-					 >
-					 	<td align="left">{{obj.userId}}</td>
+	</div>
+
+	<div>&nbsp</div>
+	<div ng-show=showAuditHistroyTable>
+		<div>
+			<h3 style="font-size: 16px; color: #960;" align="left">Audit
+				History Details</h3>
+		</div>
+
+		<div>
+			<div>
+				<div class="bs-component">
+					<form name='myform'>
+						<div>
+							<div class="slinputtext ">
+								<!-- <i class="fa fa-search left-icon"></i>  -->
+								<input class="pull-left textbox" required ng-model="search"
+									placeholder="Enter search term" />
+								<!--  <i class="fa fa-close right-icon" ng-click="resetParent()"></i> -->
+							</div>
+							<div class="col-xs-6 pull-right">
+								<label for="search">Record(s) per page</label> <input
+									type="number" min="1" max="100" class="textboxNumber"
+									ng-model="pageSize"> <a uisref="{{'.'}}"
+									onClick="$('#parentId').tableExport({tableName:'AuditHistoryDetails',type:'excel',escape:'false'});">
+									<img src='./export/images/xls.png' width='24px'>
+								</a>
+
+
+							</div>
+
+
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<table class="table" id="parentId">
+				<thead>
+					<tr>
+						<th ng-click="sort('userId')">User Name <span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-click="sort('activityName')">Activity Name<span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-click="sort('activityStartTime')">Start Time <span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-click="sort('activityEndTime')">End Time <span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-click="sort('revisedActivityStartTime')">Revised Start
+							Time <span class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+						</th>
+						<th ng-click="sort('revisedActivityEndTime')">Revised End
+							Time <span class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+						</th>
+						<th ng-click="sort('updatedBy')">Revised By<span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-click="sort('updatedDate')">Last Updated Date<span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-click="sort('comments')">Comments <span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-class-odd="ClassOdd($index)"
+						ng-class-even="ClassEven($index)"
+						dir-paginate="obj in filtered= ( myAuditList | filter:search)| orderBy:sortKey:reverse |itemsPerPage:pageSize">
+						<td align="left">{{obj.userId}}</td>
+						<td align="left">{{obj.activityName}}</td>
+						<td align="left">{{obj.activityStartTime|date:'yyyy-MM-dd
+							HH:mm:ss'}}</td>
+						<td align="left">{{obj.activityEndTime|date:'yyyy-MM-dd
+							HH:mm:ss'}}</td>
+						<td align="left">
+							{{obj.revisedActivityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+						<td align="left">{{obj.revisedActivityEndTime|date:'yyyy-MM-dd
+							HH:mm:ss'}}</td>
+						<td align="left">{{obj.updatedBy}}</td>
+						<td align="left">{{obj.updatedDate|date:'yyyy-MM-dd
+							HH:mm:ss'}}</td>
+						<td align="left">{{obj.comments}}</td>
+
+
+					</tr>
+				</tbody>
+			</table>
+
+			<div>
+				<dir-pagination-controls class="pull-left" max-size="5"
+					direction-links="true" boundary-links="true">
+				</dir-pagination-controls>
+			</div>
+			<div id="tablenodata"
+				ng-show=" myAuditList =='null'||  myAuditList =='undefined' || myAuditList.length==0">
+				<div>No Record Found.</div>
+			</div>
+			<div class=" pull-right"
+				ng-show="myAuditList !='undefined' && myAuditList.length>=0"
+				class="pull-right">Filtered : ({{ filtered.length }})
+				record(s) out of ({{myAuditList.length }}) entries</div>
+
+		</div>
+
+	</div>
+	<div ng-show=showTable>
+		<div>
+			<h3 style="font-size: 16px; color: #960;" align="left">Activity
+				Details</h3>
+		</div>
+
+		<div>
+			<div>
+				<div class="bs-component">
+					<form name='myform'>
+						<div>
+							<div class="slinputtext ">
+								<!-- <i class="fa fa-search left-icon"></i>  -->
+								<input class="pull-left textbox" required ng-model="search"
+									placeholder="Enter search term" />
+								<!--  <i class="fa fa-close right-icon" ng-click="resetParent()"></i> -->
+							</div>
+							<div class="col-xs-5 pull-right">
+								<label for="search">Record(s) per page</label> <input
+									type="number" min="1" max="100" class="textboxNumber"
+									ng-model="pageSize"> <a uisref="{{'.'}}"
+									onClick="$('#parentId').tableExport({tableName:'ActivityDetails',type:'excel',escape:'false'});">
+									<img src='./export/images/xls.png' width='24px'>
+								</a>
+
+
+							</div>
+
+
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<table class="table" id="parentId">
+				<thead>
+					<tr>
+						<th ng-click="sort('userId')">User Name <span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-click="sort('activityName')">Activity Name <span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-click="sort('activityStatus')">Activity Status <span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-click="sort('activityStartTime')">Start Time <span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-click="sort('activityEndTime')">End Time <span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-click="sort('activityTotTime')">Total Time(HH:mm:ss) <span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-click="sort('comments')">Comments <span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-show="isEditable">Override</th>
+
+
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-class-odd="ClassOdd($index)"
+						ng-class-even="ClassEven($index)"
+						dir-paginate="obj in filtered= ( myReportList | filter:search)| orderBy:sortKey:reverse |itemsPerPage:pageSize">
+						<td align="left">{{obj.userId}}</td>
 						<td align="left">{{obj.activityName}}</td>
 						<td align="left">{{obj.activityStatus}}</td>
-     					<td align="left">{{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-						<td align="left">{{obj.activityEndTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>  
-						<td align="left">{{obj.activityTotTime}}</td> 
-						<td align="left" >{{obj.comments}}</td> 
-				       <td align="left"  ng-show="isEditable"  >   <a  ng-show="obj.activityStatus=='Completed'" tooltip="Override Start & End DateTime" ng-click="doRevise(obj.id)"> 
-						<img src='./app/images/Edit_32x32.png' width='24px'>
-					</a><div ng-show="obj.activityStatus!='Completed'">{{obj.activityStatus}}</div></td>
-					
-				</tr>
-			</tbody>
-		</table>
-			
-	<div>
-		<dir-pagination-controls class="pull-left" max-size="5" direction-links="true" boundary-links="true" >
-	   	</dir-pagination-controls>
-	</div>	 
-		<div id="tablenodata" ng-show=" myReportList =='null'||  myReportList =='undefined' || myReportList.length==0">
-			<div>No Record Found.</div>
+						<td align="left">{{obj.activityStartTime|date:'yyyy-MM-dd
+							HH:mm:ss'}}</td>
+						<td align="left">{{obj.activityEndTime|date:'yyyy-MM-dd
+							HH:mm:ss'}}</td>
+						<td align="left">{{obj.activityTotTime}}</td>
+						<td align="left">{{obj.comments}}</td>
+						<td align="left" ng-show="isEditable"><a
+							ng-show="obj.activityStatus=='Completed'"
+							tooltip="Override Start & End DateTime"
+							ng-click="doRevise(obj.id)"> <img
+								src='./app/images/Edit_32x32.png' width='24px'>
+						</a>
+						<div ng-show="obj.activityStatus!='Completed'">{{obj.activityStatus}}</div></td>
+
+					</tr>
+				</tbody>
+			</table>
+
+			<div>
+				<dir-pagination-controls class="pull-left" max-size="5"
+					direction-links="true" boundary-links="true">
+				</dir-pagination-controls>
+			</div>
+			<div id="tablenodata"
+				ng-show=" myReportList =='null'||  myReportList =='undefined' || myReportList.length==0">
+				<div>No Record Found.</div>
+			</div>
+			<div class=" pull-right"
+				ng-show="myReportList !='undefined' && myReportList.length>=0"
+				class="pull-right">Filtered : ({{ filtered.length }})
+				record(s) out of ({{myReportList.length }}) entries</div>
+
 		</div>
-		<div  class=" pull-right"ng-show="myReportList !='undefined' && myReportList.length>=0" class="pull-right">Filtered : ({{ filtered.length }})
-							record(s) out of ({{myReportList.length }}) entries
+
+	</div>
+	<div id="confirmation-dialog">
+		<div class="modal fade confirmation-dialog" role="dialog">
+			<div class="modal-dialog">
+				<form name="reviseform" id="reviseform" method="post" action="#">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">{{confirmationDialogConfig.title}}</h4>
+						</div>
+						<div class="modal-body">
+							<div class="form-horizontal">
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group">
+											<div class="col-sm-3 control-label" class="required">
+												<label for="startdate" class="control-label">Revised
+													Start Time</label>
+											</div>
+											<div class="col-sm-6">
+
+												<div class="input-group date" name="startdate"
+													id="startdate">
+													<span class="input-group-addon"> <span
+														class="glyphicon-calendar glyphicon"></span>
+													</span> <input type="text" class="form-control" id="revstartdate"
+														name="revstartdate" placeholder="mm/dd/yyyy HH:mm:ss"
+														readonly />
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group">
+											<div class="col-sm-3 control-label" class="required">
+												<label for="enddate">Revised End Time</label>
+											</div>
+											<div class="col-sm-6">
+												<div class="input-group date" name="enddate" id="enddate">
+													<span class="input-group-addon"> <span
+														class="glyphicon-calendar glyphicon"></span>
+													</span> <input type="text" class="form-control" id="revenddate"
+														name="revenddate" placeholder="mm/dd/yyyy HH:mm:ss"
+														readonly />
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="form-group">
+											<div class="col-sm-3 control-label" class="required">
+												<label for="comments">Comments</label>
+											</div>
+											<div class="col-sm-8">
+												<div>
+													<textarea class="form-control"
+														placeholder="Enter Revised Comments" type="text"
+														name="comments" id="comments" cols="30" rows="3"
+														maxlength="100">  </textarea>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+						<div class="modal-footer col-sm-12">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal" ng-click="cancelRevise()">Cancel</button>
+							<button id="submit_button" type="submit"
+								ng-repeat="button in confirmationDialogConfig.buttons"
+								ng-click="overrideEmployeeTime(confirmationDialogConfig.id)"
+								class="btn btn-primary">{{button.label}}</button>
+						</div>
+					</div>
+				</form>
+			</div>
 		</div>
-		
-</div>
-  
-    </div>
- <div id="confirmation-dialog">
-      <div class="modal fade confirmation-dialog" role="dialog">
-        <div class="modal-dialog">
-         <form name="reviseform" id="reviseform"  method="post" action="#">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">{{confirmationDialogConfig.title}}</h4>
-            </div>
-            <div class="modal-body">
-             <div class="form-horizontal">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <div class="col-sm-3 control-label"  class="required">
-                            <label for="startdate" class="control-label">Revised Start Time</label>
-                        </div>
-                        <div class="col-sm-6">
-                        
-                            <div class="input-group date" name="startdate"  id="startdate"  >
-                             <span class="input-group-addon">
-                                    <span class="glyphicon-calendar glyphicon"></span>
-                                </span>
-                                <input type="text" class="form-control" id="revstartdate" name="revstartdate" placeholder="mm/dd/yyyy HH:mm:ss" readonly />
-                               
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <div class="col-sm-3 control-label"  class="required">
-                            <label for="enddate">Revised End Time</label>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="input-group date"  name="enddate"  id="enddate"  >
-                              <span class="input-group-addon">
-                                    <span class="glyphicon-calendar glyphicon"></span>
-                                </span>
-                                <input type="text" class="form-control" id="revenddate" name="revenddate" placeholder="mm/dd/yyyy HH:mm:ss" readonly/>
-                              
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-             <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <div class="col-sm-3 control-label"  class="required">
-                            <label for="comments">Comments</label>
-                        </div>
-                        <div class="col-sm-8">
-                            <div>
-                                  <textarea class="form-control"  placeholder="Enter Revised Comments" type="text" name="comments" id="comments" cols="30" rows="3" maxlength="100" >  </textarea> 
-    
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-     
-            </div>
-            <div class="modal-footer col-sm-12">
-              <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelRevise()">Cancel</button>
-              <button  id="submit_button" type="submit" ng-repeat="button in confirmationDialogConfig.buttons" ng-click="overrideEmployeeTime(confirmationDialogConfig.id)" class="btn btn-primary">{{button.label}}</button>
-            </div>
-          </div></form>
-        </div>
-      </div>
-    </div>   
-    
+	</div>
+
 </div>
 
 
-<script type="text/javascript" src="../app/bootstrap/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-<script type="text/javascript" src="../app/bootstrap/js/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
+<script type="text/javascript"
+	src="../app/bootstrap/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script type="text/javascript"
+	src="../app/bootstrap/js/bootstrap-datetimepicker.fr.js"
+	charset="UTF-8"></script>
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -450,8 +524,8 @@ $(document).ready(function() {
 	    
 	
 });
-</script>  
- 
+</script>
+
 <script>
 
 function generatePdf(tableId) {
