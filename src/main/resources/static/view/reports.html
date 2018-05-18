@@ -382,7 +382,7 @@ $(function() {
 						<td align="left">{{obj.activityEndTime|date:'yyyy-MM-dd
 							HH:mm:ss'}}</td>
 						<td align="left">{{obj.activityTotTime}}</td>
-						<td align="left">{{obj.comments}}</td>
+						<td align="left" style="width:100px; word-wrap:break-word;">{{obj.comments}}</td>
 						<td align="left" ng-show="isEditable"><a
 							ng-show="obj.activityStatus=='Completed'"
 							tooltip="Override Start & End DateTime"
@@ -474,7 +474,7 @@ $(function() {
 													<textarea class="form-control"
 														placeholder="Enter Revised Comments" type="text"
 														name="comments" id="comments" cols="30" rows="3"
-														maxlength="100">  </textarea>
+														maxlength="1000">  </textarea>
 
 												</div>
 											</div>
