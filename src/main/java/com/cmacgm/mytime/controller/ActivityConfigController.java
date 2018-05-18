@@ -2,6 +2,7 @@ package com.cmacgm.mytime.controller;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -54,9 +55,9 @@ public class ActivityConfigController {
 	public int getStartTaskCount(){
 		int count=0;
 		String userId= (String) httpSession.getAttribute("userName");
-		System.out.println("count="+ userId);
+		//System.out.println("count="+ userId);
 		count= activityTrackRepository.findByActivityStatus(userId);
-		System.out.println("count="+ count);
+		//System.out.println("count="+ count);
 		return count;
 	}
 	
@@ -74,15 +75,15 @@ public class ActivityConfigController {
 			String activityName=request.getParameter("activityName");
 			String updatedBy=request.getParameter("updatedBy");
 			ActivitySettings activity=activityConfigRepository.findById(id);
-			System.out.println(" in update method server");
+			/*System.out.println(" in update method server");
 			System.out.println(id+ activityName + updatedBy );
-			System.out.println(" from db" + activity);
+			System.out.println(" from db" + activity);*/
 			if(activity!=null){
 				try{
 					activity.setActivityName(activityName);
 					activity.setActiveIndicator(true);
 					activity.setUpdatedBy(updatedBy);
-					System.out.println(activity.isActiveIndicator());
+					//System.out.println(activity.isActiveIndicator());
 					activityConfigRepository.save(activity);
 					updateResponse="Activity Updated Successfully";
 					
@@ -108,7 +109,7 @@ public class ActivityConfigController {
 			try{
 				activity.setActiveIndicator(false);
 				activity.setUpdatedBy(updatedBy);
-				System.out.println(activity.isActiveIndicator());
+				//System.out.println(activity.isActiveIndicator());
 				activityConfigRepository.save(activity);
 				deleteResponse="Application-" + activity.getActivityName() +" Deleted Successfully";
 				
@@ -154,17 +155,56 @@ public class ActivityConfigController {
 	//Activity Tracker for user
 	
 	
+	
 	@GetMapping(value="/getActiveActivity")
 	public List<ActivitySettings> getActiveActivity(){
+		String userId = (String) httpSession.getAttribute("userName");
 		boolean activeIndicator=true;
+		List<String> availableTasksList=new ArrayList<String>();
+		List<String> userAddedTasksList=new ArrayList<String>();
+		List<String> notSelectedTasksList=new ArrayList<String>();
+		List<ActivitySettings> notSelectedTasks=new ArrayList<ActivitySettings>();
 		
-		return activityConfigRepository.findByActiveIndicator(activeIndicator);
+		List<ActivitySettings> availableTasks=activityConfigRepository.findByActiveIndicator(activeIndicator);
+		for (ActivitySettings loop1:availableTasks){
+			availableTasksList.add(loop1.getActivityName());
+		}
+		
+		List<UserActivityTrack> userAddedTasks=activityTrackRepository.findByUserId(userId);
+		for (UserActivityTrack loop2:userAddedTasks){
+			userAddedTasksList.add(loop2.getActivityName());
+		}
+		
+		for(String obj:availableTasksList){
+			if(!userAddedTasksList.contains(obj)){
+				notSelectedTasksList.add(obj);
+				System.out.println(obj);
+			}
+		}
+		
+		//System.out.println("availableTasks size:"+availableTasks.size()+","+"userAddedTasks:"+userAddedTasks.size()+","+"Notselected size:"+notSelectedTasksList.size());
+		if(userAddedTasks.size()>0){
+			for(String obj1:notSelectedTasksList){
+				for (ActivitySettings loop1:availableTasks){
+					if(obj1.equals(loop1.getActivityName())){
+						notSelectedTasks.add(loop1);
+						
+					}
+				}
+			}
+			return notSelectedTasks;
+		}else{
+		//System.out.println(" To get not selected tasks" + notSelectedTasks);
+		return availableTasks;
+		}
+	
 	}
 	
 	
 	@GetMapping(value="/getUserActivity")
 	public List<UserActivityTrack> getUserActivity(){
 		String userId = (String) httpSession.getAttribute("userName");
+		System.out.println("get user activity list"+ userId);
 		
 		return activityTrackRepository.findByUserId(userId);
 	}

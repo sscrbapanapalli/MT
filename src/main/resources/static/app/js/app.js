@@ -822,7 +822,7 @@ angular.module('myTimeApp').controller(
                         });
                         
                         $http.get(userActivityUrl).then(function(response) {
-                        	//console.log(' user Activity ' , response)
+                        	console.log(' user Activity List ' , response)
                         	//$scope.allRolesConstant=angular.copy(response.data);
                         	$scope.userActivityList=response.data;	
                         	
@@ -843,7 +843,7 @@ angular.module('myTimeApp').controller(
 					      };
 							
 					
-					// To move items from allRoles to userRoles
+					/*// To move items from allRoles to userRoles
 					$scope.moveItemLeft = function(items, from, to) {
 						items.forEach(function(item) {
 				        	for(var j = 0; j < $scope.userActivityList.length; j++){
@@ -861,9 +861,9 @@ angular.module('myTimeApp').controller(
 				              to.push(item);      
 				          }
 				        });
-				    };
+				    };*/
 				    
-					$scope.moveItemRight = function(items, from, to) {
+					$scope.moveItem = function(items, from, to) {
 
 				        //console.log('Move items: ' + items + ' From: ' + from + ' To: ' + to)
 				        //console.log('in user init role constant in move', $scope.allRolesConstant)

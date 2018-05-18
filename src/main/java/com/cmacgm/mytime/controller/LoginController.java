@@ -62,7 +62,7 @@ public class LoginController {
            String rm1="SSC.RM1";
            String rm2="SSC.RM2";
            String sd="SSC.SUPERADMIN";
-           System.out.println("Login User Method is reached");
+           //System.out.println("Login User Method is reached");
            try {
                   if (user.getUserName() != null && user.getPassword() != null
                                || user.getUserName().trim() != "" && user.getPassword().trim() != "") {
@@ -78,10 +78,10 @@ public class LoginController {
                         		||username.equals(rm1)||username.equals(rm2)||username.equals(sd)){
                         
                         	authStatus=true;
-                        	System.out.println("with out LDAP AD"+ authStatus);
+                        	//System.out.println("with out LDAP AD"+ authStatus);
                         }else{
                         	authStatus = ActiveDirectory.getActiveDirectoryAuthentication(username, decrypt(user.getPassword()));
-                            System.out.println("in LDAP AD"+ authStatus);
+                           // System.out.println("in LDAP AD"+ authStatus);
                             
                         	
                         }
@@ -94,6 +94,7 @@ public class LoginController {
                                       
                                       httpSession.setAttribute("userName", username);
                                       httpSession.setAttribute("userToken", token);
+                                      //System.out.println("username in set session" + httpSession.getAttribute("userName"));
 
                                       return FrameworkUtil.getResponseValue(true, "success", map);
                        }
@@ -219,6 +220,7 @@ public class LoginController {
 		if (httpSession.getAttribute("userName") != null && httpSession.getAttribute("userToken") != null
 				&& !userToken.isEmpty() && userToken.equals(httpSession.getAttribute("userToken").toString())) {
 			String userName = (String) httpSession.getAttribute("userName");
+			//System.out.println("in login controller username:" + userName);
 			userDetail = new EmployeeDetails();
 			userDetail=employeeDetailsRepository.findByEmailId(userName + "@CMA-CGM.COM");
 				
