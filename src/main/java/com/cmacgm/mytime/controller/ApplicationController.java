@@ -54,7 +54,7 @@ public class ApplicationController {
 	   String userName="";
 	    HashMap<String, String> uploadResponse=null;
 	    userName=request.getParameter("userName");
-	   System.out.println("userName:   "+userName);
+	
 	    
 		MultipartHttpServletRequest multipart = (MultipartHttpServletRequest) request;
 					Iterator<String> fileNames = multipart.getFileNames();
@@ -127,6 +127,8 @@ public class ApplicationController {
 	 	            	  errorlistEmpDetails= getError(row);	 
 	 	              else if(row.getCell(5)==null)
 	 	            	  errorlistEmpDetails= getError(row); 
+	 	             else if(row.getCell(6)==null)
+	 	            	  errorlistEmpDetails= getError(row); 
 	 	           
 	            		   
 	                  else {
@@ -149,6 +151,9 @@ public class ApplicationController {
 		            	
 		            		Cell isAdmin=row.getCell(5);
 		            		employeeDetails.setAdmin(isAdmin.getBooleanCellValue()); 
+		            		
+		            		Cell activeIndicator=row.getCell(6);
+		            		employeeDetails.setActiveIndicator(activeIndicator.getBooleanCellValue()); 
 		            		
 		            		employeeDetails.setCreatedBy(userName);
 		            		employeeDetails.setUpdatedBy(userName);
@@ -201,6 +206,9 @@ public class ApplicationController {
     		
     		Cell isAdmin=row.getCell(5);
     		employeeDetails.setAdmin(isAdmin.getBooleanCellValue()); 
+    		
+    		Cell activeIndicator=row.getCell(6);
+    		employeeDetails.setActiveIndicator(activeIndicator.getBooleanCellValue()); 
     		
     		errorlistEmpDetails.add(employeeDetails);
 			return errorlistEmpDetails;

@@ -7,7 +7,7 @@
 	//serverUrl : "http://localhost:8080",
 
 }).run(function($http, $window) {	
-	$http.defaults.headers.common['userToken'] =$window.sessionStorage["userToken"]?$window.sessionStorage["userToken"]: null;
+	//$http.defaults.headers.common['userToken'] =$window.sessionStorage["userToken"]?$window.sessionStorage["userToken"]: null;
 });
  
  angular.module('appConfigApp') 

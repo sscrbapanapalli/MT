@@ -10,14 +10,12 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
 import org.joda.time.Hours;
 import org.joda.time.Minutes;
 import org.joda.time.Seconds;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,8 +35,6 @@ import com.cmacgm.mytime.repository.ActivityTrackRepository;
 public class ActivityConfigController {
 	
 	
-	@Autowired(required=true)
-	private HttpSession httpSession;
 
 	@Autowired
 	ActivityConfigRepository activityConfigRepository;
@@ -52,18 +48,24 @@ public class ActivityConfigController {
 	}
 	
 	@GetMapping(value="/getStartTaskCount")
-	public int getStartTaskCount(){
+	public int getStartTaskCount(HttpServletRequest request){
 		int count=0;
-		String userId= (String) httpSession.getAttribute("userName");
-		//System.out.println("count="+ userId);
-		count= activityTrackRepository.findByActivityStatus(userId);
-		//System.out.println("count="+ count);
+		try {
+			String windowsUserName=request.getParameter("windowsUserName");
+			if ( !windowsUserName.isEmpty() && windowsUserName!=null){	
+				count= activityTrackRepository.findByActivityStatus(windowsUserName);
+				return count;
+			}
+		} catch (Exception e) {
+			return count;			
+		}
+		
 		return count;
 	}
 	
 	 @GetMapping("/getselectedActivityDetails/{id}")
 		public ActivitySettings  getselectedActivityDetails(@PathVariable(value="id") Long id){
-		 System.out.println(" for all roles" + id);
+	
 			return activityConfigRepository.findById(id);
 		}
 	 
@@ -137,7 +139,6 @@ public class ActivityConfigController {
 		activitySettings.setUpdatedBy(createdBy);
 		activitySettings.setActiveIndicator(true);
 		
-		System.out.println(activitySettings);
 		try{
 			activityConfigRepository.save(activitySettings);
 		configResponse="Activity Configuration saved successfully";
@@ -157,63 +158,82 @@ public class ActivityConfigController {
 	
 	
 	@GetMapping(value="/getActiveActivity")
-	public List<ActivitySettings> getActiveActivity(){
-		String userId = (String) httpSession.getAttribute("userName");
-		boolean activeIndicator=true;
-		List<String> availableTasksList=new ArrayList<String>();
-		List<String> userAddedTasksList=new ArrayList<String>();
-		List<String> notSelectedTasksList=new ArrayList<String>();
-		List<ActivitySettings> notSelectedTasks=new ArrayList<ActivitySettings>();
+	public List<ActivitySettings> getActiveActivity(HttpServletRequest request){
 		
-		List<ActivitySettings> availableTasks=activityConfigRepository.findByActiveIndicator(activeIndicator);
-		for (ActivitySettings loop1:availableTasks){
-			availableTasksList.add(loop1.getActivityName());
-		}
-		
-		List<UserActivityTrack> userAddedTasks=activityTrackRepository.findByUserId(userId);
-		for (UserActivityTrack loop2:userAddedTasks){
-			userAddedTasksList.add(loop2.getActivityName());
-		}
-		
-		for(String obj:availableTasksList){
-			if(!userAddedTasksList.contains(obj)){
-				notSelectedTasksList.add(obj);
-				System.out.println(obj);
+		List<UserActivityTrack> userAddedTasks=null;
+		List<ActivitySettings> notSelectedTasks=null;
+		List<ActivitySettings> availableTasks=null;
+		try {
+			String windowsUserName=request.getParameter("windowsUserName");
+			if ( !windowsUserName.isEmpty() && windowsUserName!=null){	
+			userAddedTasks=activityTrackRepository.findByUserId(windowsUserName);
 			}
-		}
-		
-		//System.out.println("availableTasks size:"+availableTasks.size()+","+"userAddedTasks:"+userAddedTasks.size()+","+"Notselected size:"+notSelectedTasksList.size());
-		if(userAddedTasks.size()>0){
-			for(String obj1:notSelectedTasksList){
-				for (ActivitySettings loop1:availableTasks){
-					if(obj1.equals(loop1.getActivityName())){
-						notSelectedTasks.add(loop1);
-						
-					}
+			boolean activeIndicator=true;
+			List<String> availableTasksList=new ArrayList<String>();
+			List<String> userAddedTasksList=new ArrayList<String>();
+			List<String> notSelectedTasksList=new ArrayList<String>();
+			notSelectedTasks=new ArrayList<ActivitySettings>();
+			
+			availableTasks=activityConfigRepository.findByActiveIndicator(activeIndicator);
+			for (ActivitySettings loop1:availableTasks){
+				availableTasksList.add(loop1.getActivityName());
+			}
+			
+			
+			for (UserActivityTrack loop2:userAddedTasks){
+				userAddedTasksList.add(loop2.getActivityName());
+			}
+			
+			for(String obj:availableTasksList){
+				if(!userAddedTasksList.contains(obj)){
+					notSelectedTasksList.add(obj);
+				
 				}
 			}
-			return notSelectedTasks;
-		}else{
-		//System.out.println(" To get not selected tasks" + notSelectedTasks);
-		return availableTasks;
+			
+			//System.out.println("availableTasks size:"+availableTasks.size()+","+"userAddedTasks:"+userAddedTasks.size()+","+"Notselected size:"+notSelectedTasksList.size());
+			if(userAddedTasks.size()>0){
+				for(String obj1:notSelectedTasksList){
+					for (ActivitySettings loop1:availableTasks){
+						if(obj1.equals(loop1.getActivityName())){
+							notSelectedTasks.add(loop1);
+							
+						}
+					}
+				}
+				return notSelectedTasks;
+			}else{
+			//System.out.println(" To get not selected tasks" + notSelectedTasks);
+			return availableTasks;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return availableTasks;	
 	
 	}
 	
 	
 	@GetMapping(value="/getUserActivity")
-	public List<UserActivityTrack> getUserActivity(){
-		String userId = (String) httpSession.getAttribute("userName");
-		System.out.println("get user activity list"+ userId);
+	public List<UserActivityTrack> getUserActivity(HttpServletRequest request){
+		List<UserActivityTrack> userActivity=null;
+		  String windowsUserName=request.getParameter("windowsUserName");
+		try {
+			if ( !windowsUserName.isEmpty() && windowsUserName!=null)	
+				return activityTrackRepository.findByUserId(windowsUserName);
+			else
+				return userActivity;
+		} catch (Exception e) {
+		          e.printStackTrace();
+		}
+		return userActivity;
 		
-		return activityTrackRepository.findByUserId(userId);
 	}
 	
 	
 	@RequestMapping(value = "/addUserActivity", method = RequestMethod.POST ,consumes="application/json", produces="application/json")
     public @ResponseBody String addUserActivity(@RequestBody ActivityConfig activityConfig) throws IllegalStateException, IOException {
-		System.out.println("in controller");
-		System.out.println("in controller"+ activityConfig.getUserName()+ activityConfig.getActivityMapping());
+		
 	String configResponse="";
 	String activityStatus="Not Started";
 	String userId=activityConfig.getUserName();
@@ -228,7 +248,7 @@ public class ActivityConfigController {
 		userActivityTrack.setUpdatedBy(createdBy);
 		userActivityTrack.setActivityStatus(activityStatus);
 		
-		System.out.println(userActivityTrack);
+	
 		try{
 			activityTrackRepository.save(userActivityTrack);
 		configResponse="Activity Task added successfully";
@@ -254,10 +274,9 @@ public class ActivityConfigController {
 	String currentMonth=c.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.ENGLISH );
 	Long currentYear = Long.valueOf(c.get(Calendar.YEAR));
 	Long id=Long.parseLong(request.getParameter("id"));
-	System.out.println(updatedBy);
-	System.out.println(id);
+
 	UserActivityTrack selectedTask=activityTrackRepository.findById(id);
-	System.out.println(selectedTask);
+	
 			
 	if(selectedTask!=null ){
 		
@@ -318,20 +337,18 @@ public class ActivityConfigController {
 		 if (hours   < 10) {convertH = "0"+hours;}
 		 if (minutes < 10) {convertM = "0"+minutes;}
 		 if (seconds < 10) {convertS = "0"+seconds;}
-		 System.out.println(hours);
+		
 		totalTime=convertH+":"+convertM+":"+convertS;
 	    
 		/*totalTime=Hours.hoursBetween(dt1, dt2).getHours() % 24+":"
 							+Minutes.minutesBetween(dt1, dt2).getMinutes() % 60+":"
 							+Seconds.secondsBetween(dt1, dt2).getSeconds() % 60;
 */
-		System.out.println(totalTime);
 	}catch(Exception e){
 		e.printStackTrace();
 	}
 	
-	System.out.println(date1);
-	System.out.println(date2);
+
 			
 	if(selectedTask!=null ){
 		

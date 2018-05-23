@@ -21,7 +21,7 @@ public class EmployeeErrorDetails {
 
 	private boolean isAdmin;
 
-
+	 private boolean activeIndicator;
 	
 
 
@@ -93,6 +93,18 @@ public class EmployeeErrorDetails {
 
 	public void setAdmin(boolean isAdmin) {
 		this.isAdmin = isAdmin;
+	}
+
+
+
+	public boolean isActiveIndicator() {
+		return activeIndicator;
+	}
+
+
+
+	public void setActiveIndicator(boolean activeIndicator) {
+		this.activeIndicator = activeIndicator;
 	}
 
 

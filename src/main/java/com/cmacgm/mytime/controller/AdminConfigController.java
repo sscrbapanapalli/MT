@@ -42,7 +42,7 @@ public class AdminConfigController {
 
 	 @GetMapping("/getAllEmployees")
 		public List<EmployeeDetails> getAllEmployees(){
-		 System.out.println(" All Employees");		 
+			 
 			return employeeDetailsRepository.findAll();
 		}
 	 
@@ -53,7 +53,6 @@ public class AdminConfigController {
 			Long id=Long.parseLong(request.getParameter("id"));
 			String updatedBy=request.getParameter("updatedBy");
 			EmployeeDetails employeeDetails=employeeDetailsRepository.findById(id);
-			System.out.println(" in delete reverse method server");
 			if(employeeDetails!=null){
 				try{
 					employeeDetails.setUpdatedBy(updatedBy);
@@ -140,7 +139,7 @@ public class AdminConfigController {
 				 }
 				 catch(Exception e){
 					 
-					 System.out.println(e.getMessage());
+					
 					 configResponse="Failed to save Config Employee Details";
 					 return configResponse;
 				 }

@@ -41,10 +41,7 @@ public class EmployeeDetails {
 
 	 @Column(name="active_indicator",nullable = false, columnDefinition = "TINYINT(1)")
 	 private boolean activeIndicator;
-	 
-	 @Column(name="ref_column", length=100)
-	  private String refColumn;
-	
+
 	
 	@CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -126,13 +123,7 @@ public class EmployeeDetails {
 		this.activeIndicator = activeIndicator;
 	}
 
-	public String getRefColumn() {
-		return refColumn;
-	}
-
-	public void setRefColumn(String refColumn) {
-		this.refColumn = refColumn;
-	}
+	
 
 	public Date getCreatedDate() {
 		return createdDate;

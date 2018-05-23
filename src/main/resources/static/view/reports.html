@@ -134,7 +134,7 @@ $(function() {
 					ui-sref="activityTrackAdmin">Master Task List</a></li>
 				<li><span ng-if="user.data.admin==true" class="divider"></span></li>
 
-				<li><a ui-sref="activityTrackUser">Task Timer</a></li>
+				<li><a  ui-sref="home" >Task Timer</a> </li>
 				<li><span ng-if="user.data.admin==true" class="divider"></span></li>
 				<li><a ng-if="user.data.admin==true" ui-sref="monitoring"
 					ui-sref-opts="{reload:true}">Active Time</a></li>
@@ -217,7 +217,7 @@ $(function() {
 								<label for="search">Record(s) per page</label> <input
 									type="number" min="1" max="100" class="textboxNumber"
 									ng-model="pageSize"> <a uisref="{{'.'}}"
-									onClick="$('#parentId').tableExport({tableName:'AuditHistoryDetails',type:'excel',escape:'false'});">
+									onClick="$('#parentIdA').tableExport({tableName:'AuditHistoryDetails',type:'excel',escape:'false'});">
 									<img src='./export/images/xls.png' width='24px'>
 								</a>
 
@@ -230,7 +230,7 @@ $(function() {
 				</div>
 			</div>
 
-			<table class="table" id="parentId">
+			<table class="table" id="parentIdA">
 				<thead>
 					<tr>
 						<th ng-click="sort('userId')">User Name <span
@@ -271,17 +271,13 @@ $(function() {
 						dir-paginate="obj in filtered= ( myAuditList | filter:search)| orderBy:sortKey:reverse |itemsPerPage:pageSize">
 						<td align="left">{{obj.userId}}</td>
 						<td align="left">{{obj.activityName}}</td>
-						<td align="left">{{obj.activityStartTime|date:'yyyy-MM-dd
-							HH:mm:ss'}}</td>
-						<td align="left">{{obj.activityEndTime|date:'yyyy-MM-dd
-							HH:mm:ss'}}</td>
+						<td align="left">{{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+						<td align="left">{{obj.activityEndTime|date:'yyyy-MM-dd	HH:mm:ss'}}</td>
 						<td align="left">
 							{{obj.revisedActivityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-						<td align="left">{{obj.revisedActivityEndTime|date:'yyyy-MM-dd
-							HH:mm:ss'}}</td>
+						<td align="left">{{obj.revisedActivityEndTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
 						<td align="left">{{obj.updatedBy}}</td>
-						<td align="left">{{obj.updatedDate|date:'yyyy-MM-dd
-							HH:mm:ss'}}</td>
+						<td align="left">{{obj.updatedDate|date:'yyyy-MM-dd	HH:mm:ss'}}</td>
 						<td align="left">{{obj.comments}}</td>
 
 
@@ -377,10 +373,8 @@ $(function() {
 						<td align="left">{{obj.userId}}</td>
 						<td align="left">{{obj.activityName}}</td>
 						<td align="left">{{obj.activityStatus}}</td>
-						<td align="left">{{obj.activityStartTime|date:'yyyy-MM-dd
-							HH:mm:ss'}}</td>
-						<td align="left">{{obj.activityEndTime|date:'yyyy-MM-dd
-							HH:mm:ss'}}</td>
+						<td align="left">{{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+						<td align="left">{{obj.activityEndTime|date:'yyyy-MM-dd	HH:mm:ss'}}</td>
 						<td align="left">{{obj.activityTotTime}}</td>
 						<td align="left" style="width:100px; word-wrap:break-word;">{{obj.comments}}</td>
 						<td align="left" ng-show="isEditable"><a
@@ -462,8 +456,7 @@ $(function() {
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="row">
+										<div class="row">
 									<div class="col-sm-12">
 										<div class="form-group">
 											<div class="col-sm-3 control-label" class="required">
@@ -481,6 +474,8 @@ $(function() {
 										</div>
 									</div>
 								</div>
+								</div>
+							
 							</div>
 
 						</div>

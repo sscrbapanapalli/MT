@@ -44,7 +44,7 @@ public class MyTimeApplication  extends SpringBootServletInitializer  {
 
 	public static void applyFullCorsAllowedPolicy(CorsRegistry registry) {
 		  registry.addMapping("/**").allowCredentials(false).allowedOrigins("*").
-		  allowedMethods("PUT", "POST", "GET", "OPTIONS", "DELETE").exposedHeaders("userToken");
+		  allowedMethods("PUT", "POST", "GET", "OPTIONS", "DELETE");
 
 	}
 }

@@ -58,44 +58,7 @@ element.style {
 
 
 </style>
- <script>
-/* function myFunction() {
-    var checkBox = document.getElementById("employeeStatus");
-    
-    if (employeeStatus == true){
-        text2.style.display = "block";
-        text1.style.display = "none";
-    } else if(employeeStatus == false){
-    	text1.style.display = "block";
-      	 text2.style.display = "none";
-    }
-}
 
-function myFunctionIsRm() {
-    var checkBox = document.getElementById("isReportingManager");
-    
-    if (isReportingManager == true){
-        text2.style.display = "block";
-        text1.style.display = "none";
-    } else if(isReportingManager == false){
-    	text1.style.display = "block";
-      	 text2.style.display = "none";
-    }
-}
-function myFunctionIsAdmin() {
-    var checkBox = document.getElementById("isAdmin");
-    
-    if (isAdmin == true){
-        text2.style.display = "block";
-        text1.style.display = "none";
-    } else if(isAdmin == false){
-    	text1.style.display = "block";
-      	 text2.style.display = "none";
-    }
-}
- */
-
-</script> 
 
 <div ng-controller="loginController" ng-init="init()">
 	<div class="overall" >
@@ -113,7 +76,7 @@ function myFunctionIsAdmin() {
                            <li ><span ng-if="user.data.admin==true"   class="divider"></span></li>
                            
                            <li>
-                                  <a  ui-sref="activityTrackUser" >Task Timer</a> 
+                                  <a  ui-sref="home" >Task Timer</a> 
                                   
                            </li>
                           <li><span ng-if="user.data.admin==true" class="divider"></span></li>
@@ -153,8 +116,8 @@ function myFunctionIsAdmin() {
    		<div class="form-group" >
 				<div class="control-label col-sm-4"  ><label style="float:left;padding-left:100px;">Email Id</label></div>
 				<div class="col-sm-5" tooltip="ex:SSC.ABC@CMA-CGM.COM" align="left">
-					<input class="text-uppercase"  type="email" size="35" name="emailId" id="emailId" ng-model="employee.emailId" ng-blur="checkEmployee()"  ng-disabled="inputReadOnly" required />
-					<a ng-if="employeeExists" > Email Id Already Exist</a>
+					<input class="text-uppercase"  type="email" size="35" name="emailId" id="emailId" ng-model="employee.emailId"  ng-disabled="inputReadOnly" required />
+					<!-- <a ng-if="employeeExists" > Email Id Already Exist</a> -->
 				</div>
 			</div>
    			<div class="form-group" >
