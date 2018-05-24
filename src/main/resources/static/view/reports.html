@@ -15,6 +15,7 @@ label.required::before {
 	margin-right: 4px;
 	color: red;
 }
+ .required input:after { content:"*"; }
 
 input.error {
 	border: 1px solid red;
@@ -457,7 +458,7 @@ $(function() {
 													<textarea class="form-control"
 														placeholder="Enter Revised Comments" type="text"
 														name="comments" id="comments" cols="30" rows="3"
-														maxlength="1000">  </textarea>
+														maxlength="100">  </textarea>
 
 												</div>
 											</div>
