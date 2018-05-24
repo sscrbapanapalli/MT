@@ -419,7 +419,10 @@ angular
 			 $scope.dataLoading = false;						
 			 $rootScope.displayUserName="";
 						
-			 $scope.inituser = function() {			
+			
+			 
+			 $scope.inituser = function() {	
+			
 				 $rootScope.isProfilePage=true;    
 				 $rootScope.currentUser = userService.getCurrentUser();
              	if ($rootScope.currentUser==undefined)

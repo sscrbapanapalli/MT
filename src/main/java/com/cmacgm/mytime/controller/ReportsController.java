@@ -168,7 +168,7 @@ public class ReportsController {
 				String[] split=id.split("@");
 				String userId=split[0];
 			
-				 empTaskList=activityTrackRepository.findByUserIdAndCreatedDateBetween(userId,dateFrom,dateTo);
+				 empTaskList=activityTrackRepository.getProgressAndCompleted(userId,dateFrom,dateTo);
 			
 				for(UserActivityTrack temp1:empTaskList){
 					myRepList.add(temp1);

@@ -19,6 +19,10 @@ public interface ActivityTrackRepository extends JpaRepository<UserActivityTrack
 	public UserActivityTrack findById(@Param("id") Long Id);
 	public List<UserActivityTrack> findByUserIdAndCreatedDateBetween(String userId,Date dateFrom,Date dateTo);
 	
+	@Query(nativeQuery=true,value="select * from user_activity_track t where  (t.created_date between :dateFrom and :dateTo) and t.activity_status in('In Progress','Completed') and t.user_id=:userId")
+	public List<UserActivityTrack> getProgressAndCompleted(@Param("userId") String userId,@Param("dateFrom") Date dateFrom,@Param("dateTo") Date dateTo);
+	
+	
 	@Modifying(clearAutomatically = true)
 	@Transactional
 	@Query("update UserActivityTrack u set u.activityStartTime = :activityStartTime, u.activityEndTime = :activityEndTime , u.activityTotTime = :activityTotTime ,u.comments = :comments, u.updatedBy = :updatedBy where u.id = :id")
