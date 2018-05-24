@@ -92,29 +92,20 @@ div.box {
 .modal.confirmation-dialog {
 	background-color: none !important;
 }
+.ranges li:last-child { display: none; }
 </style>
 <script type="text/javascript">
-$(function() {
+$(function() {   
 
-    var start = moment().subtract(29, 'days');
-    var end = moment();
-
-    function cb(start, end) {
-        $('#reportrange span').html(start.format('MMMM D, YYYY') + '-' + end.format('MMMM D, YYYY'));
-    }
-
-    $('#reportrange').daterangepicker({
-        startDate: start,
-        endDate: end,
+    $('#reportrange').daterangepicker({        
         ranges: {
            'Today': [moment(), moment()],
            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
            'Last 7 Days': [moment().subtract(6, 'days'), moment()], 'Last 15 Days': [moment().subtract(14, 'days'), moment()]
           
         }
-    }, cb);
+    });
 
-    cb(start, end);
 
 });
 </script>
@@ -269,16 +260,16 @@ $(function() {
 					<tr ng-class-odd="ClassOdd($index)"
 						ng-class-even="ClassEven($index)"
 						dir-paginate="obj in filtered= ( myAuditList | filter:search)| orderBy:sortKey:reverse |itemsPerPage:pageSize">
-						<td align="left">{{obj.userId}}</td>
-						<td align="left">{{obj.activityName}}</td>
-						<td align="left">{{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-						<td align="left">{{obj.activityEndTime|date:'yyyy-MM-dd	HH:mm:ss'}}</td>
-						<td align="left">
+						<td align="left">&nbsp;{{obj.userId}}</td>
+						<td align="left">&nbsp;{{obj.activityName}}</td>
+						<td align="left">&nbsp;{{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+						<td align="left">&nbsp;{{obj.activityEndTime|date:'yyyy-MM-dd	HH:mm:ss'}}</td>
+						<td align="left">&nbsp;
 							{{obj.revisedActivityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-						<td align="left">{{obj.revisedActivityEndTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-						<td align="left">{{obj.updatedBy}}</td>
-						<td align="left">{{obj.updatedDate|date:'yyyy-MM-dd	HH:mm:ss'}}</td>
-						<td align="left">{{obj.comments}}</td>
+						<td align="left">&nbsp;{{obj.revisedActivityEndTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+						<td align="left">&nbsp;{{obj.updatedBy}}</td>
+						<td align="left">&nbsp;{{obj.updatedDate|date:'yyyy-MM-dd	HH:mm:ss'}}</td>
+						<td align="left">&nbsp;{{obj.comments}}</td>
 
 
 					</tr>
@@ -370,20 +361,19 @@ $(function() {
 					<tr ng-class-odd="ClassOdd($index)"
 						ng-class-even="ClassEven($index)"
 						dir-paginate="obj in filtered= ( myReportList | filter:search)| orderBy:sortKey:reverse |itemsPerPage:pageSize">
-						<td align="left">{{obj.userId}}</td>
-						<td align="left">{{obj.activityName}}</td>
-						<td align="left">{{obj.activityStatus}}</td>
-						<td align="left">{{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-						<td align="left">{{obj.activityEndTime|date:'yyyy-MM-dd	HH:mm:ss'}}</td>
-						<td align="left">{{obj.activityTotTime}}</td>
-						<td align="left" style="width:100px; word-wrap:break-word;">{{obj.comments}}</td>
-						<td align="left" ng-show="isEditable"><a
-							ng-show="obj.activityStatus=='Completed'"
-							tooltip="Override Start & End DateTime"
+						<td align="left">&nbsp;{{obj.userId}}</td>
+						<td align="left">&nbsp;{{obj.activityName}}</td>
+						<td align="left">&nbsp;{{obj.activityStatus}}</td>
+						<td align="left">&nbsp;{{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+						<td align="left">&nbsp;{{obj.activityEndTime|date:'yyyy-MM-dd	HH:mm:ss'}}</td>
+						<td align="left">&nbsp;{{obj.activityTotTime}}</td>
+						<td align="left" style="width:100px; word-wrap:break-word;">&nbsp;{{obj.comments}}</td>
+						<td align="left" ng-show="isEditable">&nbsp;<a
+							ng-show="obj.activityStatus=='Completed'"							
 							ng-click="doRevise(obj.id)"> <img
 								src='./app/images/Edit_32x32.png' width='24px'>
 						</a>
-						<div ng-show="obj.activityStatus!='Completed'">{{obj.activityStatus}}</div></td>
+						<div ng-show="obj.activityStatus!='Completed'">&nbsp;{{obj.activityStatus}}</div></td>
 
 					</tr>
 				</tbody>

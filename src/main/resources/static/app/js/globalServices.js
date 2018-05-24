@@ -8,10 +8,7 @@ commonServices.service("globalServices", ['$q', '$http', '$window', function ($q
 	return {		
 		isUserTokenAvailable : function () {
 				return $window.sessionStorage["userToken"];
-		},
-		isWindowsAuth : function () {
-			return $window.sessionStorage["isWindowsAuthName"];
-	}
+		}
 	}
 
 

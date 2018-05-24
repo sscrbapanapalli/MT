@@ -24,9 +24,6 @@ public class ActivitySettings {
 	@Column(name="activity_name", length=100)
 	private String activityName;
 	
-	@Column(name="activity_seq_num", length=100)
-	private Long activitySeqNum;
-	
 	@CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
@@ -44,9 +41,7 @@ public class ActivitySettings {
     private String createdBy;
     
     @Column(name="updated_by",length = 100)
-    private String updatedBy;
-
-	
+    private String updatedBy;	
     
 	public Long getId() {
 		return id;
@@ -54,14 +49,6 @@ public class ActivitySettings {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getActivitySeqNum() {
-		return activitySeqNum;
-	}
-
-	public void setActivitySeqNum(Long activitySeqNum) {
-		this.activitySeqNum = activitySeqNum;
 	}
 
 	public String getActivityName() {
@@ -112,16 +99,6 @@ public class ActivitySettings {
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}  
-    
-    @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("Application [id=").append(id).append("]").append("[activityName=").append(activityName).append("]")
-        .append("[activitySeqNum=").append(activitySeqNum).append("]")
-        .append("[createdDate=").append(createdDate).append("]").append("[updatedDate=").append(updatedDate).append("]")
-        .append("[activeIndicator=").append(activeIndicator).append("]").append("[createdBy=").append(createdBy).append("]")
-        .append("[updatedBy=").append(updatedBy).append("]");
-        return builder.toString();
-    }
+  
 
 }

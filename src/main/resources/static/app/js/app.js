@@ -138,27 +138,16 @@ angular.module('myTimeApp').controller(
 						
 					 $scope.inituser = function() {
 						 $rootScope.isProfilePage=true;    
-						 var isWindowsAuth = globalServices.isWindowsAuth();				
-							
-							$rootScope.currentUser = userService.getCurrentUser();
-							if ($rootScope.currentUser==undefined)
+						 $rootScope.currentUser = userService.getCurrentUser();
+	                    	if ($rootScope.currentUser==undefined)
 							 { 
-								var url =  "http://10.13.44.33:8080/windowsUN/Testing";				
-					             $http.get(url).then(function(response) {
-					                    $scope.windowsUser=response.data;  
-					                  //  console.log($scope.windowsUser)
-								//$scope.windowsUser={"userName":"SSC.BAMMU"}
-										 var currentUser = {
-					                            userId : $scope.windowsUser.userName,
-					                            email  : $scope.windowsUser.userName+"@CMA-CGM.COM",
-					                            userName : $scope.windowsUser.userName,
-					                            userToken :""
-					                     };  
-										 $rootScope.currentUser=currentUser;
-										 $rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName
-										 $state.go("home",{}, {reload: true});  
-					             });
-						    }  
+								if(!appConstants.localServer){
+									$rootScope.currentUser =userService.getWindowsCurrentUserName();								
+								}else{
+									$rootScope.currentUser =userService.getLocalTestName();									
+								}								
+						    }else
+						    	$rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName
 					}
 					
 					$scope.init = function() {
@@ -432,44 +421,25 @@ angular
 						
 			 $scope.inituser = function() {			
 				 $rootScope.isProfilePage=true;    
-				 var isWindowsAuth = globalServices.isWindowsAuth();				
-					
-					$rootScope.currentUser = userService.getCurrentUser();			
-					if ($rootScope.currentUser==undefined)
+				 $rootScope.currentUser = userService.getCurrentUser();
+             	if ($rootScope.currentUser==undefined)
 					 { 
-						var url =  "http://10.13.44.33:8080/windowsUN/Testing";				
-			             $http.get(url).then(function(response) {
-			                    $scope.windowsUser=response.data;  
-			                  //  console.log($scope.windowsUser)
-						//$scope.windowsUser={"userName":"SSC.BAMMU"}
-								 var currentUser = {
-			                            userId : $scope.windowsUser.userName,
-			                            email  : $scope.windowsUser.userName+"@CMA-CGM.COM",
-			                            userName : $scope.windowsUser.userName,
-			                            userToken :""
-			                     };  
-								 
-								 $rootScope.currentUser=currentUser;
-								 $rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName
-								 $state.go("home",{}, {reload: true});  
-			             });
-				    }  
+						if(!appConstants.localServer){
+							$rootScope.currentUser =userService.getWindowsCurrentUserName();								
+						}else{
+							$rootScope.currentUser =userService.getLocalTestName();									
+						}								
+				    }else
+				    	$rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName 
 						
 				}
-			 			
-							
-							
-							$scope.init = function() {
-								$scope.inituser();
-							}
-							 
-							
-							$scope.init();
-							
-
-							
-			
-						} ]);
+			 				
+				$scope.init = function() {
+					$scope.inituser();
+				}
+				 				
+				$scope.init();
+			} ]);
 
 
 
@@ -492,28 +462,17 @@ angular
 							  $scope.user={};
 							
 							$scope.init=function(){	
-								 $rootScope.isProfilePage=true;    
-								var isWindowsAuth = globalServices.isWindowsAuth();				
-	  							
-								$rootScope.currentUser = userService.getCurrentUser();
-								if ($rootScope.currentUser==undefined)
-								 { 
-									var url =  "http://10.13.44.33:8080/windowsUN/Testing";				
-						             $http.get(url).then(function(response) {
-						                    $scope.windowsUser=response.data;  
-						                  //  console.log($scope.windowsUser)
-									//$scope.windowsUser={"userName":"SSC.BAMMU"}
-											 var currentUser = {
-						                            userId : $scope.windowsUser.userName,
-						                            email  : $scope.windowsUser.userName+"@CMA-CGM.COM",
-						                            userName : $scope.windowsUser.userName,
-						                            userToken :""
-						                     };  
-											 $rootScope.currentUser=currentUser;
-											 $rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName
-											 $state.go("home",{}, {reload: true});  
-						             });
-							    }  
+								 $rootScope.isProfilePage=true;								
+								 $rootScope.currentUser = userService.getCurrentUser();
+			                    	if ($rootScope.currentUser==undefined)
+									 { 
+										if(!appConstants.localServer){
+											$rootScope.currentUser =userService.getWindowsCurrentUserName();								
+										}else{
+											$rootScope.currentUser =userService.getLocalTestName();									
+										}								
+								    }else
+								    	$rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName
 		
 							  if($window.sessionStorage.getItem('isWindowsAuthName')!=undefined && $window.sessionStorage.getItem('isWindowsAuthName')!=null){
 								  var url =  appConstants.serverUrl+"/login/getUserDetails?windowsUserName="+$window.sessionStorage.getItem('isWindowsAuthName');
@@ -630,30 +589,20 @@ angular.module('myTimeApp').directive('multiselectDropdown', [function() {
 
 'use strict';
 angular.module('myTimeApp').run([
-			'$state','$http','$rootScope','globalServices','userService',function ( $state,$http,$rootScope,globalServices,userService) {
+			'$state','$http','$rootScope','globalServices','userService','appConstants',function ( $state,$http,$rootScope,globalServices,userService,appConstants) {
 				
 	   $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams) {	    
 	   
-		$rootScope.currentUser = userService.getCurrentUser();		
-		if ($rootScope.currentUser==undefined)
+		$rootScope.currentUser = userService.getCurrentUser();	
+    	if ($rootScope.currentUser==undefined)
 		 { 
-			 var url =  "http://10.13.44.33:8080/windowsUN/Testing";				
-             $http.get(url).then(function(response) {
-            	 $rootScope.windowsUser=response.data;  
-                  //  console.log($scope.windowsUser)
-			//$scope.windowsUser={"userName":"SSC.BAMMU"}
-					 var currentUser = {
-                            userId : $rootScope.windowsUser.userName,
-                            email  : $rootScope.windowsUser.userName+"@CMA-CGM.COM",
-                            userName : $rootScope.windowsUser.userName,
-                            userToken :""
-                     };  
-					 $rootScope.currentUser=currentUser;
-					 $rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName
-					 $state.go("home",{}, {reload: true});  
-             });
-		  
-	    }  
+			if(!appConstants.localServer){
+				$rootScope.currentUser =userService.getWindowsCurrentUserName();								
+			}else{
+				$rootScope.currentUser =userService.getLocalTestName();									
+			}								
+	    }else
+	    	$rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName
 	    
 	  });
 	   
@@ -688,61 +637,31 @@ angular.module('myTimeApp').controller(
 					$rootScope.dataLoading = false;
 					$scope.inituser = function() {
 						 $rootScope.isProfilePage=true;    
-                      	var isWindowsAuth = globalServices.isWindowsAuth();				
-  							
-                    	$rootScope.currentUser = userService.getCurrentUser();
+                       	$rootScope.currentUser = userService.getCurrentUser();
                     	if ($rootScope.currentUser==undefined)
 						 { 
-							var url =  "http://10.13.44.33:8080/windowsUN/Testing";				
-				             $http.get(url).then(function(response) {
-				                    $scope.windowsUser=response.data;  
-				                  //  console.log($scope.windowsUser)
-							//$scope.windowsUser={"userName":"SSC.BAMMU"}
-									 var currentUser = {
-				                            userId : $scope.windowsUser.userName,
-				                            email  : $scope.windowsUser.userName+"@CMA-CGM.COM",
-				                            userName : $scope.windowsUser.userName,
-				                            userToken :""
-				                     };  
-									 $rootScope.currentUser=currentUser;
-									 $rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName
-									   $window.sessionStorage.setItem('isWindowsAuthName',$rootScope.currentUser.userName); 
-				    			       $window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));  
-									 $state.go("home",{}, {reload: true});  
-				             });
+							if(!appConstants.localServer){
+								$rootScope.currentUser =userService.getWindowsCurrentUserName();
+							}else{
+								$rootScope.currentUser =userService.getLocalTestName();									
+							}								
 					    }  
                              
                       }
 					
 					$scope.init=function(){
 						$scope.inituser();
+						$rootScope.currentUser = userService.getCurrentUser();
+                    	if ($rootScope.currentUser==undefined)
+						 { 
+							if(!appConstants.localServer){
+								$rootScope.currentUser =userService.getWindowsCurrentUserName();								
+							}else{
+								$rootScope.currentUser =userService.getLocalTestName();									
+							}								
+					    }else
+					    	$rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName
 					
-							$scope.userName="";
-							$scope.userStatus=true;					
-						 var url =  "http://10.13.44.33:8080/windowsUN/Testing";
-					
-                          $http.get(url).then(function(response) {
-                                 $scope.windowsUser=response.data;  
-                               //  console.log($scope.windowsUser)
-						//$scope.windowsUser={"userName":"SSC.BAMMU"}
-    							 var currentUser = {
-    	                                 userId : $scope.windowsUser.userName,
-    	                                 email  : $scope.windowsUser.userName+"@CMA-CGM.COM",
-    	                                 userName : $scope.windowsUser.userName,
-    	                                 userToken :""
-    	                          };     							 
-    							 $rootScope.currentUser=currentUser;
-    							 $rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName
-							 if($rootScope.currentUser.userName!=undefined && $rootScope.currentUser.userName!=null){
-							       $window.sessionStorage.setItem('isWindowsAuthName',$rootScope.currentUser.userName); 
-			    			       $window.sessionStorage.setItem('currentUser', JSON.stringify(currentUser));  
-			    							
-							 }
-    			
-	                     });
-	                        
-						
-							
 							 
                           if($rootScope.currentUser.userName!=undefined && $rootScope.currentUser.userName!=null){
   									 var url =  appConstants.serverUrl+"/login/getUserDetails?windowsUserName="+$rootScope.currentUser.userName;
@@ -771,11 +690,7 @@ angular.module('myTimeApp').controller(
                         	
                         });
                         }
-                        
-                      
-                        
-                        
-							
+                          
 						}
 					
 					$scope.sort = function(keyname){
@@ -968,27 +883,16 @@ angular.module('myTimeApp').controller(
                             
                             $scope.inituser = function() {
                             	 $rootScope.isProfilePage=true;    
-                            	var isWindowsAuth = globalServices.isWindowsAuth();				
-        							
-                            	$rootScope.currentUser = userService.getCurrentUser();
-                            	if ($rootScope.currentUser==undefined)
-   							 { 
-   								var url =  "http://10.13.44.33:8080/windowsUN/Testing";				
-   					             $http.get(url).then(function(response) {
-   					                    $scope.windowsUser=response.data;  
-   					                  //  console.log($scope.windowsUser)
-   								//$scope.windowsUser={"userName":"SSC.BAMMU"}
-   										 var currentUser = {
-   					                            userId : $scope.windowsUser.userName,
-   					                            email  : $scope.windowsUser.userName+"@CMA-CGM.COM",
-   					                            userName : $scope.windowsUser.userName,
-   					                            userToken :""
-   					                     };  
-   										 $rootScope.currentUser=currentUser;
-   										 $rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName
-   										 $state.go("home",{}, {reload: true});  
-   					             });
-   						    }  
+                            	 $rootScope.currentUser = userService.getCurrentUser();
+                             	if ($rootScope.currentUser==undefined)
+         						 { 
+         							if(!appConstants.localServer){
+         								$rootScope.currentUser =userService.getWindowsCurrentUserName();								
+         							}else{
+         								$rootScope.currentUser =userService.getLocalTestName();									
+         							}								
+         					    }else
+         					    	$rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName
                                    
                             }
                             
@@ -1050,30 +954,20 @@ angular.module('myTimeApp').controller(
 					$scope.myReportList=[];
 					$scope.exportHref="";
 					$scope.pageSize = 10;
+					$scope.pageSizeB = 10;
 				
 					  $scope.inituser = function() {
 						  $rootScope.isProfilePage=true;    
-                      	var isWindowsAuth = globalServices.isWindowsAuth();				
-  							
-                    	$rootScope.currentUser = userService.getCurrentUser();
-                    	if ($rootScope.currentUser==undefined)
-						 { 
-							var url =  "http://10.13.44.33:8080/windowsUN/Testing";				
-				             $http.get(url).then(function(response) {
-				                    $scope.windowsUser=response.data;  
-				                  //  console.log($scope.windowsUser)
-							//$scope.windowsUser={"userName":"SSC.BAMMU"}
-									 var currentUser = {
-				                            userId : $scope.windowsUser.userName,
-				                            email  : $scope.windowsUser.userName+"@CMA-CGM.COM",
-				                            userName : $scope.windowsUser.userName,
-				                            userToken :""
-				                     };  
-									 $rootScope.currentUser=currentUser;
-									 $rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName
-									 $state.go("home",{}, {reload: true});  
-				             });
-					    }  
+						  $rootScope.currentUser = userService.getCurrentUser();
+	                    	if ($rootScope.currentUser==undefined)
+							 { 
+								if(!appConstants.localServer){
+									$rootScope.currentUser =userService.getWindowsCurrentUserName();								
+								}else{
+									$rootScope.currentUser =userService.getLocalTestName();									
+								}								
+						    }else
+						    	$rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName
                              
                       }
 					  $scope.showDialog = function(flag) {
@@ -1168,6 +1062,12 @@ angular.module('myTimeApp').controller(
 						
 					
 					}
+					$scope.sort = function(keyname){
+						$scope.sortKey = keyname;   //set the sortKey to the param passed
+						$scope.reverse = !$scope.reverse; //if true make it false and vice versa
+						
+						
+					}
 					
 					$scope.cancelRevise=function(){
 						 $scope.showDialog(false);	
@@ -1210,8 +1110,8 @@ angular.module('myTimeApp').controller(
 					        submitHandler: function (form) {
 					        	
 					        
-								var date_ini = new Date($('#revstartdate').val()).getTime();
-								var date_end = new Date($('#revenddate').val()).getTime();				
+								var date_ini = new Date($('#revstartdate').val());
+								var date_end = new Date($('#revenddate').val());	
 								if (isNaN(date_ini)) {
 								alert("Please Select The Start DateTime");
 								return false;;
@@ -1222,7 +1122,7 @@ angular.module('myTimeApp').controller(
 								}
 								if (date_ini > date_end) {
 									alert("Please Select The End DateTime greater Than Start Date Time");
-									return false;;
+									return false;
 								}// for demo
 					        	if($rootScope.currentUser!=undefined && $rootScope.currentUser!=null){
 									var data = {
@@ -1261,7 +1161,9 @@ angular.module('myTimeApp').controller(
 					    });
 						    	
 						
-					}	
+					}
+					
+					
 				
 				} ]);
 
@@ -1289,28 +1191,17 @@ angular.module('myTimeApp').controller(
 			
 				
 					  $scope.inituser = function() {
-						  $rootScope.isProfilePage=true;    
-                      	var isWindowsAuth = globalServices.isWindowsAuth();				
-  							
-                    	$rootScope.currentUser = userService.getCurrentUser();
-                    	if ($rootScope.currentUser==undefined)
-						 { 
-							var url =  "http://10.13.44.33:8080/windowsUN/Testing";				
-				             $http.get(url).then(function(response) {
-				                    $scope.windowsUser=response.data;  
-				                  //  console.log($scope.windowsUser)
-							//$scope.windowsUser={"userName":"SSC.BAMMU"}
-									 var currentUser = {
-				                            userId : $scope.windowsUser.userName,
-				                            email  : $scope.windowsUser.userName+"@CMA-CGM.COM",
-				                            userName : $scope.windowsUser.userName,
-				                            userToken :""
-				                     };  
-									 $rootScope.currentUser=currentUser;
-									 $rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName
-									 $state.go("home",{}, {reload: true});  
-				             });
-					    }  
+						 $rootScope.isProfilePage=true;    
+						 $rootScope.currentUser = userService.getCurrentUser();
+	                    	if ($rootScope.currentUser==undefined)
+							 { 
+								if(!appConstants.localServer){
+									$rootScope.currentUser =userService.getWindowsCurrentUserName();								
+								}else{
+									$rootScope.currentUser =userService.getLocalTestName();									
+								}								
+						    }else
+						    	$rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName
                              
                       }
 					
@@ -1345,9 +1236,9 @@ angular.module('myTimeApp').controller(
 							          $rootScope.showModal = !$rootScope.showModal;	
 								}
 								else{					
-									 
+									$scope.dataLoading = false;
 									  $rootScope.contentColor = "#dd4b39";
-									  $rootScope.buttonClicked =response.data+" : "+response.message;
+									  $rootScope.buttonClicked ="Select the Appropriate Employee Details To Upload";						
 							          $rootScope.showModal = !$rootScope.showModal;	
 								}
 					        })
@@ -1357,6 +1248,7 @@ angular.module('myTimeApp').controller(
 							//fileUpload.uploadFileToUrl(file,$rootScope.currentUser.userName);
 						else{
 							 $scope.dataLoading = false;
+							  $rootScope.buttonClicked ="Select the Appropriate Employee Details To Upload";
 							 $rootScope.showModal = !$rootScope.showModal;
 					         $rootScope.contentColor = "#dd4b39";	
 							
@@ -1398,27 +1290,17 @@ angular.module('myTimeApp').controller(
 					
 					
 					  $scope.inituser = function() {
-						  $rootScope.isProfilePage=true;    
-                      	var isWindowsAuth = globalServices.isWindowsAuth();				
+						  $rootScope.isProfilePage=true;
                     	$rootScope.currentUser = userService.getCurrentUser();
                     	if ($rootScope.currentUser==undefined)
 						 { 
-							var url =  "http://10.13.44.33:8080/windowsUN/Testing";				
-				             $http.get(url).then(function(response) {
-				                    $scope.windowsUser=response.data;  
-				                  //  console.log($scope.windowsUser)
-							//$scope.windowsUser={"userName":"SSC.BAMMU"}
-									 var currentUser = {
-				                            userId : $scope.windowsUser.userName,
-				                            email  : $scope.windowsUser.userName+"@CMA-CGM.COM",
-				                            userName : $scope.windowsUser.userName,
-				                            userToken :""
-				                     };  
-									 $rootScope.currentUser=currentUser;
-									 $rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName
-									 $state.go("home",{}, {reload: true});  
-				             });
-					    }  
+							if(!appConstants.localServer){
+								$rootScope.currentUser =userService.getWindowsCurrentUserName();								
+							}else{
+								$rootScope.currentUser =userService.getLocalTestName();									
+							}								
+					    }else
+					    	$rootScope.displayUserName="Welcome "+$rootScope.currentUser.userName
                              
                       }
 					
