@@ -147,6 +147,13 @@ element.style {
 					<input class="text-uppercase" type="text" size="35" name="rmId" id="rmId" ng-model="employee.rmId"  required />
 					
 				</div>	
+				</div>	
+				<div class="form-group" >
+				<div class="control-label col-sm-4"  ><label style="float:left;padding-left:100px;">Team Name</label></div>
+				<div class="col-sm-5" tooltip="ex:IT-ArchTechDelivery&MgmTeam" align="left">
+					<input class="text-uppercase" type="text" size="35" name="teamName" id="teamName" ng-model="employee.teamName"  required />
+					
+				</div>	
 				</div>			
 				
 		<!-- 	<div class="form-group">
@@ -221,9 +228,11 @@ element.style {
 					<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 					<th ng-click="sort('empId')">Employee Id
 					<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					<th ng-click="sort('teamName')">Team Name
+					<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>				
 					<th ng-click="sort('rmName')">Manager Name
 					<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('rmId')">Manager Id
+						<th ng-click="sort('rmId')">Manager Id
 					<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>					
 					<th ng-click="sort('activeIndicator')">Is Active<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 					<th>Actions</th>
@@ -235,7 +244,8 @@ element.style {
 					 
 						<td align="left">&nbsp;{{obj.empName}}</td>
 						<td align="left" class="text-uppercase">&nbsp;{{obj.emailId}}</td> 
-     					<td align="left" >&nbsp;{{obj.empId}}</td>  
+     					<td align="left" >&nbsp;{{obj.empId}}</td> 
+     					<td align="left" class="text-uppercase">&nbsp;{{obj.teamName}}</td> 
      					<td align="left" class="text-uppercase">&nbsp;{{obj.rmName}}</td>
      					<td align="left"  class="text-uppercase">&nbsp;{{obj.rmId}}</td>     				
      					<td align="left" class="text-uppercase">&nbsp;{{obj.activeIndicator}}</td>

@@ -17,6 +17,7 @@ public class EmployeeErrorDetails {
 	
 	private String rmName;
 
+	private String teamName;
 
 
 	private boolean isAdmin;
@@ -105,6 +106,18 @@ public class EmployeeErrorDetails {
 
 	public void setActiveIndicator(boolean activeIndicator) {
 		this.activeIndicator = activeIndicator;
+	}
+
+
+
+	public String getTeamName() {
+		return teamName;
+	}
+
+
+
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
 	}
 
 

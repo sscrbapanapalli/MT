@@ -20,8 +20,8 @@ public interface EmployeeDetailsRepository extends JpaRepository<EmployeeDetails
 	
 	@Modifying(clearAutomatically = true)
 	@Transactional
-	@Query("update EmployeeDetails u set u.empName = :empName, u.empId = :empId, u.rmId = :rmId, u.rmName = :rmName, u.isAdmin = :isAdmin where u.emailId = :emailId")
-	void setEmployee(@Param("empName") String empName,@Param("empId") Long empId,@Param("rmId")String rm_id,@Param("rmName") String rm_name,@Param("isAdmin") Boolean isAdmin,@Param("emailId") String emailId);
+	@Query("update EmployeeDetails u set u.empName = :empName, u.empId = :empId, u.rmId = :rmId, u.rmName = :rmName, u.isAdmin = :isAdmin , u.activeIndicator = :activeIndicator , u.teamName = :teamName where u.emailId = :emailId")
+	void setEmployee(@Param("empName") String empName,@Param("empId") Long empId,@Param("rmId")String rm_id,@Param("rmName") String rm_name,@Param("isAdmin") Boolean isAdmin,@Param("activeIndicator") Boolean activeIndicator,@Param("teamName") String teamName,@Param("emailId") String emailId);
 	
 	
 

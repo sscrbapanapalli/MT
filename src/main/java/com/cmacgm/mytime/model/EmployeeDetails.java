@@ -36,6 +36,10 @@ public class EmployeeDetails {
 	@Column(name="rm_name", length=100)
 	private String rmName;
 	
+	@Column(name="team_name", length=100)
+	private String teamName;
+	
+	
 	@Column(name="is_admin",nullable = false, columnDefinition = "TINYINT(1)")
 	 private boolean isAdmin;
 
@@ -155,6 +159,14 @@ public class EmployeeDetails {
 
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+
+	public String getTeamName() {
+		return teamName;
+	}
+
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
 	}
 
 	

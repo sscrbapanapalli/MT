@@ -13,6 +13,8 @@ import org.joda.time.Hours;
 import org.joda.time.Minutes;
 import org.joda.time.Seconds;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -109,24 +111,40 @@ public class ReportsController {
    	}
 	
 	@GetMapping(value="/getMonitoring")
-    public List<MonitoringDetails> getMonitoring(HttpServletRequest req){
-	 List<MonitoringDetails> monitoringDetailsList=null;
+    public Page<MonitoringDetails> getMonitoring(HttpServletRequest req){
+		Page<MonitoringDetails> monitoringDetailsList=null;
+		Integer pageNumber=0;
+		Integer size=10;
 	try {
 		String windowsUserName=req.getParameter("windowsUserName");
-		if ( !windowsUserName.isEmpty() && windowsUserName!=null){
+		try {
+			if(req.getParameter("pageNumber").trim()!="undefined")
+			    pageNumber=Integer.valueOf(req.getParameter("pageNumber"));
+			if(req.getParameter("size").trim()!="undefined")
+			   size=Integer.valueOf(req.getParameter("size"));
+		} catch (NumberFormatException e) {
+			pageNumber=0;
+			 size=10;
+		}
+		
+		
+		if ( !windowsUserName.isEmpty() && windowsUserName!=null){		
+			
 			 String rmId=windowsUserName + "@CMA-CGM.COM";
 	         //  System.out.println(rmId);
-	         monitoringDetailsList=activeMonitoringRepository.findAll();
+	         monitoringDetailsList=activeMonitoringRepository.findAll(new PageRequest(pageNumber, size));	        
 		}else{
-			 monitoringDetailsList=activeMonitoringRepository.findAll();
+			 monitoringDetailsList=activeMonitoringRepository.findAll(new PageRequest(pageNumber, size));
 			 return monitoringDetailsList;
 		}      
   
 	} catch (Exception e) {
+		pageNumber=0;
+		 size=10;
 		e.printStackTrace();
 	}		
      return monitoringDetailsList;
-}
+	}
 	
 	@GetMapping("/getTeamReport")
 	public List<UserActivityTrack> getTeamReport(HttpServletRequest req){

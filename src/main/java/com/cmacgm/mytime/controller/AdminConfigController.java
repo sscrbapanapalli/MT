@@ -98,6 +98,7 @@ public class AdminConfigController {
 				 employee.setEmpId(employeeDetailsConfig.getEmpId());
 				 employee.setRmName(employeeDetailsConfig.getRmName());
 				 employee.setAdmin(employeeDetailsConfig.isAdmin());
+				 employee.setTeamName(employeeDetailsConfig.getTeamName());
 				 employee.setRmId(employeeDetailsConfig.getRmId());				
 				 employee.setActiveIndicator(employeeDetailsConfig.isActiveIndicator());
 				 employee.setRmId(employeeDetailsConfig.getRmId());
@@ -123,6 +124,7 @@ public class AdminConfigController {
 				 checkEmployee.setRmName(employeeDetailsConfig.getRmName());				
 				 checkEmployee.setActiveIndicator(employeeDetailsConfig.isActiveIndicator());
 				 checkEmployee.setRmId(employeeDetailsConfig.getRmId());
+				 checkEmployee.setTeamName(employeeDetailsConfig.getTeamName());
 				 checkEmployee.setCreatedBy(employeeDetailsConfig.getCreatedBy());
 				 checkEmployee.setUpdatedBy(employeeDetailsConfig.getCreatedBy());
 				 checkEmployee.setId(employeeDetailsConfig.getId());

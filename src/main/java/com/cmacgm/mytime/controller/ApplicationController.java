@@ -129,6 +129,8 @@ public class ApplicationController {
 	 	            	  errorlistEmpDetails= getError(row); 
 	 	             else if(row.getCell(6)==null)
 	 	            	  errorlistEmpDetails= getError(row); 
+	 	            else if(row.getCell(7)==null)
+	 	            	  errorlistEmpDetails= getError(row); 
 	 	           
 	            		   
 	                  else {
@@ -154,6 +156,9 @@ public class ApplicationController {
 		            		
 		            		Cell activeIndicator=row.getCell(6);
 		            		employeeDetails.setActiveIndicator(activeIndicator.getBooleanCellValue()); 
+		            		
+		            		Cell teamName=row.getCell(7);
+		            		employeeDetails.setTeamName(teamName.getStringCellValue()); 	
 		            		
 		            		employeeDetails.setCreatedBy(userName);
 		            		employeeDetails.setUpdatedBy(userName);
@@ -210,6 +215,10 @@ public class ApplicationController {
     		Cell activeIndicator=row.getCell(6);
     		employeeDetails.setActiveIndicator(activeIndicator.getBooleanCellValue()); 
     		
+    		
+    		Cell teamName=row.getCell(7);
+    		employeeDetails.setTeamName(teamName.getStringCellValue()); 	
+    		
     		errorlistEmpDetails.add(employeeDetails);
 			return errorlistEmpDetails;
 		}
@@ -220,7 +229,7 @@ public class ApplicationController {
 		   		EmployeeDetails employeeDetailsOld=new EmployeeDetails();
 		   		  employeeDetailsOld=employeeDetailsRepository.findByEmailId(employeeDetails.getEmailId());
 		   		 if(employeeDetailsOld!=null)
-		   		  employeeDetailsRepository.setEmployee(employeeDetails.getEmpName(), employeeDetails.getEmpId(),employeeDetails.getRmId(), employeeDetails.getRmName(),  employeeDetails.isAdmin(),employeeDetails.getEmailId());	
+		   		  employeeDetailsRepository.setEmployee(employeeDetails.getEmpName(), employeeDetails.getEmpId(),employeeDetails.getRmId(), employeeDetails.getRmName(),  employeeDetails.isAdmin(),employeeDetails.isActiveIndicator(),employeeDetails.getTeamName(),employeeDetails.getEmailId());	
 		   		  else
 		   			employeeDetailsRepository.save(employeeDetails);
 		     	}	

@@ -154,6 +154,8 @@ function myFunction() {
 		</nav>
 	</div>
 </div>
+
+
 <div ng-controller="activityTrackUserController" ng-init="init()">
 
 	<div> <h3  style="font-size:16px; color:#960;" align="left">Task Timer</h3></div>
@@ -161,6 +163,33 @@ function myFunction() {
 	 <div>
 		<div>
 			<div class="bs-component">
+			<div class="box" >
+   	<div class="main" ng-show="allActivity">
+   		<form class="form-horizontal" >
+		 	
+			<div class="form-group" >
+				
+				<div class="col-sm-12">
+							
+			 		<div style="width:24%;float:left;padding-top:5px;" align="left">
+			 			<label class="pull-left" >Available Task(s)</label>	
+			 			<input class="pull-left textbox_multi" style="width: 240px" ng-model="search2" placeholder="Enter search term"  />
+			 			<select size="10" multiple ng-model="userSelectedRole" ng-options="userRole as userRole.activityName for userRole in allActivity| filter:search2" style="width: 240px"></select>
+   					</div>	
+				</div>
+			
+				
+			</div>
+						
+   			<div class="pull-left">
+   				 <button type="submit" class="btn btn-primary" ng-click = "Reset()">Reset</button>
+   				 <button type="submit" class="btn btn-success" ng-click = "userActivityConfig(userSelectedRole)">Submit</button>
+			</div>
+   		 </form>
+   	<div style="padding: 25px;"></div>
+	</div> 
+	
+   </div>
 				<form name='myform'>
 					<div>
 						<div class="slinputtext ">
@@ -243,51 +272,7 @@ function myFunction() {
 
 		</div>
 
-   <div class="box" >
-   	<div class="main" >
-   		<form class="form-horizontal" >
-		 	
-			<div class="form-group" >
-				
-				<div class="col-sm-12">
-				
-					<div style="width:25%;float:left" align="left">
-						<label class="pull-left" style="padding-top:5px;padding-bottom:0px" >Available</label>					
-						<input class="pull-left textbox_multi" style="width: 240px" required ng-model="search1" placeholder="Enter search term"  /> 
-						<select size="10"   multiple ng-model="userRole" ng-options="role as role.activityName for role in allActivity | filter:search1" style="width: 240px"></select>         
-					</div>
-					
-			 		<div style="width:5%;float:left;padding-top:90px;padding-right:50px" align="center">
-			 			<div>
-			 			<a  class="btn btn-info btn-lg" ng-click="moveItem(userRole, allActivity,userActivity)" style="width:25px; height:20px;display:block;padding:0px">
-				        	  <span class="glyphicon glyphicon-arrow-right" ></span> 
-				        </a>
-				        </div>
-				        <div style="padding-top:20px">
-			 			<a  class="btn btn-info btn-lg" ng-click="moveItem(userSelectedRole,userActivity, allActivity)" style="width:25px; height:20px;display:block;padding:0px">
-				        	  <span class="glyphicon glyphicon-arrow-left" ></span> 
-				        </a>
-				        </div>
-			 		</div>
-			 				
-			 		<div style="width:24%;float:left;padding-top:5px;" align="left">
-			 			<label class="pull-left" >Selected</label>	
-			 			<input class="pull-left textbox_multi" style="width: 240px" required ng-model="search2" placeholder="Enter search term"  />
-			 			<select size="10" multiple ng-model="userSelectedRole" ng-options="userRole as userRole.activityName for userRole in userActivity| filter:search2" style="width: 240px"></select>
-   					</div>	
-				</div>
-			
-				
-			</div>
-						
-   			<div class="pull-left">
-   				 <button type="submit" class="btn btn-primary" ng-click = "Reset()">Reset</button>
-   				 <button type="submit" class="btn btn-success" ng-click = "userActivityConfig(userActivityList)">Submit</button>
-			</div>
-   		 </form>
-   	
-	</div> 
-   </div>
+   
    
    <div id="confirmation-dialog">
       <div class="modal fade confirmation-dialog" role="dialog">

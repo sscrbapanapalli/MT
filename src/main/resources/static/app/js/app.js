@@ -728,7 +728,7 @@ angular.module('myTimeApp').controller(
 				        
 			            $scope.Reset=function(){
 			            	//$state.go("userSettings",{},{reload:true});
-			            	
+			            	$scope.userSelectedRole=[];
 			            	$scope.allActivity=angular.copy($scope.allActivityConstant);
 			            	$scope.userActivity=[];
 								
@@ -736,6 +736,7 @@ angular.module('myTimeApp').controller(
 			            
 			          
 			            $scope.userActivityConfig=function(userActivityList){
+			            	 $scope.userActivity=userActivityList;
 			            	//var duplicate=0;
 			            	var addUserActivityUrl=appConstants.serverUrl+"/activity/addUserActivity/";
 							var data = {
@@ -882,7 +883,38 @@ angular.module('myTimeApp').controller(
                      function($scope, $state, $rootScope, $window, $q,
                                    $http,appConstants,userService,globalServices,$stateParams,$location,$filter) {
                             $scope.pageSize = 10;
-                            $scope.monitorDataList=[];                          
+                            $scope.monitorDataList=[];    
+                            $scope.pageNumber=1;
+                            $scope.totalRecords = 0;
+                            $scope.usersPerPage = 10; // this should match however many results your API puts on one page
+                            getResultsPage(1);
+
+                            $scope.pagination = {
+                                current: 1
+                            };
+
+                            $scope.pageChanged = function(newPage) {
+                            	console.log(newPage)
+                                getResultsPage(newPage);
+                            };
+
+                            function getResultsPage(pageNumber) {
+                            	 $scope.pageNumber=pageNumber > 0?pageNumber - 1:0;                            	
+                                // this is just an example, in reality this stuff should be in a service
+                            	 if($rootScope.currentUser.userName!=undefined && $rootScope.currentUser.userName!=null){
+                            		  var url= appConstants.serverUrl+"/reports/getMonitoring?windowsUserName="+$rootScope.currentUser.userName+"&pageNumber="+ $scope.pageNumber+"&size="+ $scope.usersPerPage;
+                                      
+                                     $http.get(url).success(function(result){                                    	
+                                    	 $scope.monitorDataList = result.content;
+                                         $scope.totalRecords = result.totalElements
+                                     })
+                                     .error(function(data,status){    
+                                          console.error('Fail to load data', status, data);    
+                                          $scope.monitorDataList  = { };     
+                                        });    
+                                     }
+                              
+                            }
                             
                             $scope.inituser = function() {
                             	 $rootScope.isProfilePage=true;    
@@ -901,17 +933,17 @@ angular.module('myTimeApp').controller(
                             
                             $scope.init=function(){
                             	 $scope.inituser();
-                                   $scope.userName="";
-                                   
-                                   var url= appConstants.serverUrl+"/reports/getMonitoring?windowsUserName="+$rootScope.currentUser.userName;
+                                   $scope.userName="";                               
+                                   var url= appConstants.serverUrl+"/reports/getMonitoring?windowsUserName="+$rootScope.currentUser.userName+"&pageNumber="+ $scope.pageNumber+"&size="+ $scope.usersPerPage;
                                    if($rootScope.currentUser.userName!=undefined && $rootScope.currentUser.userName!=null){
-                                   $http.get(url).success(function(response){ 
-                                          $scope.monitorDataList = response; 
+                                   $http.get(url).success(function(result){                               	 
+                                	   $scope.monitorDataList = result.content;
+                                       $scope.totalRecords = result.totalElements
                                          
                                    })
                                    .error(function(data,status){    
                                         console.error('Fail to load data', status, data);    
-                                        $scope.employees = { };     
+                                        $scope.monitorDataList = { };     
                                       });    
                                    }
                                   
@@ -1344,7 +1376,8 @@ angular.module('myTimeApp').controller(
 								id : employee.id,
 			            		 empName : employee.empName,
 			            		 rmId : employee.rmId,
-			            		 rmName :employee.rmName,			            		
+			            		 rmName :employee.rmName,	
+			            		 teamName :employee.teamName,	
 			            		 activeIndicator :employee.activeIndicator,
 			            		 createdBy :$rootScope.currentUser.userName,
 			            		 updatedBy :$rootScope.currentUser.userName
@@ -1367,6 +1400,11 @@ angular.module('myTimeApp').controller(
 							
 						}else if(employee.rmId==null ||employee.rmId==undefined ||employee.rmId==""){
 							$rootScope.buttonClicked = "Please provide Reporting Manager Id";
+							$rootScope.showModal = !$rootScope.showModal;
+							  $rootScope.contentColor = "#dd4b39";
+							
+						}else if( employee.teamName==null || employee.teamName==undefined ||  employee.teamName ==""){
+							$rootScope.buttonClicked = "Please provide Team Name";
 							$rootScope.showModal = !$rootScope.showModal;
 							  $rootScope.contentColor = "#dd4b39";
 							
