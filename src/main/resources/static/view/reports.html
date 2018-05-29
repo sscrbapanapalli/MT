@@ -224,7 +224,9 @@ $(function() {
 
 			<table class="table" id="parentIdA">
 				<thead>
-					<tr>
+					<tr><th >Sl No
+								
+							</th>
 						<th ng-click="sort('userId')">User Name <span
 							class="glyphicon sort-icon"
 							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
@@ -261,6 +263,7 @@ $(function() {
 					<tr ng-class-odd="ClassOdd($index)"
 						ng-class-even="ClassEven($index)"
 						dir-paginate="obj in filtered= ( myAuditList | filter:search)| orderBy:sortKey:reverse |itemsPerPage:pageSize">
+							<td align="left">&nbsp;{{$index+1}}</td>
 						<td align="left">&nbsp;{{obj.userId}}</td>
 						<td align="left">&nbsp;{{obj.activityName}}</td>
 						<td align="left">&nbsp;{{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
@@ -331,6 +334,9 @@ $(function() {
 			<table class="table" id="parentId">
 				<thead>
 					<tr>
+					<th >Sl No
+								
+							</th>
 						<th ng-click="sort('userId')">User Name <span
 							class="glyphicon sort-icon"
 							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
@@ -362,6 +368,7 @@ $(function() {
 					<tr ng-class-odd="ClassOdd($index)"
 						ng-class-even="ClassEven($index)"
 						dir-paginate="obj in filtered= ( myReportList | filter:search)| orderBy:sortKey:reverse |itemsPerPage:pageSize">
+							<td align="left">&nbsp;{{$index+1}}</td>
 						<td align="left">&nbsp;{{obj.userId}}</td>
 						<td align="left">&nbsp;{{obj.activityName}}</td>
 						<td align="left">&nbsp;{{obj.activityStatus}}</td>
