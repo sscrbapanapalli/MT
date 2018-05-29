@@ -164,8 +164,8 @@ function myFunction() {
 		<table class="table" id="parentId">
 			<thead>
 				<tr>
-							<th ng-click="sort('id')">ID
-								<span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+							<th >Sl No
+								
 							</th>
 							<th ng-click="sort('empUserName')">Employee Name
 								<span class="glyphicon sort-icon" ng-show="sortKey=='user_name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
@@ -199,17 +199,17 @@ function myFunction() {
 			</thead>
 			<tbody>
 				<tr dir-paginate="user in filtered= (  monitorDataList | filter:search)|orderBy:sortKey:reverse|itemsPerPage:usersPerPage "  total-items="totalRecords" current-page="pagination.current">
-							<td>{{user.id}}</td>
-							<td>{{user.empUserName}}</td>
-							<td>{{user.machineName}}</td>
+							<td>&nbsp;{{$index+1}}</td>
+							<td align="left">&nbsp;{{user.empUserName}}</td>
+							<td align="left">&nbsp;{{user.machineName}}</td>
 							
-							<td>{{user.currentDate|date:'yyyy-MM-dd'}}</td>
-							<td>{{user.currentMonth}}</td>
-							<td>{{user.currentYear}}</td>
-							<td>{{user.logOnTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-							<td>{{user.logoffTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-							<td>{{user.activeTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-							<td>{{user.idleTime}}</td>
+							<td>&nbsp;{{user.currentDate|date:'yyyy-MM-dd'}}</td>
+							<td class="text-uppercase">&nbsp;{{user.currentMonth}}</td>
+							<td>&nbsp;{{user.currentYear}}</td>
+							<td>&nbsp;{{user.logOnTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td>&nbsp;{{user.logoffTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td>&nbsp;{{user.activeTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+							<td>&nbsp;{{user.idleTime}}</td>
 						</tr>
 			</tbody>
 		</table>

@@ -199,7 +199,7 @@ function myFunction() {
 						</div>
 						<div class="col-sm-10 pull-right">
 							<label for="search">Record(s) per page</label> 
-								<input type="number"	min="1" max="100" class="textboxNumber" ng-model="pageSize">
+								<input type="number"	min="1" max="1000" class="textboxNumber" ng-model="pageSize">
 								<a uisref="{{'.'}}"
 										onClick="$('#parentId').tableExport({tableName:'TaskTimer',type:'excel',escape:'false'});">
 											<img src='./export/images/xls.png' width='24px'>

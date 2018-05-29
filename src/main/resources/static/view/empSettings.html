@@ -205,7 +205,7 @@ element.style {
 						</div>
 						<div class="col-xs-5 pull-right">
 							<label for="search">Record(s) per page</label> 
-								<input type="number"	min="1" max="100" class="textboxNumber" ng-model="pageSize">
+								<input type="number"	min="1" max="1000" class="textboxNumber" ng-model="pageSize">
 								<a uisref="{{'.'}}"
 										onClick="$('#parentId').tableExport({tableName:'EmployeeDetails',type:'excel',escape:'false'});">
 											<img src='./export/images/xls.png' width='24px'>
@@ -222,7 +222,8 @@ element.style {
 		
 		<table class="table" id="parentId" >
 			<thead>
-				<tr>
+				<tr> <th >Sl No				
+							</th>
 					<th ng-click="sort('empName')">Employee Name <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 					<th ng-click="sort('emailId')">Email Id
 					<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
@@ -241,7 +242,7 @@ element.style {
 			<tbody>
 				<tr ng-class-odd="ClassOdd($index)"  ng-class-even="ClassEven($index)"
 					dir-paginate="obj in filtered= ( allEmployeeDetails | filter:search)| orderBy:sortKey:reverse |itemsPerPage:pageSize">
-					 
+					 <td align="left">&nbsp;{{$index+1}}</td>
 						<td align="left">&nbsp;{{obj.empName}}</td>
 						<td align="left" class="text-uppercase">&nbsp;{{obj.emailId}}</td> 
      					<td align="left" >&nbsp;{{obj.empId}}</td> 

@@ -227,7 +227,7 @@ function myFunction() {
 						</div>
 						<div class="">
 							<label for="search">Record(s) per page</label> 
-								<input type="number"	min="1" max="100" class="textboxNumber" ng-model="pageSize">
+								<input type="number"	min="1" max="1000" class="textboxNumber" ng-model="pageSize">
 						        <a uisref="{{'.'}}"
 										onClick="$('#parentId').tableExport({tableName:'MasterTaskList',type:'excel',escape:'false'});">
 											<img src='./export/images/xls.png' width='24px'>
@@ -243,6 +243,8 @@ function myFunction() {
 	<table class="table" id="parentId" style="width:75%">
 		<thead>
 			<tr>
+			    <th >Sl No				
+							</th>
 				<th ng-click="sort('activityName')">Activity Name
 					<span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
 				</th>
@@ -261,6 +263,7 @@ function myFunction() {
 		<tbody>
 			<tr ng-class-odd="ClassOdd($index)"  ng-class-even="ClassEven($index)"
 				dir-paginate="obj in filtered = (allActivities | filter:search) |orderBy:sortKey:reverse | itemsPerPage:pageSize ">
+				<td align="left">&nbsp;{{$index+1}}</td>
 				<td align="left">&nbsp;{{obj.activityName}}</td>
 				<td align="left" class="text-uppercase">&nbsp;{{obj.activeIndicator}}</td>  
 				<td align="left">&nbsp;{{obj.createdBy}}</td>
