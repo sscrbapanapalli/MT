@@ -1028,6 +1028,11 @@ angular.module('myTimeApp').controller(
 						}
 					};
 					
+					$scope.getUserTimeReport=function(){
+						$window.open(appConstants.userTimeReportUrl);
+						//console.log($location.href)
+					}
+					
 					$scope.doRevise = function(id){
 						
 					

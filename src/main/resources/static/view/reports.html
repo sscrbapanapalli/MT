@@ -51,7 +51,7 @@ p.ext {
 
 div.box {
 	height: 40px;
-	width: 780px;
+	width: 850px;
 	border: 1px;
 	align: center;
 	background: #ddd;
@@ -154,37 +154,19 @@ $(function() {
 			Reports</h3>
 	</div>
 	<div class="box">
-
-		<div
-			style="float: left; padding-right: 25px; padding-left: 25px; padding-top: 2px"
-			align="left">
+		<div style="float: left; padding-right: 25px; padding-left: 25px; padding-top: 2px"	align="left">
 			<label for="startDate">Date Range:</label>
 		</div>
-		<div
-			style="float: left; padding-right: 25px; padding-left: 25px; padding-top: 2px"
-			align="left">
-
-			<input id="reportrange" ng-model="dateRange"
-				style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
-			<!-- <i class="fa fa-calendar"></i>&nbsp;
- 				  <span></span> <i class="fa fa-caret-down"></i> -->
-			</input>
+		<div style="float: left; padding-right: 25px; padding-left: 25px; padding-top: 2px"	align="left">
+			<input id="reportrange" ng-model="dateRange" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%"></input>
 		</div>
 
-		<div
-			style="float: left; padding-right: 15px; padding-left: 10px; padding-top: 3px"
-			align="left">
-			<button type="submit" class="btn btn-primary"
-				ng-click="getMyReport(dateRange)">My Report</button>
-			<button type="submit" class="btn btn-primary"
-				ng-show="empdDetailsList.length>0"
-				ng-click="getTeamReport(dateRange)">Team Report</button>
-			<button type="submit" class="btn btn-primary"
-				ng-show="empdDetailsList.length>0"
-				ng-click="getAuditHistoryReport(dateRange)">Audit History
-				Report</button>
+		<div style="float: left; padding-right: 15px; padding-left: 10px; padding-top: 3px" align="left">
+			<button type="submit" class="btn btn-primary"	ng-click="getMyReport(dateRange)">My Report</button>
+			<button type="submit" class="btn btn-primary"	ng-show="empdDetailsList.length>0"	ng-click="getTeamReport(dateRange)">Team Report</button>
+			<button type="submit" class="btn btn-primary"	ng-show="empdDetailsList.length>0"	ng-click="getAuditHistoryReport(dateRange)">Audit History Report</button>
+			<button type="submit" class="btn btn-primary"	ng-show="empdDetailsList.length>0"	ng-click="getUserTimeReport()">User Time Report</button>
 		</div>
-
 	</div>
 
 	<div>&nbsp</div>
@@ -527,3 +509,4 @@ function generatePdf(tableId) {
           doc.save();
     }
 </script>
+

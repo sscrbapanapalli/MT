@@ -31,7 +31,7 @@ angular.module('myTimeApp').service('userService', ['$window', '$q','$http','app
         return  currentUser;
     };
     this.getLocalTestName = function () {  
-    	         var currName ={"userName":"SSC.BAMMU"}	
+    	         var currName ={"userName":"SSC.RBAPANAPALLI"}	
 				 var currentUser = {
                        userId :currName.userName,
                        email  : currName.userName+"@CMA-CGM.COM",
