@@ -242,7 +242,7 @@ element.style {
 			<tbody>
 				<tr ng-class-odd="ClassOdd($index)"  ng-class-even="ClassEven($index)"
 					dir-paginate="obj in filtered= ( allEmployeeDetails | filter:search)| orderBy:sortKey:reverse |itemsPerPage:pageSize">
-					 <td align="left">&nbsp;{{$index+1}}</td>
+					 <td>&nbsp;{{$index+1}}</td>
 						<td align="left">&nbsp;{{obj.empName}}</td>
 						<td align="left" class="text-uppercase">&nbsp;{{obj.emailId}}</td> 
      					<td align="left" >&nbsp;{{obj.empId}}</td> 
