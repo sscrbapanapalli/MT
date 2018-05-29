@@ -20,7 +20,7 @@ public class LoggingAspect
 {
     private Log log = LogFactory.getLog(this.getClass());
     
-    @Pointcut("execution(public * com.cmacgm.cdrserver.controller..*(..))")
+    @Pointcut("execution(public * com.cmacgm.mytime.controller..*(..))")
     protected void loggingOperation() {}
     
     @Before("loggingOperation()")
@@ -43,7 +43,7 @@ public class LoggingAspect
         log.info("Return value :"+result);
     }
     
-    @AfterThrowing(pointcut="execution(public * com.cmacgm.cdrserver.controller..*(..))", throwing = "e")
+    @AfterThrowing(pointcut="execution(public * com.cmacgm.mytime.controller..*(..))", throwing = "e")
     @Order(3)
     public void logAfterThrowing(JoinPoint joinPoint, Throwable e)
     {
@@ -51,7 +51,7 @@ public class LoggingAspect
         log.info("Cause :"+e.getCause());
     }
     
-    @Around("execution(public * com.cmacgm.cdrserver.controller..*(..))")
+    @Around("execution(public * com.cmacgm.mytime.controller..*(..))")
     @Order(4)
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable
     {
