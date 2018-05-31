@@ -148,7 +148,7 @@ angular.module('myTimeApp').controller(
 								
 							});
 						}
-					$scope.setUpdatedActDetails=function(id,activityName){
+					$scope.setUpdatedActDetails=function(id,activityName,activityType){
 					
 						var config = {
 								transformRequest : angular.identity,
@@ -161,9 +161,8 @@ angular.module('myTimeApp').controller(
 					var data = new FormData();
 					data.append("id" ,id);
 					data.append("activityName", activityName)
+					data.append("activityType", activityType)
 					data.append("updatedBy", $rootScope.currentUser.userName);
-					
-		
 					
 					$http.post(updateActUrl,data,config)
 					.success(function (response) {  
@@ -257,18 +256,25 @@ angular.module('myTimeApp').controller(
 					$scope.Add = function () {
 		            
 		                //Add the new item to the Array.
-		            	if($scope.activityName==null || $scope.activityName==undefined ||$scope.activityName=="" ){
-		            		$rootScope.buttonClicked = "Please provide activity";
+		            	if($scope.activityName==null || $scope.activityName==undefined ||$scope.activityName=="" ||
+		            	   $scope.activityType==null || $scope.activityType==undefined ||$scope.activityType==""){
+		            		$rootScope.buttonClicked = "Please provide activity Details";
 							$rootScope.showModal = !$rootScope.showModal;
 							  $rootScope.contentColor = "#dd4b39";
 		            	}else{
+		            		var activitySettingsObj = {};
+		            		activitySettingsObj.activityName=$scope.activityName;
+		            		activitySettingsObj.activityType=$scope.activityType;
 		               	                
-		                $scope.activityMapping.push($scope.activityName);
-		            	}
-		            	
+		                $scope.activityMapping.push(activitySettingsObj);
 		                //Clear the TextBoxes.
 		                $scope.activityName = "";
-		                
+		                $scope.activityType="";
+		            	}
+		            	
+		               /* //Clear the TextBoxes.
+		                $scope.activityName = "";
+		                $scope.activityType="";*/
 		            	
 		            };
 
@@ -283,15 +289,17 @@ angular.module('myTimeApp').controller(
 		            
 		            $scope.Reset=function(){
 		            	
-	            		
+		            	$scope.activityMapping=[];
+		            	$scope.activityName = "";
+		                $scope.activityType="";
 	            		$scope.selectedActivityDetails.activityName="";
+	            		$scope.selectedActivityDetails.activityType="";
 	            		
 	            		
 		            }
 					
 					$scope.activityConfig=function(){
 						
-		                $scope.activityMapping.push($scope.activityName);
 				                
 				             var url =  appConstants.serverUrl+"/activity/setActivityConfig/";
 				             
@@ -302,20 +310,30 @@ angular.module('myTimeApp').controller(
 											'Content-Type' : undefined
 										}
 									}
+				             
 				            
-				             var dataObj = {
-				            	 	
-				            	 	 activityMapping :$scope.activityMapping,
-				            		 userName :$rootScope.currentUser.userName
-				     		};
+				            
 				            
 				             
-				             if($scope.activityName==null || $scope.activityName==undefined || $scope.activityName==""){
-				            	 $rootScope.buttonClicked = "Please provide Activity Name";
+				             if($scope.activityName==null || $scope.activityName==undefined || $scope.activityName=="" ||
+				            		 $scope.activityType==null || $scope.activityType==undefined ||$scope.activityType==""	 ){
+				            	 $rootScope.buttonClicked = "Please provide Activity Details";
 									$rootScope.showModal = !$rootScope.showModal;
 									  $rootScope.contentColor = "#dd4b39";
 				             }
 				             else{
+				            	 var activitySettingsObj = {};
+				            		activitySettingsObj.activityName=$scope.activityName;
+				            		activitySettingsObj.activityType=$scope.activityType;
+									
+					                $scope.activityMapping.push(activitySettingsObj);
+					                
+					                var dataObj = {
+						            	 	
+						            	 	 activityMapping :$scope.activityMapping,
+						            		 userName :$rootScope.currentUser.userName
+						     		};
+						             console.log(dataObj)
 				             $http.post(url,dataObj,
 										{
 											headers : {
@@ -331,6 +349,10 @@ angular.module('myTimeApp').controller(
 									$rootScope.showModal = !$rootScope.showModal;
 									$rootScope.contentColor = "#78b266";
 									$state.go("activityTrackAdmin", {} , {reload: true} );
+									
+									$scope.activityMapping=[];
+				            		$scope.activityName = "";
+				            		$scope.activityName = "";
 			                	}else{
 			                		$rootScope.buttonClicked = response;
 									$rootScope.showModal = !$rootScope.showModal;
@@ -339,8 +361,7 @@ angular.module('myTimeApp').controller(
 			                	}
 							});
 			              }	
-				            		$scope.activityMapping=[];
-				            		$scope.activityName = "";
+				            		
 				            		
 			            }
 					

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cmacgm.mytime.model.ActivityConfig;
+import com.cmacgm.mytime.model.ActivityDetails;
 import com.cmacgm.mytime.model.ActivitySettings;
 import com.cmacgm.mytime.model.UserActivityTrack;
 import com.cmacgm.mytime.repository.ActivityConfigRepository;
@@ -75,6 +76,7 @@ public class ActivityConfigController {
 			
 			Long id=Long.parseLong(request.getParameter("id"));
 			String activityName=request.getParameter("activityName");
+			String activityType=request.getParameter("activityType");
 			String updatedBy=request.getParameter("updatedBy");
 			ActivitySettings activity=activityConfigRepository.findById(id);
 			/*System.out.println(" in update method server");
@@ -85,6 +87,7 @@ public class ActivityConfigController {
 					activity.setActivityName(activityName);
 					activity.setActiveIndicator(true);
 					activity.setUpdatedBy(updatedBy);
+					activity.setActivityType(activityType);
 					//System.out.println(activity.isActiveIndicator());
 					activityConfigRepository.save(activity);
 					updateResponse="Activity Updated Successfully";
@@ -130,11 +133,12 @@ public class ActivityConfigController {
 	String configResponse="";
 	
 	String createdBy=activityConfig.getUserName();
-	List<String> activityList=activityConfig.getActivityMapping();
+	List<ActivityDetails> activityList=activityConfig.getActivityMapping();
 			
-	for(String obj:activityList){
+	for(ActivityDetails obj:activityList){
 		ActivitySettings activitySettings=new ActivitySettings();
-		activitySettings.setActivityName(obj);
+		activitySettings.setActivityName(obj.getActivityName());
+		activitySettings.setActivityType(obj.getActivityType());
 		activitySettings.setCreatedBy(createdBy);
 		activitySettings.setUpdatedBy(createdBy);
 		activitySettings.setActiveIndicator(true);

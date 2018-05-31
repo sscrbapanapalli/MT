@@ -6,7 +6,7 @@ public class ActivityConfig {
 	
 	private Long id;
 	private String userName;
-	private List<String> activityMapping;
+	private List<ActivityDetails> activityMapping;
 	private List<ActivitySettings> activityTracker;
 	public String getUserName() {
 		return userName;
@@ -14,10 +14,10 @@ public class ActivityConfig {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public List<String> getActivityMapping() {
+	public List<ActivityDetails> getActivityMapping() {
 		return activityMapping;
 	}
-	public void setActivityMapping(List<String> activityMapping) {
+	public void setActivityMapping(List<ActivityDetails> activityMapping) {
 		this.activityMapping = activityMapping;
 	}
 	public List<ActivitySettings> getActivityTracker() {

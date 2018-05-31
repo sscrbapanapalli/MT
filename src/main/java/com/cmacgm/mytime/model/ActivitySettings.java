@@ -24,6 +24,9 @@ public class ActivitySettings {
 	@Column(name="activity_name", length=100)
 	private String activityName;
 	
+	@Column(name="activity_type", length=100)
+	private String activityType;
+	
 	@CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
@@ -98,7 +101,17 @@ public class ActivitySettings {
 
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
-	}  
-  
+	}
 
+	public String getActivityType() {
+		return activityType;
+	}
+
+	public void setActivityType(String activityType) {
+		this.activityType = activityType;
+	}
+
+	
+
+	
 }
