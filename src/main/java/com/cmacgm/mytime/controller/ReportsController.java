@@ -277,7 +277,7 @@ public class ReportsController {
 			 auditHistoryActivityTrack.setActivityEndTime(userActivityTrack.getActivityEndTime());
 			 auditHistoryActivityTrack.setUpdatedBy(auditHistoryActivityTrack.getUpdatedBy());
 			 auditHistoryActivityTrack.setCreatedBy(auditHistoryActivityTrack.getCreatedBy());
-			 auditHistoryActivityTrack.setActivityName(userActivityTrack.getActivityName());
+			 auditHistoryActivityTrack.setActivityId(userActivityTrack.getActivityId());
 			 auditHistoryActivityTrack.setUserId(userActivityTrack.getUserId());
 			 auditHistoryActivityTrack.setComments(comments);
 			auditHistoryActivityTrackRepository.save(auditHistoryActivityTrack);

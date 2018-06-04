@@ -185,7 +185,7 @@ public class ActivityConfigController {
 			
 			
 			for (UserActivityTrack loop2:userAddedTasks){
-				userAddedTasksList.add(loop2.getActivityName());
+				userAddedTasksList.add(loop2.getActivityId().getActivityName());
 			}
 			
 			for(String obj:availableTasksList){
@@ -247,7 +247,8 @@ public class ActivityConfigController {
 	for(ActivitySettings obj:activityList){
 		UserActivityTrack userActivityTrack=new UserActivityTrack();
 		userActivityTrack.setUserId(userId);
-		userActivityTrack.setActivityName(obj.getActivityName());
+		userActivityTrack.setActivityId(obj);
+		//userActivityTrack.setActivityType(obj.getActivityType());
 		userActivityTrack.setCreatedBy(createdBy);
 		userActivityTrack.setUpdatedBy(createdBy);
 		userActivityTrack.setActivityStatus(activityStatus);
@@ -259,6 +260,7 @@ public class ActivityConfigController {
 		
 		}catch(Exception e){
 			configResponse="Activity Configuration failed to save, Please contact Application Support Team";
+			System.out.println(e.getMessage());
 		}
 		
 	 }

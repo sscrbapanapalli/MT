@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -30,9 +32,13 @@ public class AuditHistoryActivityTrack {
 	@Column(name="activity_end_time")
     private Date activityEndTime;  	
 	
-	@Column(name="activity_name", length=100)
+	@ManyToOne
+	@JoinColumn(name="activity_Id",referencedColumnName="id")
+	private ActivitySettings activityId;
+	
+	/*@Column(name="activity_name", length=100)
 	private String activityName;	
-
+*/
 	@Column(name="revised_activity_start_time")
     private Date revisedActivityStartTime;
 	
@@ -194,7 +200,17 @@ public class AuditHistoryActivityTrack {
 	}
 
 
-	public String getActivityName() {
+	public ActivitySettings getActivityId() {
+		return activityId;
+	}
+
+
+	public void setActivityId(ActivitySettings activityId) {
+		this.activityId = activityId;
+	}
+
+
+	/*public String getActivityName() {
 		return activityName;
 	}
 
@@ -202,7 +218,7 @@ public class AuditHistoryActivityTrack {
 	public void setActivityName(String activityName) {
 		this.activityName = activityName;
 	}	
-	
+	*/
     
 	
     

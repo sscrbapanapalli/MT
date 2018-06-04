@@ -27,6 +27,8 @@ public class ActivitySettings {
 	@Column(name="activity_type", length=100)
 	private String activityType;
 	
+	
+	
 	@CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")

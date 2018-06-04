@@ -652,6 +652,7 @@ angular.module('myTimeApp').controller(
                         $http.get(userActivityUrl).then(function(response) {
                         	
                         	$scope.userActivityList=response.data;	
+                        	console.log('userActivityList',$scope.userActivityList)
                         	
                         });
                         $http.get(activiActivityUrl).then(function(response) {
@@ -705,6 +706,8 @@ angular.module('myTimeApp').controller(
 			          
 			            $scope.userActivityConfig=function(userActivityList){
 			            	 $scope.userActivity=userActivityList;
+			            	 console.log($scope.userActivity)
+			            	 console.log(userActivityList)
 			            	//var duplicate=0;
 			            	var addUserActivityUrl=appConstants.serverUrl+"/activity/addUserActivity/";
 							var data = {

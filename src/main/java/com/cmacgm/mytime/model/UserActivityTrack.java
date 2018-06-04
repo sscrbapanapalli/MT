@@ -2,11 +2,15 @@ package com.cmacgm.mytime.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -24,11 +28,25 @@ public class UserActivityTrack {
 	@Column(name="user_id", length=100)
 	private String userId;
 	
-	/*@Column(name="activity_id", length=100)
-	private Long activityId;*/
+	@ManyToOne
+    @JoinColumn( name = "activity_id" , referencedColumnName = "id")
+	private ActivitySettings activityId;
 	
-	@Column(name="activity_name", length=100)
+	
+	public ActivitySettings getActivityId() {
+		return this.activityId;
+	}
+
+	public void setActivityId(ActivitySettings activityId) {
+		this.activityId = activityId;
+	}
+	
+	
+	/*@Column(name="activity_name", length=100)
 	private String activityName;
+	
+	@Column(name="activity_type", length=100)
+	private String activityType;*/
 	
 	@Column(name="activity_cur_year", length=100)
 	private Long activityCurYear;
@@ -84,13 +102,13 @@ public class UserActivityTrack {
 
 	
 
-	public String getActivityName() {
+	/*public String getActivityName() {
 		return activityName;
 	}
 
 	public void setActivityName(String activityName) {
 		this.activityName = activityName;
-	}
+	}*/
 
 	
 	public Date getCreatedDate() {
@@ -209,6 +227,16 @@ public class UserActivityTrack {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
+
+	
+
+	/*public String getActivityType() {
+		return activityType;
+	}
+
+	public void setActivityType(String activityType) {
+		this.activityType = activityType;
+	}*/
 
 	
 	

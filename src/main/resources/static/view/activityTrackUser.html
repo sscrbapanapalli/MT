@@ -220,6 +220,7 @@ function myFunction() {
 								
 							</th>
 					<th ng-click="sort('activityName')" style="width:15%">Activity Name <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					<th ng-click="sort('activityType')" style="width:15%">Activity Type <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 					<th ng-click="sort('activityStatus')" style="width:15%">Activity Status <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 					<th ng-click="sort('activityStartTime')" style="width:15%">Start Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 					<th ng-click="sort('activityEndTime')" style="width:15%">End Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
@@ -231,7 +232,8 @@ function myFunction() {
 				<tr ng-class-odd="ClassOdd($index)"  ng-class-even="ClassEven($index)"
 					dir-paginate="obj in filtered= ( userActivityList | filter:search)| orderBy:sortKey:reverse |itemsPerPage:pageSize"
 					 >	<td>&nbsp;{{$index+1}}</td>
-						<td align="left">&nbsp;{{obj.activityName}}</td>
+						<td align="left">&nbsp;{{obj.activityId.activityName}}</td>
+						<td align="left">&nbsp;{{obj.activityId.activityType}}</td>
 						<td align="left">&nbsp;{{obj.activityStatus}}</td>
      					<td align="left">&nbsp;&nbsp;{{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
 						<td align="left">&nbsp;&nbsp;{{obj.activityEndTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>  

@@ -215,6 +215,9 @@ $(function() {
 						<th ng-click="sort('activityName')">Activity Name<span
 							class="glyphicon sort-icon"
 							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-click="sort('activityType')">Activity Type<span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 						<th ng-click="sort('activityStartTime')">Start Time <span
 							class="glyphicon sort-icon"
 							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
@@ -247,11 +250,11 @@ $(function() {
 						dir-paginate="obj in filtered= ( myAuditList | filter:search)| orderBy:sortKey:reverse |itemsPerPage:pageSize">
 							<td >&nbsp;{{$index+1}}</td>
 						<td align="left">&nbsp;{{obj.userId}}</td>
-						<td align="left">&nbsp;{{obj.activityName}}</td>
+						<td align="left">&nbsp;{{obj.activityId.activityName}}</td>
+						<td align="left">&nbsp;{{obj.activityId.activityType}}</td>
 						<td align="left">&nbsp;{{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
 						<td align="left">&nbsp;{{obj.activityEndTime|date:'yyyy-MM-dd	HH:mm:ss'}}</td>
-						<td align="left">&nbsp;
-							{{obj.revisedActivityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+						<td align="left">&nbsp;{{obj.revisedActivityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
 						<td align="left">&nbsp;{{obj.revisedActivityEndTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
 						<td align="left">&nbsp;{{obj.updatedBy}}</td>
 						<td align="left">&nbsp;{{obj.updatedDate|date:'yyyy-MM-dd	HH:mm:ss'}}</td>
@@ -325,6 +328,9 @@ $(function() {
 						<th ng-click="sort('activityName')">Activity Name <span
 							class="glyphicon sort-icon"
 							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-click="sort('activityType')">Activity Type <span
+							class="glyphicon sort-icon"
+							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>	
 						<th ng-click="sort('activityStatus')">Activity Status <span
 							class="glyphicon sort-icon"
 							ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
@@ -352,7 +358,8 @@ $(function() {
 						dir-paginate="obj in filtered= ( myReportList | filter:search)| orderBy:sortKey:reverse |itemsPerPage:pageSize">
 							<td >&nbsp;{{$index+1}}</td>
 						<td align="left">&nbsp;{{obj.userId}}</td>
-						<td align="left">&nbsp;{{obj.activityName}}</td>
+						<td align="left">&nbsp;{{obj.activityId.activityName}}</td>
+						<td align="left">&nbsp;{{obj.activityId.activityType}}</td>
 						<td align="left">&nbsp;{{obj.activityStatus}}</td>
 						<td align="left">&nbsp;{{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
 						<td align="left">&nbsp;{{obj.activityEndTime|date:'yyyy-MM-dd	HH:mm:ss'}}</td>
@@ -400,8 +407,7 @@ $(function() {
 									<div class="col-sm-12">
 										<div class="form-group">
 											<div class="col-sm-3 control-label" class="required">
-												<label for="startdate" class="control-label">Revised
-													Start Time</label>
+												<label for="startdate" class="control-label">Revised Start Time</label>
 											</div>
 											<div class="col-sm-6">
 
