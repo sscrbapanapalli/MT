@@ -116,10 +116,10 @@ public class ActivityConfigController {
 				activity.setUpdatedBy(updatedBy);
 				//System.out.println(activity.isActiveIndicator());
 				activityConfigRepository.save(activity);
-				deleteResponse="Application-" + activity.getActivityName() +" Deleted Successfully";
+				deleteResponse="Activity-" + activity.getActivityName() +" Deleted Successfully";
 				
 			}catch(Exception e){
-				deleteResponse="Application-" + activity.getActivityName() +" failed to Delete Please contact Application Support Team";
+				deleteResponse="Activity-" + activity.getActivityName() +" failed to Delete Please contact Application Support Team";
 			}
 			
 		}else{
@@ -334,7 +334,7 @@ public class ActivityConfigController {
 		
 		DateTime dt1 = new DateTime(d1);
 		DateTime dt2 = new DateTime(d2);
-		hours=Hours.hoursBetween(dt1, dt2).getHours() % 24;
+		hours=Hours.hoursBetween(dt1, dt2).getHours();
 		convertH=String.valueOf(hours);
 		minutes=Minutes.minutesBetween(dt1, dt2).getMinutes() % 60;
 		convertM=String.valueOf(minutes);
