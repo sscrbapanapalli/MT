@@ -300,7 +300,7 @@ public class ReportsController {
 			
 			DateTime dt1 = new DateTime(revactivityStartTime);
 			DateTime dt2 = new DateTime(revactivityEndTime);
-            hours=Hours.hoursBetween(dt1, dt2).getHours() % 24;
+            hours=Hours.hoursBetween(dt1, dt2).getHours();
             convertH=String.valueOf(hours);
             minutes=Minutes.minutesBetween(dt1, dt2).getMinutes() % 60;
             convertM=String.valueOf(minutes);
