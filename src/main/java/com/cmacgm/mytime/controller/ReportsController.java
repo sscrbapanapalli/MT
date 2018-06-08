@@ -58,7 +58,8 @@ public class ReportsController {
 		try {
 			String windowsUserName=req.getParameter("windowsUserName");
 			if ( !windowsUserName.isEmpty() && windowsUserName!=null){
-				 data=reportsRepository.findByRmId(windowsUserName);
+				 data=reportsRepository.findTopByRmId(windowsUserName);
+				 System.out.println("RmId By Top:" + data);
 			 }
 		
 		} catch (Exception e) {
