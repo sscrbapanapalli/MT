@@ -13,7 +13,7 @@ public interface ReportsRepository extends JpaRepository<EmployeeDetails, Long> 
 	public List<EmployeeDetails> findByRmId(@Param("rmId") String rmId);	
 	
 	
-	@Query(nativeQuery = true,value = "SELECT * FROM Employee_Details a WHERE a.rm_Id <= :rmId ORDER BY a.id LIMIT 1")
+	@Query(nativeQuery = true,value = "SELECT * FROM Employee_Details a WHERE a.rm_Id = :rmId ORDER BY a.id LIMIT 1")
 	public List<EmployeeDetails> findTopByRmId(@Param("rmId") String rmId);
 
 
