@@ -199,7 +199,7 @@ angular.module('myTimeApp').controller(
 				$scope.deleteActivityDetails=function(id,activityName){
 				
 					$scope.confirmationDialogConfig = {
-						      title: "DELETE Application",
+						      title: "DELETE Activity",
 						      message: "Are you sure you want to Delete Activity?",
 						      buttons: [{
 						        label: "Delete",
