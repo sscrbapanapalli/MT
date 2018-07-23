@@ -59,7 +59,7 @@ public class ReportsController {
 			String windowsUserName=req.getParameter("windowsUserName");
 			if ( !windowsUserName.isEmpty() && windowsUserName!=null){
 				 data=reportsRepository.findByRmId(windowsUserName);
-				 System.out.println("RmId By Top:" + data);
+		
 			 }
 		
 		} catch (Exception e) {
@@ -158,6 +158,7 @@ public class ReportsController {
 			String windowsUserName=req.getParameter("windowsUserName");
 			if ( !windowsUserName.isEmpty() && windowsUserName!=null){
 				mgrReporteesList=reportsRepository.findByRmId(windowsUserName);
+				
 			}
 			String[] splited = {};
 			List<String> empList=new ArrayList<String>();
@@ -180,7 +181,7 @@ public class ReportsController {
 				
 			for(EmployeeDetails obj:mgrReporteesList){
 				empList.add(obj.getEmailId());
-				
+			
 			}
 			for(String id:empList){
 			
@@ -255,8 +256,8 @@ public class ReportsController {
         if(revactivityEndTime!=null){
         	revactivityEndTime=revactivityEndTime;
 		}
-		
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+      
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd HH:mm");
 		Date dateFrom=null;
 		Date dateTo=null;		
 		
@@ -305,13 +306,13 @@ public class ReportsController {
             convertH=String.valueOf(hours);
             minutes=Minutes.minutesBetween(dt1, dt2).getMinutes() % 60;
             convertM=String.valueOf(minutes);
-            seconds=Seconds.secondsBetween(dt1, dt2).getSeconds() % 60;
-            convertS=String.valueOf(seconds);
+            //seconds=Seconds.secondsBetween(dt1, dt2).getSeconds() % 60;
+            //convertS=String.valueOf(seconds);
             if (hours   < 10) {convertH = "0"+hours;}
             if (minutes < 10) {convertM = "0"+minutes;}
-            if (seconds < 10) {convertS = "0"+seconds;}
+           // if (seconds < 10) {convertS = "0"+seconds;}
            
-            totalTime=convertH+":"+convertM+":"+convertS;
+            totalTime=convertH+":"+convertM+":00";
  
 		} catch (Exception e) {
 			// TODO: handle exception
