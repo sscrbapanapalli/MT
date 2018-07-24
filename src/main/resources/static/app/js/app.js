@@ -1059,7 +1059,13 @@ angular.module('myTimeApp').controller(
 					
 					$scope.doRevise = function(id){
 						
-					
+						 $( "#revstartdate" ).val("");
+						   $( "#revenddate" ).val("");
+						    $( "#comments" ).val("");	
+						    $("#reviseform").find('.error').removeClass("error");
+						    $('label[for=revstartdate]').remove();
+						    $('label[for=revenddate]').remove();
+						    $('label[for=comments]').remove();
 						 $scope.confirmationDialogConfig = {
 						      title: "Override StartTime and EndTime",
 						      message: "Are you sure you want to Override StartTime and EndTime?",
@@ -1084,11 +1090,20 @@ angular.module('myTimeApp').controller(
 						 $scope.showDialog(false);	
 						  $( "#revstartdate" ).val("");
 						   $( "#revenddate" ).val("");
-						    $( "#comments" ).val("");		
+						    $( "#comments" ).val("");	
+						    $("#reviseform").find('.error').removeClass("error");
+						    $('label[for=revstartdate]').remove();
+						    $('label[for=revenddate]').remove();
+						    $('label[for=comments]').remove();
+						   
 					}
-					
-					$scope.overrideEmployeeTime=function(id){
-						
+				
+					$scope.overrideEmployeeTime=function(id){											
+						$("#reviseform").find('.error').removeClass("error");
+					    $('label[for=revstartdate]').remove();
+					    $('label[for=revenddate]').remove();
+					    $('label[for=comments]').remove();
+						   
 						
 					    $("#reviseform").validate({
 					        rules: {

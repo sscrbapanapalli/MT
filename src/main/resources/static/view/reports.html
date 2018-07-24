@@ -485,19 +485,36 @@ $(function() {
 <script type="text/javascript">
 
 $(document).ready(function() {
+	var date=new Date();
 	   $("#startdate").datetimepicker({
 		  
 	        autoclose: true,
 	        todayBtn: true,	       
-	        pickerPosition: "bottom-right"
+	        pickerPosition: "bottom-right",
+	   
+	        	 startDate : new Date('2018-01-01'),
+	 	        endDate : date  
 	    });
-	    $("#enddate").datetimepicker({
-	    
+	    $("#enddate").datetimepicker({	    
 	        autoclose: true,
 	        todayBtn: true,	        
-	        pickerPosition: "bottom-right"
+	        pickerPosition: "bottom-right",
+	        language: 'en',
+	        startDate : new Date('2018-01-01'),
+	        endDate : date  
 	    });
 	    
+	    $(function () {
+            var date = new Date();
+            var currentMonth = date.getMonth();
+            var currentDate = date.getDate();
+            var currentYear = date.getFullYear();
+            $('#startdate,#enddate').datetimepicker({
+                                    pickTime: false,
+                format: "DD-MM-YYYY",   
+                maxDate: new Date(currentYear, currentMonth, currentDate)
+            });
+        });
 	
 });
 </script>
