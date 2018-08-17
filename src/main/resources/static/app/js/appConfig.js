@@ -8,7 +8,7 @@
 	
 	localServer:false,
 	windowsUNUrl:"http://10.13.44.33:8080/windowsUN/Testing",
-	userTimeReportUrl:"http://10.13.56.23/ReportServer/Pages/ReportViewer.aspx?%2fSSC%2ftest%2fUserProductivity&rs%3aCommand=Render"
+	userTimeReportUrl:"http://10.13.56.23/ReportServer/Pages/ReportViewer.aspx?%2fSSC%2fUser_Time_Report%2fUserProductivity&rs:Command=Render"
 
 }).run(function($http, $window) {	
 	//$http.defaults.headers.common['userToken'] =$window.sessionStorage["userToken"]?$window.sessionStorage["userToken"]: null;

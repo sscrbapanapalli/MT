@@ -143,13 +143,13 @@ public class ApplicationController {
 		            		employeeDetails.setEmailId(emailId.getStringCellValue());
 		            	
 		            		Cell empName=row.getCell(2);
-		            		employeeDetails.setEmpName(empName.getStringCellValue());
-		            		
-		            		Cell rmName=row.getCell(3);
-		            		employeeDetails.setRmName(rmName.getStringCellValue());
-		            	
-		            		Cell rmId=row.getCell(4);
+		            		employeeDetails.setEmpName(empName.getStringCellValue());          		
+		            				            	
+		            		Cell rmId=row.getCell(3);
 		            		employeeDetails.setRmId(rmId.getStringCellValue());
+		            		
+		            		Cell rmName=row.getCell(4);
+		            		employeeDetails.setRmName(rmName.getStringCellValue());
 		            		
 		            		Cell isAdmin=row.getCell(5);
 		            		employeeDetails.setAdmin(isAdmin.getBooleanCellValue()); 
