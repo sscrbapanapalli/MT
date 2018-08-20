@@ -223,9 +223,9 @@ function myFunction() {
 					<th ng-click="sort('activityType')" style="width:15%">Activity Type <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 					<th ng-click="sort('activityStatus')" style="width:15%">Activity Status <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 					<th ng-click="sort('activityStartTime')" style="width:15%">Start Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th ng-click="sort('activityEndTime')" style="width:15%">End Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+				<!-- 	<th ng-click="sort('activityEndTime')" style="width:15%">End Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
 					<th ng-click="sort('activityTotTime')" style="width:10%">Total Time <span	class="glyphicon sort-icon"	ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-					<th style="width:5%">Actions </th>
+				 -->	<th style="width:5%">Actions </th>
 				</tr>
 			</thead>
 			<tbody>
@@ -236,8 +236,8 @@ function myFunction() {
 						<td align="left">&nbsp;{{obj.activityId.activityType}}</td>
 						<td align="left">&nbsp;{{obj.activityStatus}}</td>
      					<td align="left">&nbsp;&nbsp;{{obj.activityStartTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-						<td align="left">&nbsp;&nbsp;{{obj.activityEndTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>  
-						<td align="left">&nbsp;&nbsp;{{obj.activityTotTime|date: 'HH:mm:ss'}}</td> 
+						<!-- <td align="left">&nbsp;&nbsp;{{obj.activityEndTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>  
+						<td align="left">&nbsp;&nbsp;{{obj.activityTotTime|date: 'HH:mm:ss'}}</td>  -->
      					
      					<td class="pull-middle">
      					<a ng-click="startTask(obj.id)" ng-hide="obj.activityStatus=='In Progress'" >

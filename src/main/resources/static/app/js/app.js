@@ -594,9 +594,9 @@ angular.module('myTimeApp').controller(
 				'$window',
 				'$q',
 				'$http',
-				'appConstants','userService','globalServices','$stateParams','$location','$filter',
+				'appConstants','userService','globalServices','$stateParams','$location','$filter','$interval',
 				function($scope, $state, $rootScope, $window, $q,
-						$http,appConstants,userService,globalServices,$stateParams,$location,$filter) {
+						$http,appConstants,userService,globalServices,$stateParams,$location,$filter,$interval) {
 					$scope.userRoles=[];
 					$scope.allRoles=[];
 					$scope.allActivity=[];
@@ -652,7 +652,7 @@ angular.module('myTimeApp').controller(
                         $http.get(userActivityUrl).then(function(response) {
                         	
                         	$scope.userActivityList=response.data;	
-                        	console.log('userActivityList',$scope.userActivityList)
+                        	//console.log('userActivityList',$scope.userActivityList)
                         	
                         });
                         $http.get(activiActivityUrl).then(function(response) {
@@ -706,8 +706,7 @@ angular.module('myTimeApp').controller(
 			          
 			            $scope.userActivityConfig=function(userActivityList){
 			            	 $scope.userActivity=userActivityList;
-			            	 console.log($scope.userActivity)
-			            	 console.log(userActivityList)
+			            	
 			            	//var duplicate=0;
 			            	var addUserActivityUrl=appConstants.serverUrl+"/activity/addUserActivity/";
 							var data = {
@@ -823,7 +822,7 @@ angular.module('myTimeApp').controller(
 											  $rootScope.showModal = !$rootScope.showModal;
 											  $rootScope.contentColor = "#78b266";
 											  $state.go("home",{}, {reload: true}); 
-											
+											  $scope.init();
 									},function(response){
 										
 										  $('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); 
@@ -835,6 +834,56 @@ angular.module('myTimeApp').controller(
 							
 						}
 						
+					
+							$interval(callAtInterval, appConstants.timeIntervalCheck);                                  
+                            
+                            function callAtInterval() 
+                            {
+                            	  //console.log("Timer Interval Occurred"+(new Date()).getTime()); 
+                             
+                            	if(appConstants.timeIntervalCheck!=undefined && appConstants.thresholdTime !=undefined && $scope.userActivityList!=undefined
+                                        && $scope.userActivityList!=null && $scope.userActivityList.length>0){
+            							
+                            		                                           
+                                        
+                        if($rootScope.currentUser.userName!=undefined && $rootScope.currentUser.userName!=null)
+                                         {
+                        	         $scope.activityTime="";
+                        	         var currentTime = new Date();
+                                                $scope.startTaskCount=$scope.userActivityList.length;                                              
+                                                if($scope.startTaskCount > 0)
+                                                {
+                                                	 for(var i=0;i<$scope.userActivityList.length;i++){
+                                                		
+                                                		// console.log(i+"===========> ")
+                                                		 if($scope.userActivityList[i].activityStatus=="In Progress"){
+                                                			  $scope.activityTime= $scope.userActivityList[i].activityStartTime;
+                                                			  //console.log($scope.userActivityList[i])
+                                                                if($scope.activityTime!=null && $scope.activityTime!=undefined){
+                                                                	var currentTime = new Date();
+                                                                	var activityStartTime=new Date($scope.activityTime);
+                                                                	var thresholdTime=activityStartTime;
+                                                                	thresholdTime.setHours(thresholdTime.getHours()+ appConstants.thresholdHours);
+                                                                	//console.log("before thresholdTime: "+thresholdTime)
+                                                                	thresholdTime.setMinutes(thresholdTime.getMinutes()+ appConstants.thresholdMinutes);
+                                                                  	//console.log("after thresholdTime: "+thresholdTime)
+                                                                 	/*thresholdTime=thresholdTime-1800000
+                                                                 	console.log("after thresholdTime: "+thresholdTime)
+                                                                 	console.log("before currentTime: "+currentTime)
+                                                                 	currentTime=currentTime-1800000
+                                                                 	console.log("after currentTime: "+currentTime)*/
+                                                                 	if(thresholdTime < currentTime){
+                                                                 	  alert("WARNING! : "+ $scope.userActivityList[i].activityId.activityName+"  : Task Threshold Time ("+appConstants.thresholdTime+") Hours Going to Exceeds! Please Close the Task Before Exceeds! ");
+                                                                 	 break;
+                                                                 	}
+                                                                   } 
+                                                		 }
+                                                	
+                                                	 }
+                                                	
+                                     }
+						}
+                            }}   
 			            
 				} ]);
 
