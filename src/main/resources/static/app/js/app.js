@@ -872,10 +872,13 @@ angular.module('myTimeApp').controller(
                                                                  	console.log("before currentTime: "+currentTime)
                                                                  	currentTime=currentTime-1800000
                                                                  	console.log("after currentTime: "+currentTime)*/
-                                                                 	if(thresholdTime < currentTime){
-                                                                 	  alert("WARNING! : "+ $scope.userActivityList[i].activityId.activityName+"  : Task Threshold Time ("+appConstants.thresholdTime+") Hours Going to Exceeds! Please Close the Task Before Exceeds! ");
-                                                                 	 break;
-                                                                 	}
+                                                                	if(thresholdTime < currentTime){
+                                                                		 $('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); 
+																	      $rootScope.buttonClicked ="WARNING! : "+ $scope.userActivityList[i].activityId.activityName+"  : Task Threshold Time ("+appConstants.thresholdTime+") Hours Going to Exceeds! Please Close the Task Before Exceeds! ";
+							                              				  $rootScope.showModal = !$rootScope.showModal;
+																		  $rootScope.contentColor = "#ffc107";
+							                                              break;
+                                                                	}
                                                                    } 
                                                 		 }
                                                 	
