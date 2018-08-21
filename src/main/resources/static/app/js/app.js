@@ -870,7 +870,7 @@ angular.module('myTimeApp').controller(
                                                                  	/*thresholdTime=thresholdTime-1800000
                                                                  	console.log("after thresholdTime: "+thresholdTime)
                                                                  	console.log("before currentTime: "+currentTime)
-                                                                 	currentTime=currentTime-1800000
+                                                                 	 currentTime=currentTime-1800000
                                                                  	console.log("after currentTime: "+currentTime)*/
                                                                 	if(thresholdTime < currentTime){
                                                                 		 $('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); 
