@@ -874,7 +874,7 @@ angular.module('myTimeApp').controller(
                                                                  	console.log("after currentTime: "+currentTime)*/
                                                                 	if(thresholdTime < currentTime){
                                                                 		 $('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); 
-																	      $rootScope.buttonClicked ="WARNING! : "+ $scope.userActivityList[i].activityId.activityName+"  : Task Threshold Time ("+appConstants.thresholdTime+") Hours Going to Exceeds! Please Close the Task Before Exceeds! ";
+																	      $rootScope.buttonClicked ="A Gentle Reminder !! "+ $scope.userActivityList[i].activityId.activityName+" is In Progress after the Threshold Time Limit. Please Stop the Task, if you have completed it actually.";
 							                              				  $rootScope.showModal = !$rootScope.showModal;
 																		  $rootScope.contentColor = "#ffc107";
 							                                              break;
