@@ -27,6 +27,12 @@ public class ActivitySettings {
 	@Column(name="activity_type", length=100)
 	private String activityType;
 	
+	@Column(name="threshold_hours", length=10)
+	private int thresholdHours;
+	
+	@Column(name="threshold_mins", length=10)
+	private int thresholdMins;
+	
 	
 	
 	@CreationTimestamp
@@ -111,6 +117,22 @@ public class ActivitySettings {
 
 	public void setActivityType(String activityType) {
 		this.activityType = activityType;
+	}
+
+	public int getThresholdHours() {
+		return thresholdHours;
+	}
+
+	public void setThresholdHours(int thresholdHours) {
+		this.thresholdHours = thresholdHours;
+	}
+
+	public int getThresholdMins() {
+		return thresholdMins;
+	}
+
+	public void setThresholdMins(int thresholdMins) {
+		this.thresholdMins = thresholdMins;
 	}
 
 	

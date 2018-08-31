@@ -77,6 +77,8 @@ public class ActivityConfigController {
 			Long id=Long.parseLong(request.getParameter("id"));
 			String activityName=request.getParameter("activityName");
 			String activityType=request.getParameter("activityType");
+			int thresholdHours=Integer.parseInt(request.getParameter("thresholdHours"));
+			int thresholdMins=Integer.parseInt(request.getParameter("thresholdMins"));
 			String updatedBy=request.getParameter("updatedBy");
 			ActivitySettings activity=activityConfigRepository.findById(id);
 			/*System.out.println(" in update method server");
@@ -88,7 +90,8 @@ public class ActivityConfigController {
 					activity.setActiveIndicator(true);
 					activity.setUpdatedBy(updatedBy);
 					activity.setActivityType(activityType);
-					//System.out.println(activity.isActiveIndicator());
+					activity.setThresholdHours(thresholdHours);
+					activity.setThresholdMins(thresholdMins);
 					activityConfigRepository.save(activity);
 					updateResponse="Activity Updated Successfully";
 					
@@ -139,6 +142,8 @@ public class ActivityConfigController {
 		ActivitySettings activitySettings=new ActivitySettings();
 		activitySettings.setActivityName(obj.getActivityName());
 		activitySettings.setActivityType(obj.getActivityType());
+		activitySettings.setThresholdHours(obj.getThresholdHours());
+		activitySettings.setThresholdMins(obj.getThresholdMins());
 		activitySettings.setCreatedBy(createdBy);
 		activitySettings.setUpdatedBy(createdBy);
 		activitySettings.setActiveIndicator(true);
