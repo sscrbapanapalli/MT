@@ -257,7 +257,7 @@ public class ReportsController {
         	revactivityEndTime=revactivityEndTime;
 		}
       
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd HH:mm");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date dateFrom=null;
 		Date dateTo=null;		
 		

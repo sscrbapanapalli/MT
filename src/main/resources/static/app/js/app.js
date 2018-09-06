@@ -82,7 +82,8 @@ angular.module('myTimeApp').controller(
 					$scope.addApplication="false";
 					$scope.showAddActivity="true";
 					$scope.thresholdMins=0;
-					
+					$scope.thresholdHours=0;
+	                					
 						
 					 $scope.inituser = function() {
 						 $rootScope.isProfilePage=true;    
@@ -254,8 +255,7 @@ angular.module('myTimeApp').controller(
 		            
 		                //Add the new item to the Array.
 		            	if($scope.activityName==null || $scope.activityName==undefined ||$scope.activityName=="" ||
-		            	   $scope.activityType==null || $scope.activityType==undefined ||$scope.activityType==""||
-		            	   $scope.thresholdHours==null || $scope.thresholdHours==undefined ||$scope.thresholdHours==""){
+		            	   $scope.activityType==null || $scope.activityType==undefined ||$scope.activityType==""){
 		            		$rootScope.buttonClicked = "Please provide activity Details";
 							$rootScope.showModal = !$rootScope.showModal;
 							  $rootScope.contentColor = "#dd4b39";
@@ -313,8 +313,7 @@ angular.module('myTimeApp').controller(
 										}
 									}
 				             if($scope.activityName==null || $scope.activityName==undefined ||$scope.activityName=="" ||
-					            	   $scope.activityType==null || $scope.activityType==undefined ||$scope.activityType==""||
-					            	   $scope.thresholdHours==null || $scope.thresholdHours==undefined ||$scope.thresholdHours==""){
+					            	   $scope.activityType==null || $scope.activityType==undefined ||$scope.activityType==""){
 					            		$rootScope.buttonClicked = "Please provide activity Details";
 										$rootScope.showModal = !$rootScope.showModal;
 										  $rootScope.contentColor = "#dd4b39";
@@ -915,15 +914,22 @@ angular.module('myTimeApp').controller(
                                                                 	console.log("After hours added: "+thresholdTime)
                                                                 	thresholdTime.setMinutes(thresholdTime.getMinutes()+ $scope.userActivityList[i].activityId.thresholdMins);
                                                                   	console.log("after min added: "+thresholdTime)
-                                                                 	  if(thresholdTime < currentTime && $scope.userActivityList[i].activityId.thresholdMins==0 ){
+                                                                 	  if(thresholdTime < currentTime && $scope.userActivityList[i].activityId.thresholdHours>0 && $scope.userActivityList[i].activityId.thresholdMins==0 ){
                                                                 		 $('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); 
                                                                 		 $rootScope.buttonClicked =" A Gentle Reminder!! "+ $scope.userActivityList[i].activityId.activityName+" activity is in progress beyond "+ $scope.userActivityList[i].activityId.thresholdHours +" hour(s). Please stop the activity, if you have completed it actually!!"; 
                                                                 		 "A Gentle Reminder !! "+ $scope.userActivityList[i].activityId.activityName+" is In Progress after the Threshold Time Limit. Please Stop the Task, if you have completed it actually.";
 							                              				  $rootScope.showModal = !$rootScope.showModal;
 																		  $rootScope.contentColor = "#ff8000";
 							                                              break;
-                                                                	}
-                                                                 	  else if(thresholdTime < currentTime && $scope.userActivityList[i].activityId.thresholdMins>0 ){
+                                                                	}else if(thresholdTime < currentTime && $scope.userActivityList[i].activityId.thresholdHours==0 && $scope.userActivityList[i].activityId.thresholdMins>0 ){
+                                                               		 $('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); 
+                                                            		 $rootScope.buttonClicked =" A Gentle Reminder!! "+ $scope.userActivityList[i].activityId.activityName+" activity is in progress beyond "+$scope.userActivityList[i].activityId.thresholdMins +" min(s). Please stop the activity, if you have completed it actually!!"; 
+                                                            		 "A Gentle Reminder !! "+ $scope.userActivityList[i].activityId.activityName+" is In Progress after the Threshold Time Limit. Please Stop the Task, if you have completed it actually.";
+						                              				  $rootScope.showModal = !$rootScope.showModal;
+																	  $rootScope.contentColor = "#ff8000";
+						                                              break;
+                                                            	}
+                                                                 	  else if(thresholdTime < currentTime && $scope.userActivityList[i].activityId.thresholdHours>0 && $scope.userActivityList[i].activityId.thresholdMins>0 ){
                                                                		 $('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); 
                                                                		 $rootScope.buttonClicked =" A Gentle Reminder!! "+ $scope.userActivityList[i].activityId.activityName+" activity is in progress beyond "+ $scope.userActivityList[i].activityId.thresholdHours +" hour(s) : "+$scope.userActivityList[i].activityId.thresholdMins +" min(s). Please stop the activity, if you have completed it actually!!"; 
                                                                		 "A Gentle Reminder !! "+ $scope.userActivityList[i].activityId.activityName+" is In Progress after the Threshold Time Limit. Please Stop the Task, if you have completed it actually.";
