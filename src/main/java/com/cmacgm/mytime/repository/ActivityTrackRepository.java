@@ -13,6 +13,10 @@ import org.springframework.data.repository.query.Param;
 import com.cmacgm.mytime.model.UserActivityTrack;
 
 public interface ActivityTrackRepository extends JpaRepository<UserActivityTrack, Long>{
+	
+	
+	@Query(nativeQuery=true,value="select * from user_activity_track where SUBSTRING(activity_tot_time, 1, 2) > 8")
+	public List<UserActivityTrack> getExceededTasks();
 	@Query(nativeQuery=true,value="select * from user_activity_track t where t.activity_status in('In Progress','Not Started') and t.user_id=:userId ")
 	public List<UserActivityTrack> findByUserId(@Param("userId") String userId);
 	
