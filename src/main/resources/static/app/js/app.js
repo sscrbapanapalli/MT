@@ -1071,6 +1071,7 @@ angular.module('myTimeApp').controller(
 					$scope.exportHref="";
 					$scope.pageSize = 10;
 					$scope.pageSizeB = 10;
+					$scope.overideId=0;
 				
 					  $scope.inituser = function() {
 						  $rootScope.isProfilePage=true;    
@@ -1176,6 +1177,7 @@ angular.module('myTimeApp').controller(
 						    $('label[for=revstartdate]').remove();
 						    $('label[for=revenddate]').remove();
 						    $('label[for=comments]').remove();
+						    var selectedId=id;
 						 $scope.confirmationDialogConfig = {
 						      title: "Override StartTime and EndTime",
 						      message: "Are you sure you want to Override StartTime and EndTime?",
@@ -1183,11 +1185,10 @@ angular.module('myTimeApp').controller(
 						        label: "Override",
 						        action: "Override"
 						      }],
-						      id:id	
+						      id:selectedId	
 						    };
-						    $scope.showDialog(true);			    
-						
-					
+						    $scope.showDialog(true);	
+						    			
 					}
 					$scope.sort = function(keyname){
 						$scope.sortKey = keyname;   //set the sortKey to the param passed
@@ -1208,7 +1209,8 @@ angular.module('myTimeApp').controller(
 						   
 					}
 				
-					$scope.overrideEmployeeTime=function(id){											
+					$scope.overrideEmployeeTime=function(id){	
+						$scope.overrideId=id;
 						$("#reviseform").find('.error').removeClass("error");
 					    $('label[for=revstartdate]').remove();
 					    $('label[for=revenddate]').remove();
@@ -1264,7 +1266,7 @@ angular.module('myTimeApp').controller(
 									var data = {
 											revActivityStartTime : $( "#revstartdate" ).val(),
 											revActivityEndTime :  $( "#revenddate" ).val(),								
-											id : id,										            		
+											id : $scope.overrideId,										            		
 						            		 createdBy :$rootScope.currentUser.userName,
 						            		 updatedBy :$rootScope.currentUser.userName,
 						            		 comments :$( "#comments" ).val()		
