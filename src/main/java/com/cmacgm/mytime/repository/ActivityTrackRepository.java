@@ -36,6 +36,9 @@ public interface ActivityTrackRepository extends JpaRepository<UserActivityTrack
 	@Query(nativeQuery=true,value="select count(*) from user_activity_track t where t.activity_status='In Progress' and t.user_id=:userId ")
 	public int findByActivityStatus(@Param("userId") String userId);
 	
+	@Query(nativeQuery=true,value="select * from user_activity_track t where t.activity_status in('In Progress') and t.user_id=:userId ")
+		public List<UserActivityTrack> findByUserIdActivityStatus(@Param("userId") String userId);
+	
 	
 	
 	

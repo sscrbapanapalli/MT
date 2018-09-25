@@ -379,4 +379,59 @@ public class ActivityConfigController {
 	 }
 	 return configResponse;
  }
+	
+	@GetMapping(value="/getActiveTasks")
+	public String getActiveTasks(HttpServletRequest request){
+		String thresholdMsg="";
+		String message="";
+		int hours,mins,taskExceded;
+		
+		List<UserActivityTrack> userActiveTasks=null;
+		  String windowsUserName=request.getParameter("windowsUserName");
+		 
+		try {
+			if ( !windowsUserName.isEmpty() && windowsUserName!=null)	{
+				userActiveTasks= activityTrackRepository.findByUserIdActivityStatus(windowsUserName);
+				System.out.println("list size" + userActiveTasks.size());
+			
+				if(userActiveTasks.size()>0){
+					
+					for (UserActivityTrack obj:userActiveTasks){
+						Date currentTime = new Date();
+						Date activityStartTime=obj.getActivityStartTime();
+						Date thresholdTime=activityStartTime;
+						thresholdTime.setHours(thresholdTime.getHours()+ obj.getActivityId().getThresholdHours());
+						thresholdTime.setMinutes(thresholdTime.getMinutes()+obj.getActivityId().getThresholdMins());
+						taskExceded=thresholdTime.compareTo(currentTime); // date1.compareTo(date2); date1 < date2, returns less than 0
+						hours=obj.getActivityId().getThresholdHours();
+						mins=obj.getActivityId().getThresholdMins();
+						System.out.println(taskExceded);
+						if(taskExceded<0 && obj.getActivityId().getThresholdHours()>0 && obj.getActivityId().getThresholdMins()==0 ){
+							message=obj.getActivityId().getActivityName() + " activity is in progress beyond " + obj.getActivityId().getThresholdHours() + "Hour(s). ";
+							thresholdMsg=thresholdMsg+message;
+						}
+						if(taskExceded<0 && obj.getActivityId().getThresholdHours()==0 && obj.getActivityId().getThresholdMins()>0 ){
+							System.out.println("In condition");
+							message=obj.getActivityId().getActivityName() + " activity is in progress beyond " + obj.getActivityId().getThresholdMins() + "Mins(s). ";
+							thresholdMsg=thresholdMsg+message;
+						}
+						if(taskExceded<0 && obj.getActivityId().getThresholdHours()>0 && obj.getActivityId().getThresholdMins()>0 ){
+							message=obj.getActivityId().getActivityName() + " activity is in progress beyond " + obj.getActivityId().getThresholdHours() + "Hour(s) :" + 
+									obj.getActivityId().getThresholdMins() + "Mins(s). ";
+							thresholdMsg=thresholdMsg+message;
+						}
+						
+					}
+					thresholdMsg="A Gentle Reminder!! "+thresholdMsg+"Please stop the activity, if you have completed it actually!!";
+					return thresholdMsg;
+				}else
+					return thresholdMsg;
+			}
+		} catch (Exception e) {
+		          e.printStackTrace();
+		}
+		return thresholdMsg;
+		
+	}
+	
 }

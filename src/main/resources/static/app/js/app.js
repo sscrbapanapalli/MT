@@ -465,7 +465,8 @@ angular.module('myTimeApp').directive('modal', ['$timeout', function ($timeout) 
             '<div class="modal-content" style="background-color:{{contentColor}}">' + 
               '<div class="modal-header">' + 
                 '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' + 
-                '<h4 class="modal-title" style="color: #FFFFFF;">{{ buttonClicked }}!!</h4>' + 
+                '<h4 class="modal-title" style="color: #FFFFFF;">{{ buttonClicked }}</h4>' +  
+                
               '</div>' + 
               '</div>' + 
           '</div>' + 
@@ -604,6 +605,9 @@ angular.module('myTimeApp').controller(
 					$scope.userActivityList=[];
 					$scope.windowsUser={};
 					$rootScope.dataLoading = false;
+					$scope.getThresholdMsg="";
+					$scope.inside=false;
+					$scope.message="";
 					$scope.inituser = function() {
 						 $rootScope.isProfilePage=true;    
                        	$rootScope.currentUser = userService.getCurrentUser();
@@ -834,117 +838,30 @@ angular.module('myTimeApp').controller(
 						
 					
 	$interval(callAtInterval, appConstants.timeIntervalCheck);                                  
-	// Alert threshold time for fixed time
-                           /* function callAtInterval() 
-                            {
-                            	  //console.log("Timer Interval Occurred"+(new Date()).getTime()); 
-                             
-                            	if(appConstants.timeIntervalCheck!=undefined && appConstants.thresholdTime !=undefined && $scope.userActivityList!=undefined
-                                        && $scope.userActivityList!=null && $scope.userActivityList.length>0){
-            							
-                            		                                           
-                                        
-                        if($rootScope.currentUser.userName!=undefined && $rootScope.currentUser.userName!=null)
-                                         {
-                        	         $scope.activityTime="";
-                        	         var currentTime = new Date();
-                                                $scope.startTaskCount=$scope.userActivityList.length;                                              
-                                                if($scope.startTaskCount > 0)
-                                                {
-                                                	 for(var i=0;i<$scope.userActivityList.length;i++){
-                                                		
-                                                		// console.log(i+"===========> ")
-                                                		 if($scope.userActivityList[i].activityStatus=="In Progress"){
-                                                			  $scope.activityTime= $scope.userActivityList[i].activityStartTime;
-                                                			  //console.log($scope.userActivityList[i])
-                                                                if($scope.activityTime!=null && $scope.activityTime!=undefined){
-                                                                	var currentTime = new Date();
-                                                                	var activityStartTime=new Date($scope.activityTime);
-                                                                	var thresholdTime=activityStartTime;
-                                                                	thresholdTime.setHours(thresholdTime.getHours()+ appConstants.thresholdHours);
-                                                                	//console.log("before thresholdTime: "+thresholdTime)
-                                                                	thresholdTime.setMinutes(thresholdTime.getMinutes()+ appConstants.thresholdMinutes);
-                                                                  	//console.log("after thresholdTime: "+thresholdTime)
-                                                                 	thresholdTime=thresholdTime-1800000
-                                                                 	console.log("after thresholdTime: "+thresholdTime)
-                                                                 	console.log("before currentTime: "+currentTime)
-                                                                 	currentTime=currentTime-1800000
-                                                                 	console.log("after currentTime: "+currentTime)
-                                                                	if(thresholdTime < currentTime){
-                                                                		 $('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); 
-																	      $rootScope.buttonClicked ="A Gentle Reminder !! "+ $scope.userActivityList[i].activityId.activityName+" is In Progress after the Threshold Time Limit. Please Stop the Task, if you have completed it actually.";
-							                              				  $rootScope.showModal = !$rootScope.showModal;
-																		  $rootScope.contentColor = "#ffc107";
-							                                              break;
-                                                                	}
-                                                                   } 
-                                                		 }
-                                                	
-                                                	 }
-                                                	
-                                     }
-						}
-                            }}*/ 
-
 // Alert threshold time for task specific
+	
                      function callAtInterval() 
-                      {
-                         
-                         if($scope.userActivityList!=undefined
-                                        && $scope.userActivityList!=null && $scope.userActivityList.length>0){
-            			                
-                        if($rootScope.currentUser.userName!=undefined && $rootScope.currentUser.userName!=null)
-                                         {
-                        	         $scope.activityTime="";
-                        	         var currentTime = new Date();
-                                                $scope.startTaskCount=$scope.userActivityList.length;                                              
-                                                if($scope.startTaskCount > 0)
-                                                {
-                                                	 for(var i=0;i<$scope.userActivityList.length;i++){
-                                                		
-                                                		// console.log(i+"===========> ")
-                                                		 if($scope.userActivityList[i].activityStatus=="In Progress"){
-                                                			  $scope.activityTime= $scope.userActivityList[i].activityStartTime;
-                                                			  //console.log($scope.userActivityList[i])
-                                                                if($scope.activityTime!=null && $scope.activityTime!=undefined){
-                                                                	var currentTime = new Date();
-                                                                	var activityStartTime=new Date($scope.activityTime);
-                                                                	var thresholdTime=activityStartTime;
-                                                                	thresholdTime.setHours(thresholdTime.getHours()+ $scope.userActivityList[i].activityId.thresholdHours);
-                                                                	console.log("After hours added: "+thresholdTime)
-                                                                	thresholdTime.setMinutes(thresholdTime.getMinutes()+ $scope.userActivityList[i].activityId.thresholdMins);
-                                                                  	console.log("after min added: "+thresholdTime)
-                                                                 	  if(thresholdTime < currentTime && $scope.userActivityList[i].activityId.thresholdHours>0 && $scope.userActivityList[i].activityId.thresholdMins==0 ){
-                                                                		 $('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); 
-                                                                		 $rootScope.buttonClicked =" A Gentle Reminder!! "+ $scope.userActivityList[i].activityId.activityName+" activity is in progress beyond "+ $scope.userActivityList[i].activityId.thresholdHours +" hour(s). Please stop the activity, if you have completed it actually!!"; 
-                                                                		 "A Gentle Reminder !! "+ $scope.userActivityList[i].activityId.activityName+" is In Progress after the Threshold Time Limit. Please Stop the Task, if you have completed it actually.";
-							                              				  $rootScope.showModal = !$rootScope.showModal;
-																		  $rootScope.contentColor = "#ff8000";
-							                                              break;
-                                                                	}else if(thresholdTime < currentTime && $scope.userActivityList[i].activityId.thresholdHours==0 && $scope.userActivityList[i].activityId.thresholdMins>0 ){
-                                                               		 $('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); 
-                                                            		 $rootScope.buttonClicked =" A Gentle Reminder!! "+ $scope.userActivityList[i].activityId.activityName+" activity is in progress beyond "+$scope.userActivityList[i].activityId.thresholdMins +" min(s). Please stop the activity, if you have completed it actually!!"; 
-                                                            		 "A Gentle Reminder !! "+ $scope.userActivityList[i].activityId.activityName+" is In Progress after the Threshold Time Limit. Please Stop the Task, if you have completed it actually.";
-						                              				  $rootScope.showModal = !$rootScope.showModal;
-																	  $rootScope.contentColor = "#ff8000";
-						                                              break;
-                                                            	}
-                                                                 	  else if(thresholdTime < currentTime && $scope.userActivityList[i].activityId.thresholdHours>0 && $scope.userActivityList[i].activityId.thresholdMins>0 ){
-                                                               		 $('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); 
-                                                               		 $rootScope.buttonClicked =" A Gentle Reminder!! "+ $scope.userActivityList[i].activityId.activityName+" activity is in progress beyond "+ $scope.userActivityList[i].activityId.thresholdHours +" hour(s) : "+$scope.userActivityList[i].activityId.thresholdMins +" min(s). Please stop the activity, if you have completed it actually!!"; 
-                                                               		 "A Gentle Reminder !! "+ $scope.userActivityList[i].activityId.activityName+" is In Progress after the Threshold Time Limit. Please Stop the Task, if you have completed it actually.";
-							                              				  $rootScope.showModal = !$rootScope.showModal;
-																		  $rootScope.contentColor = "#ff8000";
-							                                              break;
-                                                               	}
-                                                                   } 
-                                                		 }
-                                                	
-                                                	 }
-                                                	
-                                     }
-						}
-                            }}  
+                      { 
+                    	 
+                    	 if($rootScope.currentUser.userName!=undefined && $rootScope.currentUser.userName!=null){
+       						var activeTaskUrl=appConstants.serverUrl+"/activity/getActiveTasks?windowsUserName="+$rootScope.currentUser.userName;
+                             
+                             $http.get(activeTaskUrl).then(function(response) {
+                            	 $scope.getThresholdMsg=response.data;
+                             	
+                             	if($scope.getThresholdMsg!=undefined && $scope.getThresholdMsg!=null && $scope.getThresholdMsg!=""){
+                             		 $('body').removeClass().removeAttr('style');$('.modal-backdrop').remove(); 
+								      $rootScope.buttonClicked =response.data;
+                    				  $rootScope.showModal = !$rootScope.showModal;
+									  $rootScope.contentColor = "#ff8000";
+									  
+									  console.log('Threshold Msg',response.data)
+                             	}
+                             	
+                             });
+                            
+                             }
+                    	 }  
 			            
 				} ]);
 
@@ -996,6 +913,23 @@ angular.module('myTimeApp').controller(
                                      }
                               
                             }
+                            
+                            $scope.addTimes = function(startTime, endTime) {
+                        	 	if(startTime!="" && endTime!="" && startTime!=undefined && endTime!=undefined){
+                          var seconds = Math.floor((endTime - (startTime))/1000);
+                        var minutes = Math.floor(seconds/60);
+                        var hours = Math.floor(minutes/60);
+                        var days = Math.floor(hours/24);
+
+                        hours = hours-(days*24);
+                        minutes = minutes-(days*24*60)-(hours*60);
+                        seconds = seconds-(days*24*60*60)-(hours*60*60)-(minutes*60);
+                        return ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2)
+                        }  
+                        else
+                        return " ";
+
+                        }
                             
                             $scope.inituser = function() {
                             	 $rootScope.isProfilePage=true;    

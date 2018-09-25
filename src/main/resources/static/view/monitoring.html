@@ -183,18 +183,15 @@ function myFunction() {
 							<th ng-click="sort('currentYear')">Year
 								<span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
 							</th>
-							<th ng-click="sort('logonTime')">System LogonTime
+							<th ng-click="sort('logonTime')">First Login Time
 								<span class="glyphicon sort-icon" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
 							</th>
-							<th ng-click="sort('logoffTime')">System LogoffTime
+							<th ng-click="sort('logoffTime')">Last Logout Time
 								<span class="glyphicon sort-icon"ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
 							</th>
-							<th ng-click="sort('activeTime')">Active Time
+							<th ng-click="sort('totalTime')">Total In Time
 								<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-							</th>
-							<th ng-click="sort('idleTime')">Idle Time
-								<span class="glyphicon sort-icon"  ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
-							</th>
+							</th>							
 						</tr>
 			</thead>
 			<tbody>
@@ -208,8 +205,8 @@ function myFunction() {
 							<td>&nbsp;{{user.currentYear}}</td>
 							<td>&nbsp;{{user.logOnTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
 							<td>&nbsp;{{user.logoffTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-							<td>&nbsp;{{user.activeTime|date:'yyyy-MM-dd HH:mm:ss'}}</td>
-							<td>&nbsp;{{user.idleTime}}</td>
+							<td>&nbsp;{{addTimes(user.logOnTime,user.logoffTime)}}</td>
+							
 						</tr>
 			</tbody>
 		</table>
@@ -241,4 +238,6 @@ function myFunction() {
   
     
 </div>
-
+<script type="text/javascript">
+	
+</script>
