@@ -2,11 +2,11 @@
  var config=angular.module("appConfigApp", [])
 .constant("appConstants",{
 	//serverUrl : "http://10.13.44.33:8080/MyTime",
-	serverUrl : "http://10.13.44.80:8080/MyTimeProd",
+	serverUrl : "http://10.13.44.80:8080/MyTime",
     //serverUrl : "http://localhost:8080",
 	//serverUrl : "http://10.13.56.184:8080",
 	
-	localServer:false,
+	localServer:true,
 	windowsUNUrl:"http://10.13.44.80:8080/windowsUN/Testing",
 	userTimeReportUrl:"http://10.13.56.23/ReportServer/Pages/ReportViewer.aspx?%2fSSC%2fUser_Time_Report%2fUserProductivity&rs:Command=Render",
 	//thresholdTime:4, //4 hours threshold limit for a task.
